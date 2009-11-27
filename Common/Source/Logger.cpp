@@ -393,7 +393,7 @@ void LogPoint(double Latitude, double Longitude, double Altitude,
     }
     NumLoggerBuffered = 0;
   }
-  if (LoggerActive) {
+  if (LoggerActive && !GPS_INFO.NAVWarning) {
     LogPointToFile(Latitude, Longitude, Altitude, BaroAltitude,
                    GPS_INFO.Hour, GPS_INFO.Minute, GPS_INFO.Second);
   }
