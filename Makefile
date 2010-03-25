@@ -544,22 +544,22 @@ cxx-flags	=$(DEPFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(CPPFLAGS_$(dirtarget)) $(TARGET
 #
 %.o: %.c
 	@$(NQ)echo "  CC      $@"
-	$(Q)$(CC) $(cc-flags) -c $(OUTPUT_OPTION) $<
+	$(Q)$(CC) -o $@ $(cc-flags) -c $(OUTPUT_OPTION) $<
 	@sed -i '1s,^[^ :]*,$@,' $(DEPFILE)
 
 %.o: %.cpp
 	@$(NQ)echo "  CXX     $@"
-	$(Q)$(CXX) $(cxx-flags) -c $(OUTPUT_OPTION) $<
+	$(Q)$(CXX) -o $@ $(cxx-flags) -c $(OUTPUT_OPTION) $<
 	@sed -i '1s,^[^ :]*,$@,' $(DEPFILE)
 
 %.os: %.c
 	@$(NQ)echo "  CC      $@"
-	$(Q)$(CC) $(cc-flags) -D_SIM_ -c $(OUTPUT_OPTION) $<
+	$(Q)$(CC) -o $@ $(cc-flags) -D_SIM_ -c $(OUTPUT_OPTION) $<
 	@sed -i '1s,^[^ :]*,$@,' $(DEPFILE)
 
 %.os: %.cpp
 	@$(NQ)echo "  CXX     $@"
-	$(Q)$(CXX) $(cxx-flags) -D_SIM_ -c $(OUTPUT_OPTION) $<
+	$(Q)$(CXX) -o $@ $(cxx-flags) -D_SIM_ -c $(OUTPUT_OPTION) $<
 	@sed -i '1s,^[^ :]*,$@,' $(DEPFILE)
 
 IGNORE	:= \( -name .svn -o -name CVS -o -name .git \) -prune -o
