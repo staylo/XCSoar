@@ -20,7 +20,9 @@
 #include <math.h>
 #include <malloc.h>
 
+#ifndef ASSERT
 #define ASSERT(x) assert(x)
+#endif
 
 typedef unsigned int uint;
 typedef unsigned char byte;
