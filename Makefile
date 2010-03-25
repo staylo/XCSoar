@@ -209,7 +209,7 @@ CPPFLAGS	+= -DFORCEPORTRAIT
   endif
 endif
 
-CXXFLAGS	:=$(OPTIMIZE) -fno-exceptions $(PROFILE)
+CXXFLAGS	:=$(OPTIMIZE) -fno-exceptions -fno-rtti $(PROFILE)
 CFLAGS		:=$(OPTIMIZE) $(PROFILE)
 
 ####### linker configuration
