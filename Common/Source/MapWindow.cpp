@@ -1761,6 +1761,25 @@ LRESULT CALLBACK MapWindow::MapWndProc (HWND hWnd, UINT uMsg, WPARAM wParam,
 	  }
 	}
 
+      if (GlobalModelType == MODELTYPE_PNA_NAVIGON8110) {
+	switch(wParam) {
+	case VK_F9: /* the upper left hardware button */
+	  wParam = VK_APP1;
+	  break;
+
+	case VK_F8: /* the lower left hardware button */
+	  wParam = VK_APP2;
+	  break;
+
+	case VK_F6: /* the upper right hardware button */
+	  wParam = VK_UP;
+	  break;
+
+	case VK_F7: /* the lower right hardware button */
+	  wParam = VK_DOWN;
+	  break;
+	}
+      }
 #endif
 
 

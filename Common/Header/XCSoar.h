@@ -299,6 +299,7 @@ void SwitchToMapWindow(void);
 #define MODELTYPE_PNA_NAVIGO	11800
 #define MODELTYPE_PNA_NOKIA	12000
 #define MODELTYPE_PNA_NOKIA_500	12001 // 480x272
+#define MODELTYPE_PNA_NAVIGON8110 12002
 
 
 #endif
@@ -406,6 +407,7 @@ typedef enum{
 	apImPnaMio,
 	apImPnaNokia500,
 	apImPnaPn6000,
+	apImPnaNavigon8110,
 }InfoBoxModelAppearance_t;
 #endif
 
