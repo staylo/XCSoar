@@ -60,6 +60,11 @@ endif
 
 ifeq ($(CONFIG_PC),y)
 TCPATH		:=i586-mingw32msvc-
+
+  ifeq ($(WINHOST),y)
+    TCPATH :=
+  endif
+
 CPU		:=i586
 MCPU		:= -mcpu=$(CPU)
 else
