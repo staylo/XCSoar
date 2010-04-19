@@ -37,6 +37,7 @@ Copyright_License {
 #include "externs.h"
 #include "GaugeFLARM.h"
 #include "Utils.h"
+#include "Dialogs.h"
 
 extern HFONT  TitleWindowFont;
 
@@ -353,6 +354,10 @@ LRESULT CALLBACK GaugeFLARMWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
     case WM_ERASEBKGND:
       // we don't need one, we just paint over the top
     return TRUE;
+
+    case WM_LBUTTONUP:
+      dlgFlarmTrafficShowModal();
+      return TRUE;
 
     case WM_PAINT:
       if (GlobalRunning && GaugeFLARM::Visible) {
