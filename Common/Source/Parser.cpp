@@ -1027,47 +1027,58 @@ BOOL NMEAParser::PFLAA(TCHAR *String, TCHAR **params, size_t nparams, NMEA_INFO 
 //////
 
 void NMEAParser::TestRoutine(NMEA_INFO *GPS_INFO) {
-#ifdef DEBUG
-#ifndef GNAV
-  static int i=90;
-  static TCHAR t1[] = TEXT("1,1,1,1");
-  static TCHAR t2[] = TEXT("1,300,500,220,2,DD927B,0,-4.5,30,-1.4,1");
-  static TCHAR t3[] = TEXT("0,0,1200,50,2,DD9146,270,-4.5,30,-1.4,1");
-  //  static TCHAR b50[] = TEXT("0,.1,.0,0,0,1.06,0,-222");
-  //  static TCHAR t4[] = TEXT("-3,500,1024,50");
-
-  //  nmeaParser1.ParseNMEAString_Internal(TEXT("$PTAS1,201,200,02583,000*2A"), GPS_INFO);
-  //  nmeaParser1.ParseNMEAString_Internal(TEXT("$GPRMC,082430.00,A,3744.09096,S,14426.16069,E,0.520294.90,301207,,,A*77"), GPS_INFO);
-  //  nmeaParser1.ParseNMEAString_Internal(TEXT("$GPGGA,082430.00,3744.09096,S,1426.16069,E,1,08,1.37,157.6,M,-4.9,M,,*5B"), GPS_INFO);
-
-  QNH=1013.25;
-  double h;
-  double altraw= 5.0;
-  h = AltitudeToQNHAltitude(altraw);
-  QNH = FindQNH(altraw, 50.0);
-  h = AltitudeToQNHAltitude(altraw);
-
-  ////
+  static int i = 90;
 
   i++;
+  if (i > 255)
+    i = 0;
 
-  if (i>100) {
-    i=0;
-  }
-  if (i<50) {
-    GPS_INFO->FLARM_Available = true;
-    TCHAR ctemp[MAX_NMEA_LEN];
-    TCHAR *params[MAX_NMEA_PARAMS];
-    size_t nr;
-    nr = nmeaParser1.ExtractParameters(t1, ctemp, params, MAX_NMEA_PARAMS);
-    nmeaParser1.PFLAU(t1, params, nr, GPS_INFO);
-    nr = nmeaParser1.ExtractParameters(t2, ctemp, params, MAX_NMEA_PARAMS);
-    nmeaParser1.PFLAA(t2, params, nr, GPS_INFO);
-    nr = nmeaParser1.ExtractParameters(t3, ctemp, params, MAX_NMEA_PARAMS);
-    nmeaParser1.PFLAA(t3, params, nr, GPS_INFO);
-  }
-#endif
-#endif
+  if (i > 80)
+    ;//return;
+
+  static double angle;
+  angle = (i * 360) / 255;
+
+  // PFLAU,<RX>,<TX>,<GPS>,<Power>,<AlarmLevel>,<RelativeBearing>,<AlarmType>,
+  //   <RelativeVertical>,<RelativeDistance>(,<ID>)
+  static TCHAR t_lau[] = _T("2,1,2,1");
+
+  static unsigned h1;
+  static unsigned n1;
+  static unsigned e1;
+  static unsigned t1;
+  static unsigned l;
+  h1 = ifastsine(angle) / 7;
+  n1 = ifastsine(angle) / 2 - 200;
+  e1 = ifastcosine(angle) / 1.5;
+  t1 = AngleLimit360(-angle);
+  l = (i % 30 > 13 ? 0 : (i % 30 > 5 ? 2 : 1));
+  static unsigned h2;
+  static unsigned n2;
+  static unsigned e2;
+  static unsigned t2;
+  h2 = ifastcosine(angle) / 10;
+  n2 = ifastsine(AngleLimit360(angle + 120)) / 1.2 + 300;
+  e2 = ifastcosine(AngleLimit360(angle + 120)) + 500;
+  t2 = AngleLimit360(-angle - 120);
+
+  // PFLAA,<AlarmLevel>,<RelativeNorth>,<RelativeEast>,<RelativeVertical>,
+  //   <IDType>,<ID>,<Track>,<TurnRate>,<GroundSpeed>,<ClimbRate>,<AcftType>
+  static TCHAR t_laa1[50];
+  _stprintf(t_laa1, _T("%d,%d,%d,%d,2,DDA85C,%d,0,0,0,1"), l, n1, e1, h1, t1);
+  static TCHAR t_laa2[50];
+  _stprintf(t_laa2, _T("0,%d,%d,%d,2,AA9146,%d,0,0,0,1"), n2, e2, h2, t2);
+
+  GPS_INFO->FLARM_Available = true;
+  TCHAR ctemp[MAX_NMEA_LEN];
+  TCHAR *params[MAX_NMEA_PARAMS];
+  size_t nr;
+  nr = nmeaParser1.ExtractParameters(t_lau, ctemp, params, MAX_NMEA_PARAMS);
+  nmeaParser1.PFLAU(t_lau, params, nr, GPS_INFO);
+  nr = nmeaParser1.ExtractParameters(t_laa1, ctemp, params, MAX_NMEA_PARAMS);
+  nmeaParser1.PFLAA(t_laa1, params, nr, GPS_INFO);
+  nr = nmeaParser1.ExtractParameters(t_laa2, ctemp, params, MAX_NMEA_PARAMS);
+  nmeaParser1.PFLAA(t_laa2, params, nr, GPS_INFO);
 }
 
 

@@ -3794,7 +3794,7 @@ void SIMProcessTimer(void)
 
   if (i%2==0) return;
 
-#ifdef DEBUG
+#ifdef NDEBUG
   // use this to test FLARM parsing/display
 #ifndef GNAV
   NMEAParser::TestRoutine(&GPS_INFO);
