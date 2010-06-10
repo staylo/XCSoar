@@ -3,6 +3,7 @@
 <WndForm Name="frmTextEntry_Keyboard" Width="320" Height="240" Caption="Edit text">
   <WndProperty Name="prpText"  Caption=""   X="0" Y="2" Width="270" Height="22" CaptionWidth="1" Font="2" ReadOnly="1" />
 
+  <Keyboard X="0" Y="25" Width="320" Height="220">
   <WndButton Name="btnBackspace" Caption="&lt;-"    X="272" Y="3" Width="36"  Height="20" Font="2" OnClick="OnBackspace"/>
   
   <WndButton   Caption="1"    X="0" y="25" Width="32"  Height="40" Font="2" OnClick="OnKey"/>
