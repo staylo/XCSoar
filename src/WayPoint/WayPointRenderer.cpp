@@ -358,16 +358,7 @@ DrawLandableBase(Canvas &canvas, const RasterPoint& pt,
   if (airport)
     canvas.circle(pt.x, pt.y, iradius);
   else {
-    RasterPoint diamond[4];
-    diamond[0].x = pt.x + 0;
-    diamond[0].y = pt.y - iradius;
-    diamond[1].x = pt.x + iradius;
-    diamond[1].y = pt.y + 0;
-    diamond[2].x = pt.x + 0;
-    diamond[2].y = pt.y + iradius;
-    diamond[3].x = pt.x - iradius;
-    diamond[3].y = pt.y - 0;
-    canvas.polygon(diamond, sizeof(diamond)/sizeof(diamond[0]));
+    canvas.rectangle(pt.x - iradius, pt.y - iradius, pt.x + iradius, pt.y + iradius);
   }
 }
 
@@ -427,7 +418,11 @@ WayPointRenderer::DrawLandableSymbol(Canvas &canvas, const RasterPoint &pt,
   // SW rendering of landables
   fixed scale = fixed(Layout::SmallScale(Appearance.LandableRenderingScale)) /
                 fixed_int_constant(150);
-  fixed radius = fixed_int_constant(10) * scale;
+  fixed radius;
+  if (way_point.is_airport())
+    radius = fixed_int_constant(10) * scale;
+  else
+    radius = fixed_int_constant(8) * scale;
   Brush fill;
 
   canvas.black_pen();
