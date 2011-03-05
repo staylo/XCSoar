@@ -432,7 +432,7 @@ WayPointRenderer::DrawLandableSymbol(Canvas &canvas, const RasterPoint &pt,
       fill.set(reachable_terrain ? Color::GREEN : NOT_REACHABLE_TERRAIN);
       canvas.select(fill);
       DrawLandableBase(canvas, pt, way_point.is_airport(),
-                       radius + radius / fixed_four + 1);
+                       radius + radius / fixed_two);
     }
     fill.set(Color::MAGENTA);
   } else if (Appearance.IndLandable == wpLandableAltB) {
