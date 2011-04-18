@@ -36,6 +36,8 @@ class WndOwnerDrawFrame : public PaintWindow {
 public:
   typedef void (*OnPaintCallback_t)(WndOwnerDrawFrame *Sender, Canvas &canvas);
   typedef bool (*OnMouseDownCallback_t)(WndOwnerDrawFrame *Sender, int x, int y);
+  typedef bool (*OnMouseUpCallback_t)(WndOwnerDrawFrame *Sender, int x, int y);
+  typedef bool (*OnMouseMoveCallback_t)(WndOwnerDrawFrame *Sender, int x, int y, unsigned keys);
 
 public:
   WndOwnerDrawFrame(ContainerWindow &parent,
@@ -60,6 +62,22 @@ public:
     mOnMouseDownCallback = OnMouseDownCallback;
   }
 
+  /**
+   * Sets the callback which is called when the mouse is
+   * released over the control.
+   */
+  void SetOnMouseUpNotify(OnMouseUpCallback_t OnMouseUpCallback) {
+    mOnMouseUpCallback = OnMouseUpCallback;
+  }
+
+  /**
+   * Sets the callback which is called when the mouse is
+   * moved over the control.
+   */
+  void SetOnMouseMoveNotify(OnMouseMoveCallback_t OnMouseMoveCallback) {
+    mOnMouseMoveCallback = OnMouseMoveCallback;
+  }
+
 protected:
   /**
    * The callback function for painting the content of the control
@@ -74,11 +92,27 @@ protected:
    */
   OnMouseDownCallback_t mOnMouseDownCallback;
 
+  /**
+   * The callback function that is called when the mouse is
+   * released over the control
+   * @see SetOnMouseUpNotify()
+   */
+  OnMouseUpCallback_t mOnMouseUpCallback;
+
+  /**
+   * The callback function that is called when the mouse is
+   * moved over the control
+   * @see SetOnMouseMoveNotify()
+   */
+  OnMouseMoveCallback_t mOnMouseMoveCallback;
+
   /** from class PaintWindow */
   virtual void on_paint(Canvas &canvas);
 
   /** from class Window */
   virtual bool on_mouse_down(int x, int y);
+  virtual bool on_mouse_up(int x, int y);
+  virtual bool on_mouse_move(int x, int y, unsigned keys);
 };
 
 #endif
