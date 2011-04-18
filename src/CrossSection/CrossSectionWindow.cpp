@@ -379,3 +379,30 @@ CrossSectionWindow::on_paint(Canvas &canvas)
 
   Paint(canvas, rc);
 }
+
+bool
+CrossSectionWindow::on_mouse_down(int x, int y)
+{
+  if (mOnMouseDownCallback)
+    return mOnMouseDownCallback(this, x, y);
+
+  return false;
+}
+
+bool
+CrossSectionWindow::on_mouse_up(int x, int y)
+{
+  if (mOnMouseUpCallback)
+    return mOnMouseUpCallback(this, x, y);
+
+  return false;
+}
+
+bool
+CrossSectionWindow::on_mouse_move(int x, int y, unsigned keys)
+{
+  if (mOnMouseMoveCallback)
+    return mOnMouseMoveCallback(this, x, y, keys);
+
+  return false;
+}

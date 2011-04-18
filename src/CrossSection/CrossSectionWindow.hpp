@@ -41,10 +41,62 @@ class CrossSectionWindow :
   public SettingsMapBlackboard
 {
 public:
+  typedef bool (*OnMouseDownCallback_t)(CrossSectionWindow *Sender, int x, int y);
+  typedef bool (*OnMouseUpCallback_t)(CrossSectionWindow *Sender, int x, int y);
+  typedef bool (*OnMouseMoveCallback_t)(CrossSectionWindow *Sender, int x, int y, unsigned keys);
+
+public:
   /**
    * Constructor. Initializes most class members.
    */
   CrossSectionWindow();
+
+protected:
+  /**
+   * The callback function that is called when the mouse is
+   * pressed over the control
+   * @see SetOnMouseDownNotify()
+   */
+  OnMouseDownCallback_t mOnMouseDownCallback;
+
+  /**
+   * The callback function that is called when the mouse is
+   * released over the control
+   * @see SetOnMouseUpNotify()
+   */
+  OnMouseUpCallback_t mOnMouseUpCallback;
+
+  /**
+   * The callback function that is called when the mouse is
+   * moved over the control
+   * @see SetOnMouseMoveNotify()
+   */
+  OnMouseMoveCallback_t mOnMouseMoveCallback;
+
+public:
+  /**
+   * Sets the callback which is called when the mouse is
+   * pressed over the control.
+   */
+  void SetOnMouseDownNotify(OnMouseDownCallback_t OnMouseDownCallback) {
+    mOnMouseDownCallback = OnMouseDownCallback;
+  }
+
+  /**
+   * Sets the callback which is called when the mouse is
+   * released over the control.
+   */
+  void SetOnMouseUpNotify(OnMouseUpCallback_t OnMouseUpCallback) {
+    mOnMouseUpCallback = OnMouseUpCallback;
+  }
+
+  /**
+   * Sets the callback which is called when the mouse is
+   * moved over the control.
+   */
+  void SetOnMouseMoveNotify(OnMouseMoveCallback_t OnMouseMoveCallback) {
+    mOnMouseMoveCallback = OnMouseMoveCallback;
+  }
 
   void ReadBlackboard(const NMEA_INFO &_gps_info,
                       const DERIVED_INFO &_calculated_info,
@@ -132,6 +184,11 @@ protected:
   void PaintGlide(Chart &chart);
   void PaintAircraft(Canvas &canvas, const Chart &chart, const PixelRect rc);
   void PaintGrid(Canvas &canvas, Chart &chart);
+
+  /** from class Window */
+  virtual bool on_mouse_down(int x, int y);
+  virtual bool on_mouse_up(int x, int y);
+  virtual bool on_mouse_move(int x, int y, unsigned keys);
 
   /**
    * OnPaint event called by the message loop
