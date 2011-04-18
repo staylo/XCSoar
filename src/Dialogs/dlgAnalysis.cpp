@@ -69,6 +69,7 @@ static WndOwnerDrawFrame *wGrid = NULL;
 static WndFrame *wInfo;
 static WndButton *wCalc = NULL;
 static CrossSectionWindow *csw = NULL;
+static GestureManager gestures;
 
 static void
 SetCalcVisibility(const bool visible)
@@ -327,6 +328,66 @@ NextPage(int Step)
 }
 
 static void
+OnGesture(const TCHAR* gesture)
+{
+  if (!XCSoarInterface::SettingsComputer().EnableGestures)
+    return;
+
+  if (_tcscmp(gesture, _T("L")) == 0)
+    NextPage(-1);
+  else if (_tcscmp(gesture, _T("R")) == 0)
+    NextPage(+1);
+}
+
+static bool
+OnMouseDown(gcc_unused WndOwnerDrawFrame *Sender, int x, int y)
+{
+  gestures.Start(x, y, Layout::Scale(20));
+  return true;
+}
+
+static bool
+OnMouseMove(gcc_unused WndOwnerDrawFrame *Sender, int x, int y, gcc_unused unsigned keys)
+{
+  gestures.Update(x, y);
+  return true;
+}
+
+static bool
+OnMouseUp(gcc_unused WndOwnerDrawFrame *Sender, gcc_unused int x, gcc_unused int y)
+{
+  const TCHAR* gesture = gestures.Finish();
+  if (gesture != NULL)
+    OnGesture(gesture);
+
+  return true;
+}
+
+static bool
+OnCSWMouseDown(gcc_unused CrossSectionWindow *Sender, int x, int y)
+{
+  gestures.Start(x, y, Layout::Scale(20));
+  return true;
+}
+
+static bool
+OnCSWMouseMove(gcc_unused CrossSectionWindow *Sender, int x, int y, gcc_unused unsigned keys)
+{
+  gestures.Update(x, y);
+  return true;
+}
+
+static bool
+OnCSWMouseUp(gcc_unused CrossSectionWindow *Sender, gcc_unused int x, gcc_unused int y)
+{
+  const TCHAR* gesture = gestures.Finish();
+  if (gesture != NULL)
+    OnGesture(gesture);
+
+  return true;
+}
+
+static void
 OnNextClicked(WndButton &Sender)
 {
   (void)Sender;
@@ -448,6 +509,16 @@ dlgAnalysisShowModal(SingleWindow &parent, int _page)
   wf->SetKeyDownNotify(FormKeyDown);
 
   wGrid = (WndOwnerDrawFrame*)wf->FindByName(_T("frmGrid"));
+  wGrid->SetOnMouseDownNotify(OnMouseDown);
+  wGrid->SetOnMouseMoveNotify(OnMouseMove);
+  wGrid->SetOnMouseUpNotify(OnMouseUp);
+
+  CrossSectionWindow* csw =
+      (CrossSectionWindow*)wf->FindByName(_T("frmCrossSection"));
+  csw->SetOnMouseDownNotify(OnCSWMouseDown);
+  csw->SetOnMouseMoveNotify(OnCSWMouseMove);
+  csw->SetOnMouseUpNotify(OnCSWMouseUp);
+
   wInfo = (WndFrame *)wf->FindByName(_T("frmInfo"));
   wCalc = (WndButton *)wf->FindByName(_T("cmdCalc"));
 
