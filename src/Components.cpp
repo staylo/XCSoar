@@ -595,4 +595,9 @@ XCSoarInterface::Shutdown(void)
   StartupLogFreeRamAndStorage();
 
   LogStartUp(_T("Finished shutdown"));
+
+#ifdef GNAV
+  if (is_altair() && is_embedded())
+    altair_control.Shutdown();
+#endif
 }

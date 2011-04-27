@@ -22,6 +22,8 @@ Copyright_License {
 */
 
 #include "Hardware/AltairControl.hpp"
+#include "InputEvents.hpp"
+#include "OS/Sleep.h"
 
 #include <tchar.h>
 
@@ -73,4 +75,17 @@ AltairControl::SetBacklight(int value)
 
   return ::DeviceIoControl(handle, IOCTL_TRA_BACKLIGHTSETVALUE,
                            &value, sizeof(value), NULL, 0, NULL, NULL) != 0;
+}
+
+void
+AltairControl::Shutdown()
+{
+  // this method is marked by samgi as obsolete but i think still will work.
+  // @todo check with samgi if a better method is available.
+
+  ::Sleep(2500);
+  InputEvents::eventDLLExecute(TEXT("altairplatform.dll SetShutdown 1"));
+  while(1) {
+    ::Sleep(100); // free time up for processor to perform shutdown
+  }
 }

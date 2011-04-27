@@ -54,6 +54,11 @@ public:
    * backlight.
    */
   bool SetBacklight(int value);
+
+  /**
+   * Signal hardware to shut down altair and power off
+   */
+  void Shutdown();
 };
 
 #endif
