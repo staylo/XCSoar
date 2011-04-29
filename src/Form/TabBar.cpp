@@ -270,29 +270,32 @@ TabDisplay::TabDisplay(TabBarControl& _theTabBar,
 void
 TabDisplay::on_paint(Canvas &canvas)
 {
-  canvas.clear(Color::BLACK);
+  Color clr_0 = background_color;
+  Color clr_1 = dark_color(background_color);
+
+  canvas.clear(clr_0);
   canvas.select(Fonts::MapBold);
   const unsigned CaptionStyle = DT_EXPANDTABS | DT_CENTER | DT_NOCLIP
       | DT_WORDBREAK;
 
   for (unsigned i = 0; i < theTabBar.GetTabCount(); i++) {
-    bool inverse = false;
+    bool inverse = true;
     if (((int)i == downindex) && (dragoffbutton == false)) {
-      canvas.set_text_color(Color::BLACK);
+      canvas.set_text_color(clr_0);
       canvas.set_background_color(Color::YELLOW);
 
     } else if (i == theTabBar.GetCurrentPage()) {
-        canvas.set_text_color(Color::WHITE);
+        canvas.set_text_color(Color::BLACK);
         if (has_focus() && !has_pointer()) {
-          canvas.set_background_color(Color::GRAY.highlight());
+          canvas.set_background_color(background_color.highlight());
         } else {
-          canvas.set_background_color(Color::BLACK);
+          canvas.set_background_color(clr_0);
         }
-        inverse = true;
+        inverse = false;
 
     } else {
-      canvas.set_text_color(Color::BLACK);
-      canvas.set_background_color(Color::WHITE);
+      canvas.set_text_color(Color::WHITE);
+      canvas.set_background_color(clr_1);
     }
     const PixelRect &rc = theTabBar.GetButtonSize(i);
 
@@ -323,21 +326,12 @@ TabDisplay::on_paint(Canvas &canvas)
       const int offsetx = (rc.right - rc.left - bmp->get_size().cx / 2) / 2;
       const int offsety = (rc.bottom - rc.top - bmp->get_size().cy) / 2;
 
-      if (inverse) // black background
-        canvas.copy_not(rc.left + offsetx,
-                    rc.top + offsety,
-                    bmp->get_size().cx / 2,
-                    bmp->get_size().cy,
-                    *bmp,
-                    bmp->get_size().cx / 2, 0);
-
-      else
-        canvas.copy(rc.left + offsetx,
-                    rc.top + offsety,
-                    bmp->get_size().cx / 2,
-                    bmp->get_size().cy,
-                    *bmp,
-                    bmp->get_size().cx / 2, 0);
+      canvas.copy_and(rc.left + offsetx,
+                      rc.top + offsety,
+                      bmp->get_size().cx / 2,
+                      bmp->get_size().cy,
+                      *bmp,
+                      bmp->get_size().cx / 2, 0);
 
     } else {
       canvas.formatted_text(&rcTextFinal, theTabBar.GetButtonCaption(i),
