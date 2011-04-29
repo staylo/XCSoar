@@ -62,6 +62,7 @@ protected:
   ActivateCallback_t ActivateCallback;
   CursorCallback_t CursorCallback;
   PaintItemCallback_t PaintItemCallback;
+  const Color form_background_color;
 
 public:
   /**
@@ -75,6 +76,7 @@ public:
    */
   WndListFrame(ContainerWindow &parent,
                int X, int Y, int Width, int Height,
+               const Color form_background_color,
                const WindowStyle style,
                unsigned _item_height);
 

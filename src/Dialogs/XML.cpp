@@ -855,6 +855,7 @@ LoadChild(WndForm &form, ContainerWindow &parent, Color background_color,
 
     window = new WndListFrame(parent,
                               pos.x, pos.y, size.cx, size.cy,
+                              background_color,
                               style,
                               item_height);
 

@@ -45,6 +45,7 @@ using std::max;
 
 WndListFrame::WndListFrame(ContainerWindow &parent,
                            int X, int Y, int Width, int Height,
+                           const Color _form_background_color,
                            const WindowStyle style,
                            unsigned _item_height):
   item_height(_item_height),
@@ -53,7 +54,8 @@ WndListFrame::WndListFrame(ContainerWindow &parent,
   dragging(false),
   ActivateCallback(NULL),
   CursorCallback(NULL),
-  PaintItemCallback(NULL)
+  PaintItemCallback(NULL),
+  form_background_color(_form_background_color)
 {
   set(parent, X, Y, Width, Height, style);
 }
@@ -101,7 +103,8 @@ WndListFrame::DrawItems(Canvas &canvas, unsigned start, unsigned end) const
 {
   const Color text_color = Color::BLACK;
   const Color background_color = Color::WHITE;
-  const Color selected_background_color = Color::LIGHT_GRAY;
+  const Color selected_background_color = has_focus()?
+    form_background_color.highlight() : Color::LIGHT_GRAY;
 
   PixelRect rc = item_rect(start);
 
