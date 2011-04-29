@@ -83,9 +83,11 @@ AltairControl::Shutdown()
   // this method is marked by samgi as obsolete but i think still will work.
   // @todo check with samgi if a better method is available.
 
+/*
   ::Sleep(2500);
   InputEvents::eventDLLExecute(TEXT("altairplatform.dll SetShutdown 1"));
   while(1) {
     ::Sleep(100); // free time up for processor to perform shutdown
   }
+*/
 }
