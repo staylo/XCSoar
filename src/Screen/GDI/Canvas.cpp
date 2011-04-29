@@ -26,7 +26,7 @@ Copyright_License {
 #include "Screen/Bitmap.hpp"
 #include "Screen/Util.hpp"
 #include "Compatibility/gdi.h"
-#include "Asset.hpp" /* for needclipping */
+#include "Asset.hpp" /* for needclipping, altair */
 
 void
 Canvas::line(int ax, int ay, int bx, int by)
@@ -358,3 +358,12 @@ Canvas::stretch(const Bitmap &src)
   PixelSize size = src.get_size();
   stretch(src, 0, 0, size.cx, size.cy);
 }
+
+
+void
+Canvas::fill_focus(PixelRect rc, Color background)
+{
+  if (!has_pointer())
+    fill_rectangle(rc, background.highlight());
+}
+

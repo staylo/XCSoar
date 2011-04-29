@@ -23,6 +23,7 @@ Copyright_License {
 
 #include "Screen/Canvas.hpp"
 #include "Screen/Bitmap.hpp"
+#include "Asset.hpp"
 
 #include <assert.h>
 #include <string.h>
@@ -803,6 +804,13 @@ Canvas::copy_and(int dest_x, int dest_y,
 
   copy_and(dest_x, dest_y, dest_width, dest_height,
            src.native(), src_x, src_y);
+}
+
+void
+Canvas::fill_focus(PixelRect rc, Color background)
+{
+  if (!has_pointer())
+    fill_rectangle(rc, background.highlight());
 }
 
 #endif /* !OPENGL */

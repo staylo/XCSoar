@@ -25,6 +25,8 @@ Copyright_License {
 #define XCSOAR_FORM_BUTTON_HPP
 
 #include "Screen/ButtonWindow.hpp"
+#include "Screen/Brush.hpp"
+#include "Screen/Features.hpp"
 
 class ContainerWindow;
 
@@ -33,6 +35,9 @@ class ContainerWindow;
  * It is based on the WindowControl class.
  */
 class WndButton : public ButtonWindow {
+protected:
+  virtual ButtonWindowStyle custom_painting(ButtonWindowStyle style) const;
+
 public:
   typedef void (*ClickNotifyCallback_t)(WndButton &button);
   typedef void (*LeftRightNotifyCallback_t)(WndButton &button);
@@ -52,6 +57,7 @@ public:
   WndButton(ContainerWindow &parent, const TCHAR *Caption,
       int X, int Y, int Width, int Height,
             const ButtonWindowStyle style,
+            Color _background_color,
       ClickNotifyCallback_t Function = NULL,
       LeftRightNotifyCallback_t LeftFunction = NULL,
       LeftRightNotifyCallback_t RightFunction = NULL);
@@ -112,6 +118,11 @@ protected:
   virtual bool on_key_check(unsigned key_code) const;
   virtual bool on_key_down(unsigned key_code);
 
+  /**
+   * The on_paint event is called when the button needs to be drawn
+   * (derived from PaintWindow)
+   */
+  virtual void on_paint(Canvas &canvas);
 
 private:
   /**
@@ -127,6 +138,9 @@ private:
    */
   LeftRightNotifyCallback_t mOnLeftNotify;
   LeftRightNotifyCallback_t mOnRightNotify;
+
+protected:
+  Color background_color;
 };
 
 #endif

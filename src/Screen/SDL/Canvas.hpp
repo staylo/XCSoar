@@ -335,6 +335,8 @@ public:
                       Color::DARK_GRAY);
   }
 
+  void fill_focus(PixelRect rc, Color background);
+
   void draw_button(PixelRect rc, bool down);
 
   gcc_pure

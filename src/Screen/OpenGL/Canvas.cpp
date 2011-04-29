@@ -29,6 +29,7 @@ Copyright_License {
 #include "Screen/OpenGL/Cache.hpp"
 #include "Screen/OpenGL/VertexArray.hpp"
 #include "Screen/Util.hpp"
+#include "Asset.hpp"
 
 #include <assert.h>
 
@@ -302,6 +303,14 @@ Canvas::draw_focus(PixelRect rc)
   select(pen);
   outline_rectangle(rc.left, rc.top, rc.right, rc.bottom);
 }
+
+void
+Canvas::fill_focus(PixelRect rc, Color background)
+{
+  if (!has_pointer())
+    fill_rectangle(rc, background.highlight());
+}
+
 
 void
 Canvas::text(int x, int y, const TCHAR *text)

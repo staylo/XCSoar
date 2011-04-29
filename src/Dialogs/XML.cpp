@@ -743,7 +743,7 @@ LoadChild(WndForm &form, ContainerWindow &parent, Color background_color,
 
     window = new WndButton(parent, Caption,
                            pos.x, pos.y, size.cx, size.cy,
-                           bstyle, ClickCallback);
+                           bstyle, background_color, ClickCallback);
 
   } else if (_tcscmp(node.getName(), _T("CheckBox")) == 0) {
     // Determine ClickCallback function

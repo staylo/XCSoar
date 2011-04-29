@@ -297,7 +297,7 @@ dlgConfigInfoboxesShowModal(SingleWindow &parent,
 
   buttonPanelName =
     new WndButton(client_area, _T(""),
-                  x, y, width, height, button_style, OnNameAccess);
+                  x, y, width, height, button_style, background_color, OnNameAccess);
   buttonPanelName->set_enabled(allow_name_change);
   UpdatePanelName();
 
@@ -345,17 +345,17 @@ dlgConfigInfoboxesShowModal(SingleWindow &parent,
   WndButton *close_button =
     new WndButton(client_area, _("Close"),
                   button_x, button_y, button_width, button_height,
-                  button_style, OnCloseClicked);
+                  button_style, background_color, OnCloseClicked);
   button_x += button_width + Layout::Scale(2);
   WndButton *copy_button =
     new WndButton(client_area, _("Copy"),
                   button_x, button_y, button_width, button_height,
-                  button_style, OnCopy);
+                  button_style, background_color, OnCopy);
   button_x += button_width + Layout::Scale(2);
   buttonPaste =
     new WndButton(client_area, _("Paste"),
                   button_x, button_y, button_width, button_height,
-                  button_style, OnPaste);
+                  button_style, background_color, OnPaste);
 
   RefreshPasteButton();
 

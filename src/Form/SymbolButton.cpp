@@ -45,6 +45,7 @@ WndSymbolButton::on_paint(Canvas &canvas)
   if (has_focus()) {
     PixelRect focus_rc = rc;
     InflateRect(&focus_rc, -3, -3);
+    canvas.fill_focus(focus_rc, background_color);
     canvas.draw_focus(focus_rc);
   }
 
@@ -137,4 +138,10 @@ WndSymbolButton::on_paint(Canvas &canvas)
       canvas.stretch_transparent(launcher2_bitmap, Color::BLUE);
   }
 
+}
+
+ButtonWindowStyle
+WndSymbolButton::custom_painting(ButtonWindowStyle style) const {
+  style.enable_custom_painting();
+  return style;
 }

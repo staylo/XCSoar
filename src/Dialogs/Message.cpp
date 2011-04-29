@@ -44,8 +44,9 @@ public:
                     const WindowStyle style,
                     WndForm &_form, int _result)
     :WndButton(parent, Caption, X, Y, Width, Height,
-               style),
-     form(_form), result(_result) {}
+               style, _form.GetBackColor()),
+     form(_form),
+     result(_result) {}
 
 protected:
   virtual bool on_clicked() {
