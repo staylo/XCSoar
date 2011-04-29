@@ -145,7 +145,7 @@ WndButton::on_paint(Canvas &canvas)
   canvas.black_brush();
 
   // Setup drawing of text
-  canvas.set_text_color(Color::BLACK);
+  canvas.set_text_color(is_enabled() ? Color::BLACK : Color::GRAY);
   canvas.background_transparent();
   canvas.select(Fonts::MapBold);
 
