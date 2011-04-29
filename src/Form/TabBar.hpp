@@ -27,6 +27,7 @@ Copyright_License {
 
 #include "Util/StaticArray.hpp"
 #include "Form/Tabbed.hpp"
+#include "Screen/Color.hpp"
 
 class Bitmap;
 class WndOwnerDrawFrame;
@@ -62,6 +63,7 @@ public:
  */
   TabBarControl(ContainerWindow &parent,
                 int x, int y, unsigned width, unsigned height,
+                const Color background_color,
                 const WindowStyle style = WindowStyle(),
                 bool _flipOrientation = false,
                 bool _clientOverlapTabs = false);
@@ -201,7 +203,9 @@ public:
  * @param height Height of tab bar box in the parent window
  */
  TabDisplay(TabBarControl& _theTabBar, unsigned left, unsigned top,
-     unsigned width, unsigned height, bool _flipOrientation = false);
+            unsigned width, unsigned height,
+            const Color _background_color,
+            bool _flipOrientation = false);
 
 public:
   void trigger_invalidate() { invalidate(); }
@@ -213,6 +217,7 @@ protected:
   bool dragging; // tracks that mouse is down and captured
   int downindex; // index of tab where mouse down occurred
   bool dragoffbutton; // set by mouse_move
+  const Color background_color;
   bool flipOrientation;
 
 protected:

@@ -34,7 +34,9 @@ Copyright_License {
 
 TabBarControl::TabBarControl(ContainerWindow &_parent,
                 int x, int y, unsigned _width, unsigned _height,
-                const WindowStyle style, bool _flipOrientation,
+                const Color background_color,
+                const WindowStyle style,
+                bool _flipOrientation,
                 bool _clientOverlapTabs):
                 TabbedControl(_parent, 0, 0, _parent.get_width(), _parent.get_height(), style),
                 theTabDisplay(NULL),
@@ -45,7 +47,7 @@ TabBarControl::TabBarControl(ContainerWindow &_parent,
                 clientOverlapTabs(_clientOverlapTabs),
                 setting_up(true)
 {
-  theTabDisplay = new TabDisplay(*this, x, y, _width, _height, flipOrientation);
+  theTabDisplay = new TabDisplay(*this, x, y, _width, _height, background_color, flipOrientation);
 }
 
 bool
@@ -250,11 +252,14 @@ TabBarControl::GetTabWidth()
 
 // TabDisplay Functions
 TabDisplay::TabDisplay(TabBarControl& _theTabBar,
-    unsigned left, unsigned top, unsigned width, unsigned height, bool _flipOrientation) :
+                       unsigned left, unsigned top, unsigned width, unsigned height,
+                       const Color _background_color,
+                       bool _flipOrientation) :
   PaintWindow(),
   theTabBar(_theTabBar),
   dragging(false),
   downindex(-1),
+  background_color(_background_color),
   flipOrientation(_flipOrientation)
 {
   WindowStyle mystyle;

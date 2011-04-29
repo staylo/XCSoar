@@ -892,7 +892,7 @@ LoadChild(WndForm &form, ContainerWindow &parent, Color background_color,
     style.control_parent();
     TabBarControl *tabbar = new TabBarControl(parent,
                                               pos.x, pos.y, size.cx, size.cy,
-                                              style, flipOrientation);
+                                              background_color, style, flipOrientation);
     window = tabbar;
 
   } else if (_tcscmp(node.getName(), _T("Custom")) == 0) {
