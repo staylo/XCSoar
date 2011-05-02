@@ -28,6 +28,7 @@ Copyright_License {
 #include "Screen/Key.h"
 #include "Screen/Icon.hpp"
 #include "Screen/Canvas.hpp"
+#include "Asset.hpp"
 
 #include <assert.h>
 
@@ -161,6 +162,10 @@ TabBarControl::NextPage(EventType _EventType)
 
   assert(GetCurrentPage() < buttons.size());
 
+  if (!has_pointer() && (GetCurrentPage()+1 >= buttons.size()))
+    // prevent wraparound
+    return;
+
   SetCurrentPage((GetCurrentPage() + 1) % buttons.size(), _EventType, false);
 }
 
@@ -171,6 +176,10 @@ TabBarControl::PreviousPage(EventType _EventType)
     return;
 
   assert(GetCurrentPage() < buttons.size());
+
+  if (!has_pointer() && (GetCurrentPage() == 0))
+    // prevent wraparound
+    return;
 
   SetCurrentPage((GetCurrentPage() + buttons.size() - 1) % buttons.size(),
                   _EventType, false);
