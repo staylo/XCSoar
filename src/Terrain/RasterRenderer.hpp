@@ -81,7 +81,8 @@ public:
   /**
    * Scan the map and fill the height matrix.
    */
-  void ScanMap(const RasterMap &map, const WindowProjection &projection);
+  void ScanMap(const RasterMap &map, const WindowProjection &projection,
+                     const short h_offset=0);
 
   /**
    * Convert the height matrix into the image.

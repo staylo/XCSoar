@@ -71,7 +71,8 @@ BackgroundDrawHelper::set_weather(const RasterWeather *_weather)
 void 
 BackgroundDrawHelper::Draw(Canvas& canvas,
                            const WindowProjection& proj,
-                           const TerrainRendererSettings &terrain_settings)
+                           const TerrainRendererSettings &terrain_settings,
+                           const short h_offset)
 {
   if (terrain == NULL) {
     // terrain may have been re-set, so may need new renderer
@@ -97,7 +98,7 @@ BackgroundDrawHelper::Draw(Canvas& canvas,
 
   renderer->SetSettings(terrain_settings);
   renderer->Draw(canvas, proj,
-                 sun_azimuth);
+                 sun_azimuth, h_offset);
 }
 
 void

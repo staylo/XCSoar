@@ -205,6 +205,11 @@
         <DataField DataType="enum"/>
       </Edit>
 
+      <Edit Name="prpTerrainSmoothing" Caption="Contours" Expert="1" X="2" Width="-2" Height="22" CaptionWidth="150"
+        Help="Defines whether discrete or smooth color variations are used for height variations of hypsometric tinting.">
+        <DataField DataType="enum"/>
+      </Edit>
+
     </Panel>
   
     <Panel Name="frmVarioAppearance">

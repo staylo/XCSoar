@@ -126,6 +126,7 @@ extern const TCHAR szProfileMenuTimeout[];
 extern const TCHAR szProfileTerrainContrast[];
 extern const TCHAR szProfileTerrainBrightness[];
 extern const TCHAR szProfileTerrainRamp[];
+extern const TCHAR szProfileTerrainSmoothing[];
 extern const TCHAR szProfileEnableFLARMMap[];
 extern const TCHAR szProfileEnableFLARMGauge[];
 extern const TCHAR szProfileAutoCloseFlarmDialog[];

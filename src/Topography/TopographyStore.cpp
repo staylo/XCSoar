@@ -144,11 +144,14 @@ TopographyStore::Load(NLineReader &reader, StatusCallback callback,
     if (*p == _T(','))
       labelImportantRange = strtod(p + 1, &p);
 
+    Color color(red, green, blue);
+
     files.append(new TopographyFile(zdir, ShapeFilename,
                                   fixed(ShapeRange) * 1000,
                                   fixed(labelRange) * 1000,
                                   fixed(labelImportantRange) * 1000,
-                                  Color(red, green, blue),
+                                  color,
+                                  light_color(desaturate(color)),
                                   ShapeField, ShapeIcon,
                                   pen_width));
 

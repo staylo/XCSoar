@@ -38,8 +38,11 @@ Copyright_License {
 #include <algorithm>
 
 TopographyFileRenderer::TopographyFileRenderer(const TopographyFile &_file)
-  :file(_file), pen(file.get_pen_width(), file.get_color()),
-   brush(file.get_color())
+  :file(_file),
+   pen(file.get_pen_width(), file.get_color()),
+   brush(file.get_color()),
+   pen_deemphasised(file.get_pen_width(), file.get_deemphasised_color()),
+   brush_deemphasised(file.get_deemphasised_color())
 {
   if (file.get_icon() == IDB_TOWN)
     icon.load_big(IDB_TOWN, IDB_TOWN_HD);
@@ -47,7 +50,8 @@ TopographyFileRenderer::TopographyFileRenderer(const TopographyFile &_file)
 
 void
 TopographyFileRenderer::Paint(Canvas &canvas,
-                            const WindowProjection &projection) const
+                              const WindowProjection &projection,
+                              const bool deemphasise) const
 {
   fixed map_scale = projection.GetMapScale();
   if (!file.is_visible(map_scale))
@@ -58,12 +62,21 @@ TopographyFileRenderer::Paint(Canvas &canvas,
   // we already do an outer visibility test, but may need a test
   // in screen coords
 
+  if (deemphasise) {
 #ifdef ENABLE_OPENGL
-  pen.set();
-  brush.set();
+    pen_deemphasised.set();
+    brush_deemphasised.set();
 #else
-  shape_renderer.configure(&pen, &brush);
+    shape_renderer.configure(&pen_deemphasised, &brush_deemphasised);
 #endif
+  } else {
+#ifdef ENABLE_OPENGL
+    pen.set();
+    brush.set();
+#else
+    shape_renderer.configure(&pen, &brush);
+#endif
+  }
 
   // get drawing info
 
@@ -257,7 +270,8 @@ void
 TopographyFileRenderer::PaintLabels(Canvas &canvas,
                                   const WindowProjection &projection,
                                   LabelBlock &label_block,
-                                  const SETTINGS_MAP &settings_map) const
+                                    const SETTINGS_MAP &settings_map,
+                                    const bool deemphasise) const
 {
   fixed map_scale = projection.GetMapScale();
   if (!file.is_visible(map_scale))
@@ -272,7 +286,7 @@ TopographyFileRenderer::PaintLabels(Canvas &canvas,
 
   canvas.select(file.is_label_important(map_scale) ?
                 Fonts::MapLabelImportant : Fonts::MapLabel);
-  canvas.set_text_color(Color(0x20, 0x20, 0x20));
+  canvas.set_text_color(deemphasise? Color::GRAY : dark_color(Color::GRAY));
   canvas.background_transparent();
 
   // get drawing info
@@ -366,18 +380,20 @@ TopographyRenderer::~TopographyRenderer()
 
 void
 TopographyRenderer::Draw(Canvas &canvas,
-                       const WindowProjection &projection) const
+                         const WindowProjection &projection,
+                         const bool deemphasise) const
 {
   for (unsigned i = 0; i < store.size(); ++i)
-    files[i]->Paint(canvas, projection);
+    files[i]->Paint(canvas, projection, deemphasise);
 }
 
 void
 TopographyRenderer::DrawLabels(Canvas &canvas,
                              const WindowProjection &projection,
                              LabelBlock &label_block,
-                             const SETTINGS_MAP &settings_map) const
+                               const SETTINGS_MAP &settings_map,
+                               const bool deemphasise) const
 {
   for (unsigned i = 0; i < store.size(); ++i)
-    files[i]->PaintLabels(canvas, projection, label_block, settings_map);
+    files[i]->PaintLabels(canvas, projection, label_block, settings_map, deemphasise);
 }

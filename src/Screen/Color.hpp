@@ -45,4 +45,6 @@ Color light_color(Color c);
  */
 Color dark_color(Color c);
 
+Color desaturate(Color c);
+
 #endif

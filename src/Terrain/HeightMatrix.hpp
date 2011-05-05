@@ -50,6 +50,8 @@ public:
   void Fill(const RasterMap &map, const WindowProjection &map_projection,
             unsigned quantisation_pixels, bool interpolate);
 
+  void Offset(const short h_offset);
+
   unsigned get_width() const {
     return width;
   }

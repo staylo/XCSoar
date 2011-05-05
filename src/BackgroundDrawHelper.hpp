@@ -55,7 +55,8 @@ public:
 
   void Draw(Canvas& canvas,
             const WindowProjection& proj,
-            const TerrainRendererSettings &terrain_settings);
+            const TerrainRendererSettings &terrain_settings,
+            const short h_offset= 0);
 
   bool DrawSpotHeights(Canvas& canvas, LabelBlock& block);
 

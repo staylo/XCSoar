@@ -29,6 +29,7 @@ Copyright_License {
 #include "Screen/Layout.hpp"
 #include "WindowProjection.hpp"
 #include "Asset.hpp"
+#include "Screen/Graphics.hpp"
 
 #include <assert.h>
 
@@ -75,7 +76,9 @@ RasterRenderer::~RasterRenderer()
 }
 
 void
-RasterRenderer::ScanMap(const RasterMap &map, const WindowProjection &projection)
+RasterRenderer::ScanMap(const RasterMap &map,
+                        const WindowProjection &projection,
+                        const short h_offset)
 {
   // Coordinates of the MapWindow center
   unsigned x = projection.GetScreenWidth() / 2;
@@ -107,6 +110,10 @@ RasterRenderer::ScanMap(const RasterMap &map, const WindowProjection &projection
     quantisation_effective = 0;
 
   height_matrix.Fill(map, projection, quantisation_pixels, true);
+
+  if (h_offset != 0) {
+    height_matrix.Offset(h_offset);
+  }
 }
 
 void
@@ -319,10 +326,10 @@ RasterRenderer::ColorTable(const ColorRamp *color_ramp, bool do_water,
       BYTE r, g, b;
       if (i == 255) {
         if (do_water) {
-          // water colours
-          r = 85;
-          g = 160;
-          b = 255;
+          // water colour (ICAO open water area)
+          r = 189;
+          g = 197;
+          b = 213;
         } else {
           r = 255;
           g = 255;
@@ -332,7 +339,8 @@ RasterRenderer::ColorTable(const ColorRamp *color_ramp, bool do_water,
           // Color_ramp, NUM_COLOR_RAMP_LEVELS, interp_levels);
         }
       } else {
-        Color color =  ColorRampLookup(i << height_scale, color_ramp,
+        Color color =  ColorRampLookup(i << height_scale,
+                                       color_ramp,
                                        NUM_COLOR_RAMP_LEVELS, interp_levels);
         r = color.red();
         g = color.green();

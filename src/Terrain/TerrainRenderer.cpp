@@ -28,8 +28,21 @@ Copyright_License {
 
 #include <assert.h>
 
-const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
-  {
+const short terrain_zero[10] = {
+  600, // flat
+  700, // mount
+  700, // imhof 7
+  450, // imhof 4
+  650, // imhof 12
+  600, // imhof atlas
+  750, // icao
+  500, // gray
+  520, // icao2
+  500  // icao3
+};
+
+const ColorRamp terrain_colors[10][NUM_COLOR_RAMP_LEVELS] = {
+  { // flatlands
     {0,           0x70, 0xc0, 0xa7},
     {250,         0xca, 0xe7, 0xb9},
     {500,         0xf4, 0xea, 0xaf},
@@ -41,10 +54,10 @@ const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {2000,        0xce, 0xcd, 0xf5},
     {2250,        0xc2, 0xc1, 0xfa},
     {2500,        0xb7, 0xb9, 0xff},
-    {5000,        0xb7, 0xb9, 0xff},
-    {6000,        0xb7, 0xb9, 0xff}
+    {3001,        0xb7, 0xb9, 0xff},
+    {3002,        0xb7, 0xb9, 0xff}
   },
-  {
+  { // mountainous
     {0,           0x70, 0xc0, 0xa7},
     {500,         0xca, 0xe7, 0xb9},
     {1000,        0xf4, 0xea, 0xaf},
@@ -56,23 +69,23 @@ const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {4000,        0xce, 0xcd, 0xf5},
     {4500,        0xc2, 0xc1, 0xfa},
     {5000,        0xb7, 0xb9, 0xff},
-    {6000,        0xb7, 0xb9, 0xff},
-    {7000,        0xb7, 0xb9, 0xff}
+    {5501,        0xb7, 0xb9, 0xff},
+    {5502,        0xb7, 0xb9, 0xff}
   },
   { // Imhof Type 7, geomteric 1.35 9
     {0,    153, 178, 169},
-    {368,  180, 205, 181},
+    {268,  180, 205, 181},
     {496,  225, 233, 192},
     {670,  255, 249, 196},
-    {905,  255, 249, 196},
-    {1222, 255, 219, 173},
-    {1650, 254, 170, 136},
-    {2227, 253, 107, 100},
-    {3007, 255, 255, 255},
-    {5000, 255, 255, 255},
-    {6000, 255, 255, 255},
-    {7000, 255, 255, 255},
-    {8000, 255, 255, 255}
+    {905, 255, 219, 173},
+    {1222, 254, 170, 136},
+    {1650, 253, 107, 100},
+    {2227, 255, 255, 255},
+    {3008, 255, 255, 255},
+    {3009, 255, 255, 255},
+    {3010, 255, 255, 255},
+    {3011, 255, 255, 255},
+    {3012, 255, 255, 255}
   },
   { // Imhof Type 4, geomteric 1.5 8
     {0,    175, 224, 203},
@@ -84,25 +97,25 @@ const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {2004, 215, 170, 148},
     {3007, 255, 255, 255},
     {4000, 255, 255, 255},
-    {5000, 255, 255, 255},
-    {6000, 255, 255, 255},
-    {7000, 255, 255, 255},
-    {8000, 255, 255, 255}
+    {4001, 255, 255, 255},
+    {4002, 255, 255, 255},
+    {4003, 255, 255, 255},
+    {4004, 255, 255, 255}
   },
-  { // Imhof Type 12, geomteric  1.5 8
+  { // Imhof Type 12, geomteric 1.5 8
     {0,    165, 220, 201},
-    {399,  219, 239, 212},
+    {359,  219, 239, 212},
     {558,  254, 253, 230},
     {782,  254, 247, 211},
-    {1094,  254, 237, 202},
+    {1094, 254, 237, 202},
     {1532, 254, 226, 207},
     {2145, 254, 209, 204},
     {3004, 255, 255, 255},
     {4000, 255, 255, 255},
-    {5000, 255, 255, 255},
-    {6000, 255, 255, 255},
-    {7000, 255, 255, 255},
-    {8000, 255, 255, 255}
+    {4001, 255, 255, 255},
+    {4002, 255, 255, 255},
+    {4003, 255, 255, 255},
+    {4004, 255, 255, 255}
   },
   { // Imhof Atlas der Schweiz
     {0,     47, 101, 147},
@@ -114,25 +127,25 @@ const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {1650, 229, 203, 171},
     {2227, 246, 206, 171},
     {3007, 252, 246, 244},
-    {5001, 252, 246, 244},
-    {7000, 252, 246, 244},
-    {8000, 252, 246, 244},
-    {9000, 252, 246, 244}
+    {4001, 252, 246, 244},
+    {4002, 252, 246, 244},
+    {4003, 252, 246, 244},
+    {4004, 252, 246, 244}
   },
   { // ICAO
     {0,           180, 205, 181},
-    {199,         180, 205, 181},
     {200,         225, 233, 192},
-    {499,         225, 233, 192},
     {500,         255, 249, 196},
-    {999,         255, 249, 196},
     {1000,        255, 219, 173},
-    {1499,        255, 219, 173},
     {1500,        254, 170, 136},
-    {1999,        254, 170, 136},
     {2000,        253, 107, 100},
-    {2499,        253, 107, 100},
-    {2500,        255, 255, 255}
+    {2500,        255, 255, 255},
+    {3000,        255, 255, 255},
+    {3001,        255, 255, 255},
+    {3002,        255, 255, 255},
+    {3003,        255, 255, 255},
+    {3004,        255, 255, 255},
+    {3005,        255, 255, 255},
   },
   { // Grey
     {0,           220, 220, 220},
@@ -148,6 +161,36 @@ const ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {2000,        220, 220, 220},
     {2250,        220, 220, 220},
     {2500,        220, 220, 220}
+  },
+  { // ICAO2
+    {0,           0xaa, 0xce, 0x66},
+    {200,         0xbb, 0xd2, 0x21},
+    {400,         0xf8, 0xfd, 0xbd},
+    {750,         0xfe, 0xfb, 0x87},
+    {1000,         0xfd, 0xd6, 0x0f},
+    {1500,        0xfe, 0xc5, 0x08},
+    {2000,        0xfc, 0xdb, 0x7b},
+    {2500,        0xfa, 0xd6, 0x98},
+    {3000,        0xf9, 0xe0, 0xc2},
+    {3500,        0xff, 0xf4, 0xe2},
+    {4000,        0xff, 0xff, 0xff},
+    {4501,        0xff, 0xff, 0xff},
+    {4502,        0xff, 0xff, 0xff}
+  },
+  { // ICAO3
+    {0,           0x5e, 0x69, 0x51},
+    {200,         0x80, 0x7a, 0x18},
+    {400,         0xf0, 0xf0, 0xf0},
+    {600,         0x9c, 0x90, 0x15},
+    {1000,         0xfa, 0xd0, 0x6e},
+    {1500,        0xb9, 0x66, 0x1e},
+    {2000,        0x79, 0x32, 0x19},
+    {2501,        0x79, 0x32, 0x19},
+    {2502,        0x79, 0x32, 0x19},
+    {2503,        0x79, 0x32, 0x19},
+    {2504,        0x79, 0x32, 0x19},
+    {2505,        0x79, 0x32, 0x19},
+    {2506,        0x79, 0x32, 0x19},
   }
 };
 
@@ -225,13 +268,14 @@ TerrainRenderer::CopyTo(Canvas &canvas, unsigned width, unsigned height)
 void
 TerrainRenderer::Draw(Canvas &canvas,
                       const WindowProjection &map_projection,
-                      const Angle sunazimuth)
+                      const Angle sunazimuth,
+                      const short h_offset)
 {
   const bool do_water = true;
   const unsigned height_scale = 4;
-  const int interp_levels = 2;
   const bool is_terrain = true;
   const bool do_shading = is_terrain && settings.slope_shading != sstOff;
+  const int interp_levels = std::min(2, (int)settings.interpolate_bits);
 
   const ColorRamp *const color_ramp = &terrain_colors[settings.ramp][0];
   if (color_ramp != last_color_ramp) {
@@ -242,7 +286,8 @@ TerrainRenderer::Draw(Canvas &canvas,
 
   {
     RasterTerrain::Lease map(*terrain);
-    raster_renderer.ScanMap(map, map_projection);
+    const short zero_point = h_offset>0? terrain_zero[settings.ramp]-h_offset : 0;
+    raster_renderer.ScanMap(map, map_projection, zero_point);
   }
 
   raster_renderer.GenerateImage(do_shading, height_scale,

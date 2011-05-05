@@ -336,7 +336,6 @@ Profile::Use()
       settings_map.AutoCloseFlarmDialog);
   Get(szProfileEnableTAGauge,
       settings_map.EnableTAGauge);
-
   Get(szProfileGliderScreenPosition,
       settings_map.GliderScreenPosition);
   Get(szProfileBallastSecsToEmpty,

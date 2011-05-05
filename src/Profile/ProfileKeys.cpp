@@ -189,6 +189,7 @@ const TCHAR szProfileMenuTimeout[] = _T("MenuTimeout");
 const TCHAR szProfileTerrainContrast[] = _T("TerrainContrast");
 const TCHAR szProfileTerrainBrightness[] = _T("TerrainBrightness");
 const TCHAR szProfileTerrainRamp[] = _T("TerrainRamp");
+const TCHAR szProfileTerrainSmoothing[] = _T("TerrainSmoothing");
 const TCHAR szProfileEnableFLARMMap[] = _T("EnableFLARMDisplay");
 const TCHAR szProfileEnableFLARMGauge[] = _T("EnableFLARMGauge");
 const TCHAR szProfileAutoCloseFlarmDialog[] = _T("AutoCloseFlarmDialog");

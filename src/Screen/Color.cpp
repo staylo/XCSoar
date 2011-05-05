@@ -35,7 +35,8 @@ const Color
   Color::YELLOW(0xff, 0xff, 0),
   Color::CYAN(0, 0xff, 0xff),
   Color::MAGENTA(0xff, 0, 0xff),
-  Color::ORANGE(0xff, 0xa2, 0);
+  Color::ORANGE(0xff, 0xa2, 0),
+  Color::BROWN(0xb7,0x64,0x1e); // ICAO
 
 static unsigned char light_color(unsigned char c) {
   return ((c ^ 0xff) >> 1) ^ 0xff;
@@ -53,4 +54,11 @@ static unsigned char dark_color(unsigned char c) {
 Color dark_color(Color c) {
   return Color(dark_color(c.red()), dark_color(c.green()),
                dark_color(c.blue()));
+}
+
+Color desaturate(Color c) {
+  int a = (c.red()+c.green()+c.blue())/3;
+  return Color((c.red()+a)/2,
+               (c.green()+a)/2,
+               (c.blue()+a)/2);
 }

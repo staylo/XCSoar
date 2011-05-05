@@ -39,14 +39,21 @@ MapWindow::RenderTerrain(Canvas &canvas)
                                Calculated().SunAzimuth :
                                Angle::degrees(fixed(-45.0)));
 
-  m_background.Draw(canvas, render_projection, SettingsMap().terrain);
+  const short h_offset = iround(Calculated().flight.Flying? Calculated().TerrainBase: Calculated().TerrainAlt);
+  m_background.Draw(canvas, render_projection, SettingsMap().terrain, h_offset);
+}
+
+bool
+MapWindow::do_deemphasise() const
+{
+  return !SettingsMap().EnablePan && Calculated().flight.Flying;
 }
 
 void
 MapWindow::RenderTopography(Canvas &canvas)
 {
   if (topography_renderer != NULL && SettingsMap().EnableTopography)
-    topography_renderer->Draw(canvas, render_projection);
+    topography_renderer->Draw(canvas, render_projection, do_deemphasise());
 }
 
 void
@@ -54,7 +61,7 @@ MapWindow::RenderTopographyLabels(Canvas &canvas)
 {
   if (topography_renderer != NULL && SettingsMap().EnableTopography)
     topography_renderer->DrawLabels(canvas, render_projection, label_block,
-                                  SettingsMap());
+                                    SettingsMap(), do_deemphasise());
 }
 
 void

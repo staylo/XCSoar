@@ -70,3 +70,17 @@ HeightMatrix::Fill(const RasterMap &map, const WindowProjection &projection,
                  p, width, interpolate);
   }
 }
+
+void
+HeightMatrix::Offset(const short h_offset)
+{
+  const short* end = data.begin() + height * width;
+  for (short *p = data.begin(); p!= end; ++p) {
+    if (!RasterBuffer::is_special(*p)) {
+      *p += h_offset;
+      if (RasterBuffer::is_special(*p)) {
+        *p = 0;
+      }
+    }
+  }
+}

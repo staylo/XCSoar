@@ -50,13 +50,15 @@ class TopographyFile : private NonCopyable {
   int label_field, icon, pen_width;
 
   Color color;
+  Color deemphasised_color;
 
 public:
   /**
    * The constructor opens the given shapefile and clears the cache
    * @param shpname The shapefile to open (*.shp)
    * @param threshold the zoom threshold for displaying this object
-   * @param thecolor The color to use for drawing
+   * @param color The color to use for drawing (not flying)
+   * @param deemphasised_color The color to use for drawing (when flying)
    * @param label_field The field in which the labels should be searched
    * @param icon the resource id of the icon, 0 for no icon
    * @param pen_width The pen width used for line drawing
@@ -69,6 +71,7 @@ public:
                fixed threshold, fixed labelThreshold,
                fixed labelImportantThreshold,
                const Color color,
+               const Color deemphasised_color,
                int label_field=-1, int icon=0,
                int pen_width=1);
 
@@ -99,6 +102,10 @@ public:
 
   Color get_color() const {
     return color;
+  }
+
+  Color get_deemphasised_color() const {
+    return deemphasised_color;
   }
 
   int get_pen_width() const {
