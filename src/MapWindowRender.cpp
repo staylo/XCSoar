@@ -44,11 +44,17 @@ MapWindow::RenderTerrain(Canvas &canvas)
   m_background.Draw(canvas, render_projection, SettingsMap().terrain, h_offset);
 }
 
+bool
+MapWindow::do_deemphasise() const
+{
+  return !SettingsMap().EnablePan && Calculated().flight.Flying;
+}
+
 void
 MapWindow::RenderTopography(Canvas &canvas)
 {
   if (topography_renderer != NULL && SettingsMap().EnableTopography)
-    topography_renderer->Draw(canvas, render_projection);
+    topography_renderer->Draw(canvas, render_projection, do_deemphasise());
 }
 
 void
@@ -56,7 +62,7 @@ MapWindow::RenderTopographyLabels(Canvas &canvas)
 {
   if (topography_renderer != NULL && SettingsMap().EnableTopography)
     topography_renderer->DrawLabels(canvas, render_projection, label_block,
-                                  SettingsMap());
+                                    SettingsMap(), do_deemphasise());
 }
 
 void

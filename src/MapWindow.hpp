@@ -232,6 +232,7 @@ protected:
 
   virtual void on_paint(Canvas& canvas);
   virtual void on_paint_buffer(Canvas& canvas);
+  bool do_deemphasise() const;
 
 private:
   /**

@@ -48,6 +48,8 @@ class TopographyFileRenderer : private NonCopyable {
 
   Pen pen;
   Brush brush;
+  Pen pen_deemphasised;
+  Brush brush_deemphasised;
 
   MaskedIcon icon;
 
@@ -59,8 +61,9 @@ public:
    * @param canvas The canvas to paint on
    * @param bitmap_canvas Temporary canvas for the icon
    * @param projection
+   * @param deemphasise Whether to draw bold or deemphasised colors
    */
-  void Paint(Canvas &canvas, const WindowProjection &projection) const;
+  void Paint(Canvas &canvas, const WindowProjection &projection, const bool deemphasise) const;
 
   /**
    * Paints a topography label if the space is available in the LabelBlock
@@ -68,10 +71,11 @@ public:
    * @param projection
    * @param label_block The LabelBlock class to use for decluttering
    * @param settings_map
+   * @param deemphasise Whether to draw bold or deemphasised colors
    */
   void PaintLabels(Canvas &canvas,
                    const WindowProjection &projection, LabelBlock &label_block,
-                   const SETTINGS_MAP &settings_map) const;
+                   const SETTINGS_MAP &settings_map, const bool deemphasise) const;
 };
 
 /**
@@ -89,12 +93,14 @@ public:
    * Draws the topography to the given canvas
    * @param canvas The drawing canvas
    * @param rc The area to draw in
+   * @param deemphasise Whether to draw bold or deemphasised colors
    */
-  void Draw(Canvas &canvas, const WindowProjection &projection) const;
+  void Draw(Canvas &canvas, const WindowProjection &projection, const bool deemphasise=false) const;
 
   void DrawLabels(Canvas &canvas,
                   const WindowProjection &projection, LabelBlock &label_block,
-                  const SETTINGS_MAP &settings_map) const;
+                  const SETTINGS_MAP &settings_map,
+                  const bool deemphasise=false) const;
 };
 
 #endif
