@@ -48,10 +48,23 @@ struct TerrainRendererSettings {
 
   short ramp;
 
+  short interpolate_bits;
+
   /**
    * Set all attributes to the default values.
    */
   void SetDefaults();
 };
+
+static inline bool
+operator !=(const TerrainRendererSettings a, const TerrainRendererSettings b)
+{
+  return (a.enable != b.enable)
+    || (a.slope_shading != b.slope_shading)
+    || (a.contrast != b.contrast)
+    || (a.brightness != b.brightness)
+    || (a.ramp != b.ramp)
+    || (a.interpolate_bits != b.interpolate_bits);
+}
 
 #endif

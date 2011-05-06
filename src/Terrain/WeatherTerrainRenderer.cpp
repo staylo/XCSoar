@@ -137,14 +137,15 @@ WeatherTerrainRenderer::do_scan_spot()
 void
 WeatherTerrainRenderer::Draw(Canvas &canvas,
                              const WindowProjection &projection,
-                             const Angle sunazimuth)
+                             const Angle sunazimuth,
+                             const short h_offset)
 {
   bool do_water = false;
   unsigned height_scale;
-  const int interp_levels = 5;
   const bool is_terrain = false;
   const bool do_shading = is_terrain;
   const ColorRamp *color_ramp;
+  const int interp_levels = 5;
 
   switch (weather->GetParameter()) {
   case 1: // wstar
@@ -194,13 +195,13 @@ WeatherTerrainRenderer::Draw(Canvas &canvas,
     break;
 
   default:
-    TerrainRenderer::Draw(canvas, projection, sunazimuth);
+    TerrainRenderer::Draw(canvas, projection, sunazimuth, h_offset);
     return;
   }
 
   const RasterMap *map = weather->GetMap();
   if (map == NULL) {
-    TerrainRenderer::Draw(canvas, projection, sunazimuth);
+    TerrainRenderer::Draw(canvas, projection, sunazimuth, h_offset);
     return;
   }
 

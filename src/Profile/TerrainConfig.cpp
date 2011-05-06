@@ -43,4 +43,5 @@ Profile::LoadTerrainRendererSettings(TerrainRendererSettings &settings)
   Get(szProfileTerrainContrast, settings.contrast);
   Get(szProfileTerrainBrightness, settings.brightness);
   Get(szProfileTerrainRamp, settings.ramp);
+  Get(szProfileTerrainSmoothing, settings.interpolate_bits);
 }

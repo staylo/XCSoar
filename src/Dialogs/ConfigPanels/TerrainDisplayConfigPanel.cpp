@@ -62,6 +62,18 @@ TerrainDisplayConfigPanel::Init(WndForm *_wf)
     wp->RefreshDisplay();
   }
 
+  wp = (WndProperty*)wf->FindByName(_T("prpTerrainSmoothing"));
+  if (wp) {
+    DataFieldEnum* dfe;
+    dfe = (DataFieldEnum*)wp->GetDataField();
+    dfe->addEnumText(_("0"));
+    dfe->addEnumText(_("2"));
+    dfe->addEnumText(_("4"));
+    dfe->addEnumText(_("8"));
+    dfe->Set(terrain.interpolate_bits);
+    wp->RefreshDisplay();
+  }
+
   LoadFormProperty(*wf, _T("prpTerrainContrast"),
                    terrain.contrast * 100 / 255);
 
@@ -80,6 +92,8 @@ TerrainDisplayConfigPanel::Init(WndForm *_wf)
     dfe->addEnumText(_("Imhof Atlas"));
     dfe->addEnumText(_("ICAO"));
     dfe->addEnumText(_("Grey"));
+    dfe->addEnumText(_("ICAO2"));
+    dfe->addEnumText(_("ICAO3"));
     dfe->Set(terrain.ramp);
     wp->RefreshDisplay();
   }
@@ -109,6 +123,18 @@ TerrainDisplayConfigPanel::Save()
       terrain.slope_shading =
         (SlopeShadingType_t)wp->GetDataField()->GetAsInteger();
       Profile::Set(szProfileSlopeShadingType, terrain.slope_shading);
+      changed = true;
+    }
+  }
+
+  wp = (WndProperty*)wf->FindByName(_T("prpTerrainSmoothing"));
+  if (wp) {
+    if (terrain.interpolate_bits !=
+        wp->GetDataField()->GetAsInteger()) {
+      terrain.interpolate_bits =
+          wp->GetDataField()->GetAsInteger();
+      Profile::Set(szProfileTerrainSmoothing,
+                   terrain.interpolate_bits);
       changed = true;
     }
   }

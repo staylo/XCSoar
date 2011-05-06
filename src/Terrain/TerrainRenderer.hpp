@@ -63,11 +63,15 @@ protected:
 
 public:
   void SetSettings(const TerrainRendererSettings &_settings) {
+    if (settings != _settings)
+      // trigger regeneration of table on change
+      last_color_ramp = NULL;
     settings = _settings;
   }
 
   virtual void Draw(Canvas &canvas, const WindowProjection &map_projection,
-                    const Angle sunazimuth);
+                    const Angle sunazimuth,
+                    const short h_offset);
 };
 
 #endif

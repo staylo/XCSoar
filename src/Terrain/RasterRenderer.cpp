@@ -29,6 +29,7 @@ Copyright_License {
 #include "Screen/Layout.hpp"
 #include "WindowProjection.hpp"
 #include "Asset.hpp"
+#include "Screen/Graphics.hpp"
 
 #include <assert.h>
 
@@ -75,7 +76,8 @@ RasterRenderer::~RasterRenderer()
 }
 
 void
-RasterRenderer::ScanMap(const RasterMap &map, const WindowProjection &projection)
+RasterRenderer::ScanMap(const RasterMap &map,
+                        const WindowProjection &projection)
 {
   // Coordinates of the MapWindow center
   unsigned x = projection.GetScreenWidth() / 2;
@@ -113,7 +115,8 @@ void
 RasterRenderer::GenerateImage(bool do_shading,
                               unsigned height_scale,
                               int contrast, int brightness,
-                              const Angle sunazimuth)
+                              const Angle sunazimuth,
+                              const short h_offset)
 {
   if (image == NULL ||
       height_matrix.get_width() > image->GetWidth() ||
@@ -128,13 +131,14 @@ RasterRenderer::GenerateImage(bool do_shading,
 
   if (do_shading)
     GenerateSlopeImage(height_scale, contrast, brightness,
-                       sunazimuth);
+                       sunazimuth, h_offset);
   else
-    GenerateUnshadedImage(height_scale);
+    GenerateUnshadedImage(height_scale, h_offset);
 }
 
 void
-RasterRenderer::GenerateUnshadedImage(unsigned height_scale)
+RasterRenderer::GenerateUnshadedImage(unsigned height_scale,
+                                      const short h_offset)
 {
   const short *src = height_matrix.GetData();
   const BGRColor *oColorBuf = color_table + 64 * 256;
@@ -147,10 +151,8 @@ RasterRenderer::GenerateUnshadedImage(unsigned height_scale)
     for (unsigned x = height_matrix.get_width(); x > 0; --x) {
       short h = *src++;
       if (gcc_likely(!RasterBuffer::is_special(h))) {
-        if (h < 0)
-          h = 0;
 
-        h = min(254, h >> height_scale);
+        h = min(254, std::max(0, h+h_offset) >> height_scale);
         *p++ = oColorBuf[h];
       } else if (RasterBuffer::is_water(h)) {
         // we're in the water, so look up the color for water
@@ -171,7 +173,8 @@ RasterRenderer::GenerateUnshadedImage(unsigned height_scale)
 void
 RasterRenderer::GenerateSlopeImage(unsigned height_scale,
                                    int contrast,
-                                   const int sx, const int sy, const int sz)
+                                   const int sx, const int sy, const int sz,
+                                   const short h_offset)
 {
   assert(quantisation_effective > 0);
 
@@ -215,10 +218,8 @@ RasterRenderer::GenerateSlopeImage(unsigned height_scale,
     for (unsigned x = 0; x < height_matrix.get_width(); ++x, ++src) {
       short h = *src;
       if (gcc_likely(!RasterBuffer::is_special(h))) {
-        if (h < 0)
-          h = 0;
 
-        h = min(254, h >> height_scale);
+        h = min(254, std::max(0, h+h_offset) >> height_scale);
 
         // no need to calculate slope if undefined height or sea level
 
@@ -303,7 +304,8 @@ RasterRenderer::GenerateSlopeImage(unsigned height_scale,
 void
 RasterRenderer::GenerateSlopeImage(unsigned height_scale,
                                    int contrast, int brightness,
-                                   const Angle sunazimuth)
+                                   const Angle sunazimuth,
+                                   const short h_offset)
 {
   const Angle fudgeelevation =
     Angle::degrees(fixed(10.0 + 80.0 * brightness / 255.0));
@@ -313,7 +315,7 @@ RasterRenderer::GenerateSlopeImage(unsigned height_scale,
   const int sz = (int)(255 * fudgeelevation.fastsine());
 
   GenerateSlopeImage(height_scale, contrast,
-                     sx, sy, sz);
+                     sx, sy, sz, h_offset);
 }
 
 void
@@ -325,10 +327,10 @@ RasterRenderer::ColorTable(const ColorRamp *color_ramp, bool do_water,
       BYTE r, g, b;
       if (i == 255) {
         if (do_water) {
-          // water colours
-          r = 85;
-          g = 160;
-          b = 255;
+          // water colour (ICAO open water area)
+          r = 189;
+          g = 197;
+          b = 213;
         } else {
           r = 255;
           g = 255;
@@ -338,7 +340,8 @@ RasterRenderer::ColorTable(const ColorRamp *color_ramp, bool do_water,
           // Color_ramp, NUM_COLOR_RAMP_LEVELS, interp_levels);
         }
       } else {
-        Color color =  ColorRampLookup(i << height_scale, color_ramp,
+        Color color =  ColorRampLookup(i << height_scale,
+                                       color_ramp,
                                        NUM_COLOR_RAMP_LEVELS, interp_levels);
         r = color.red();
         g = color.green();

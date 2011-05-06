@@ -39,7 +39,9 @@ MapWindow::RenderTerrain(Canvas &canvas)
                                Calculated().SunAzimuth :
                                Angle::degrees(fixed(-45.0)));
 
-  m_background.Draw(canvas, render_projection, SettingsMap().terrain);
+  const short h_offset = iround(Calculated().flight.Flying? Calculated().TerrainBase:
+                                (positive(Calculated().TerrainAlt)? Calculated().TerrainAlt: Basic().GPSAltitude));
+  m_background.Draw(canvas, render_projection, SettingsMap().terrain, h_offset);
 }
 
 void
