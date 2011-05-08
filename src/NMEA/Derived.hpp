@@ -38,6 +38,7 @@ Copyright_License {
 #include "NMEA/Validity.hpp"
 #include "NMEA/ClimbHistory.hpp"
 #include "TeamCodeCalculation.hpp"
+#include "NMEA/Acceleration.hpp"
 #include "Engine/Navigation/Aircraft.hpp"
 #include "Engine/Navigation/TraceHistory.hpp"
 #include "DateTime.hpp"
@@ -185,6 +186,8 @@ struct DERIVED_INFO:
   GlidePolar glide_polar_safety; /**< Glide polar used for safety calculations */
 
   void ResetFlight(bool full);
+
+  ACCELERATION_STATE acceleration; /**< Copy since some are computed */
 };
 
 #endif

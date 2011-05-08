@@ -31,6 +31,7 @@ Copyright_License {
 #include "Atmosphere/Pressure.hpp"
 #include "FLARM/State.hpp"
 #include "Engine/Navigation/SpeedVector.hpp"
+#include "NMEA/Acceleration.hpp"
 
 /**
  * State of external switch devices (esp Vega)
@@ -120,44 +121,6 @@ struct GPS_STATE
 #endif
 
   void reset();
-};
-
-/**
- * State of acceleration of aircraft, with calculated pseudo-attitude reference
- */
-struct ACCELERATION_STATE
-{
-  //##################
-  //   Acceleration
-  //##################
-
-  /** Estimated bank angle */
-  Angle BankAngle;
-  /** Estimated pitch angle */
-  Angle PitchAngle;
-
-  /**
-   * Is G-load information available?
-   * @see Gload
-   */
-  bool Available;
-
-  /**
-   * G-Load information of external device (if available)
-   * or estimated (assuming balanced turn) 
-   * @see AccelerationAvailable
-   */
-  fixed Gload;
-
-  void reset() {
-    Available = false;
-  }
-
-  /**
-   * Adds data from the specified object, unless already present in
-   * this one.
-   */
-  void complement(const ACCELERATION_STATE &add);
 };
 
 

@@ -41,7 +41,7 @@ DERIVED_INFO::reset()
   estimated_wind_available.Clear();
   task_stats.reset();
   common_stats.reset();
-
+  acceleration.reset();
   auto_mac_cready_available.Clear();
 }
 

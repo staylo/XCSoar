@@ -119,6 +119,7 @@ GlideComputerAirData::ProcessBasic()
   GPSVario(); // <-- note inserted here, as depends on energy height
   BruttoVario();
   NettoVario();
+  SetCalculated().acceleration = Basic().acceleration;
 }
 
 /**

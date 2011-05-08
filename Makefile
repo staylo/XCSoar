@@ -252,6 +252,7 @@ XCSOAR_SOURCES := \
 	$(SRC)/NMEA/InputLine.cpp \
 	$(SRC)/NMEA/Checksum.cpp \
 	$(SRC)/NMEA/Aircraft.cpp \
+	$(SRC)/NMEA/Acceleration.cpp \
 	$(SRC)/Replay/Replay.cpp \
 	$(SRC)/Replay/IGCParser.cpp \
 	$(SRC)/Replay/IgcReplay.cpp \
