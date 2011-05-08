@@ -25,11 +25,11 @@ Copyright_License {
 #define HORIZON_RENDERER_HPP
 
 #include "Screen/Point.hpp"
-#include "NMEA/Info.hpp"
+#include "NMEA/Acceleration.hpp"
 
 class Canvas;
 
 void DrawHorizon(Canvas &canvas, const PixelRect &rc,
-              const NMEA_INFO &Basic);
+              const ACCELERATION_STATE &acceleration);
 
 #endif

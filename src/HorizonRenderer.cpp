@@ -21,6 +21,7 @@ Copyright_License {
 }
 */
 
+#include "Math/Angle.hpp"
 #include "HorizonRenderer.hpp"
 #include "Screen/Canvas.hpp"
 #include "Screen/Layout.hpp"
@@ -28,7 +29,7 @@ Copyright_License {
 
 void
 DrawHorizon(Canvas &canvas, const PixelRect &rc,
-            const NMEA_INFO &Basic)
+            const ACCELERATION_STATE &acceleration)
 {
   RasterPoint center;
   center.y = (rc.top+rc.bottom)/2;
@@ -57,9 +58,9 @@ DrawHorizon(Canvas &canvas, const PixelRect &rc,
 #define fixed_89 fixed_int_constant(89)
 
   fixed phi = max(-fixed_89, min(fixed_89,
-      Basic.acceleration.BankAngle.value_degrees()));
+      acceleration.BankAngle.value_degrees()));
   fixed alpha = fixed_rad_to_deg * acos(max(-fixed_one, min(fixed_one,
-      Basic.acceleration.PitchAngle.value_degrees() * fixed_div)));
+      acceleration.PitchAngle.value_degrees() * fixed_div)));
   fixed sphi = fixed_180 - phi;
   Angle alpha1 = Angle::degrees(sphi - alpha);
   Angle alpha2 = Angle::degrees(sphi + alpha);
