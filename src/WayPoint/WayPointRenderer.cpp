@@ -564,4 +564,3 @@ WayPointRenderer::DrawLandableSymbol(Canvas &canvas, const RasterPoint &pt,
                        fixed_int_constant(5) * scale);
   }
 }
-
