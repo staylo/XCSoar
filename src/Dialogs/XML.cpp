@@ -703,8 +703,7 @@ LoadChild(WndForm &form, ContainerWindow &parent, Color background_color,
 
     window = W = new WndProperty(parent, Caption,
                                  pos.x, pos.y, size.cx, size.cy,
-                                 CaptionWidth, background_color,
-                                 style, edit_style,
+                                 CaptionWidth, style, edit_style,
                                  DataNotifyCallback);
 
     // Set the fore- and background color
@@ -773,8 +772,7 @@ LoadChild(WndForm &form, ContainerWindow &parent, Color background_color,
 
     window = new WndSymbolButton(parent, Caption,
                                  pos.x, pos.y, size.cx, size.cy,
-                                 style, background_color,
-                                 ClickCallback);
+                                 style, ClickCallback);
 
   // PanelControl (WndPanel)
   } else if (_tcscmp(node.getName(), _T("Panel")) == 0) {

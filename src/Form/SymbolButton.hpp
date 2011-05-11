@@ -33,10 +33,8 @@ Copyright_License {
  * It is based on the WndButton class.
  */
 class WndSymbolButton : public WndButton {
-  static inline ButtonWindowStyle custom_painting(ButtonWindowStyle style) {
-    style.enable_custom_painting();
-    return style;
-  }
+protected:
+  virtual ButtonWindowStyle custom_painting(ButtonWindowStyle style) const;
 
   Brush disabled_brush;
 #ifdef HAVE_CLIPPING
@@ -58,13 +56,12 @@ public:
    */
   WndSymbolButton(ContainerWindow &Parent, const TCHAR *Caption,
       int X, int Y, int Width, int Height, const ButtonWindowStyle style,
-                  Color background_color,
                   ClickNotifyCallback_t Function = NULL)
     :WndButton(Parent, Caption, X, Y, Width, Height,
                custom_painting(style), Function),
-               disabled_brush(COLOR_GRAY)
+               disabled_brush(dialog_prefs.widget_disabled)
 #ifdef HAVE_CLIPPING
-    , background_brush(background_color)
+    , background_brush(dialog_prefs.widget_background)
 #endif
   {}
 

@@ -59,8 +59,8 @@ KeyTimer(bool isdown, unsigned thekey)
 }
 
 WindowControl::WindowControl() :
-    mColorBack(COLOR_WHITE),
-    mColorFore(COLOR_BLACK),
+    mColorBack(dialog_prefs.control_background),
+    mColorFore(dialog_prefs.widget_text),
     mhFont(&Fonts::Map),
     mHelpText(NULL),
     mOnHelpCallback(NULL)
@@ -124,7 +124,7 @@ WindowControl::SetBackColor(Color Value)
 void
 WindowControl::PaintSelector(Canvas &canvas, const PixelRect rc)
 {
-  const Pen pen(DEFAULTBORDERPENWIDTH + 2, COLOR_BLACK);
+  const Pen pen(DEFAULTBORDERPENWIDTH + 2, dialog_prefs.widget_text);
   canvas.select(pen);
 
   canvas.two_lines(rc.right - SELECTORWIDTH - 1, rc.top,

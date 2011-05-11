@@ -298,10 +298,17 @@ Canvas::keyhole(int x, int y, unsigned small_radius, unsigned big_radius,
 void
 Canvas::draw_focus(PixelRect rc)
 {
-  Pen pen(1, COLOR_DARK_GRAY);
+  Pen pen(1, dialog_prefs.shade_background);
   select(pen);
   outline_rectangle(rc.left, rc.top, rc.right, rc.bottom);
 }
+
+void
+Canvas::fill_focus(PixelRect rc)
+{
+  fill_rectangle(rc, dialog_prefs.focus_background);
+}
+
 
 void
 Canvas::text(int x, int y, const TCHAR *text)

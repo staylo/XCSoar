@@ -69,7 +69,7 @@ WndForm::ClientAreaWindow::on_color(Window &window, Canvas &canvas)
     return ContainerWindow::on_color(window, canvas);
 #endif
 
-  canvas.set_text_color(COLOR_BLACK);
+  canvas.set_text_color(dialog_prefs.widget_text);
   canvas.set_background_color(background_color);
   return &background_brush;
 }

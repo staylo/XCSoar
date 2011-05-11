@@ -135,11 +135,11 @@ Canvas::draw_button(PixelRect rc, bool down)
 {
   const Pen old_pen = pen;
 
-  Brush gray(Color(192, 192, 192));
+  Brush gray(down? dialog_prefs.select_background: dialog_prefs.widget_background);
   fill_rectangle(rc, gray);
 
-  Pen bright(1, Color(240, 240, 240));
-  Pen dark(1, Color(128, 128, 128));
+  Pen bright(1, dark_color(dialog_prefs.widget_background));
+  Pen dark(1, light_color(dialog_prefs.widget_background));
 
   select(down ? dark : bright);
   two_lines(rc.left, rc.bottom - 2, rc.left, rc.top,
@@ -803,6 +803,12 @@ Canvas::copy_and(int dest_x, int dest_y,
 
   copy_and(dest_x, dest_y, dest_width, dest_height,
            src.native(), src_x, src_y);
+}
+
+void
+Canvas::fill_focus(PixelRect rc)
+{
+  fill_rectangle(rc, dialog_prefs.focus_background);
 }
 
 #endif /* !OPENGL */

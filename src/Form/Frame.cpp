@@ -28,12 +28,11 @@ Copyright_License {
 WndFrame::WndFrame(ContainerWindow &parent,
                    int X, int Y, int Width, int Height,
                    Color _background_color,
-                   const WindowStyle style)
-  :
+                   const WindowStyle style):
 #ifdef HAVE_CLIPPING
    background_color(_background_color),
 #endif
-   caption_color(COLOR_BLACK),
+   caption_color(dialog_prefs.widget_text),
    font(&Fonts::Map),
    mCaptionStyle(DT_EXPANDTABS | DT_LEFT | DT_NOCLIP | DT_WORDBREAK)
 {

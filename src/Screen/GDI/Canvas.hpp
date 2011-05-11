@@ -342,6 +342,8 @@ public:
     ::DrawFocusRect(dc, &rc);
   }
 
+  void fill_focus(PixelRect rc);
+
   void draw_button(PixelRect rc, bool down) {
     assert(defined());
 

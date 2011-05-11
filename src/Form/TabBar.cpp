@@ -35,7 +35,8 @@ Copyright_License {
 
 TabBarControl::TabBarControl(ContainerWindow &_parent,
                 int x, int y, unsigned _width, unsigned _height,
-                const WindowStyle style, bool _flipOrientation,
+                const WindowStyle style,
+                bool _flipOrientation,
                 bool _clientOverlapTabs):
                 TabbedControl(_parent, 0, 0, _parent.get_width(), _parent.get_height(), style),
                 theTabDisplay(NULL),
@@ -259,7 +260,8 @@ TabBarControl::GetTabWidth()
 
 // TabDisplay Functions
 TabDisplay::TabDisplay(TabBarControl& _theTabBar,
-    unsigned left, unsigned top, unsigned width, unsigned height, bool _flipOrientation) :
+                       unsigned left, unsigned top, unsigned width, unsigned height,
+                       bool _flipOrientation) :
   PaintWindow(),
   theTabBar(_theTabBar),
   dragging(false),
@@ -275,29 +277,32 @@ TabDisplay::TabDisplay(TabBarControl& _theTabBar,
 void
 TabDisplay::on_paint(Canvas &canvas)
 {
-  canvas.clear(COLOR_BLACK);
+  Color clr_0 = dialog_prefs.form_background;
+  Color clr_1 = dialog_prefs.shade_background;
+
+  canvas.clear(clr_0);
   canvas.select(Fonts::MapBold);
   const unsigned CaptionStyle = DT_EXPANDTABS | DT_CENTER | DT_NOCLIP
       | DT_WORDBREAK;
 
   for (unsigned i = 0; i < theTabBar.GetTabCount(); i++) {
-    bool inverse = false;
+    bool inverse = true;
     if (((int)i == downindex) && (dragoffbutton == false)) {
-      canvas.set_text_color(COLOR_BLACK);
-      canvas.set_background_color(COLOR_YELLOW);
+      canvas.set_text_color(clr_0);
+      canvas.set_background_color(dialog_prefs.select_background);
 
     } else if (i == theTabBar.GetCurrentPage()) {
-        canvas.set_text_color(COLOR_WHITE);
-        if (has_focus() && !has_pointer()) {
-          canvas.set_background_color(COLOR_GRAY.highlight());
+        canvas.set_text_color(dialog_prefs.widget_text);
+        if (has_focus()) {
+          canvas.set_background_color(dialog_prefs.focus_background);
         } else {
-          canvas.set_background_color(COLOR_BLACK);
+          canvas.set_background_color(clr_0);
         }
-        inverse = true;
+        inverse = false;
 
     } else {
-      canvas.set_text_color(COLOR_BLACK);
-      canvas.set_background_color(COLOR_WHITE);
+      canvas.set_text_color(dialog_prefs.widget_text);
+      canvas.set_background_color(clr_1);
     }
     const PixelRect &rc = theTabBar.GetButtonSize(i);
 
@@ -328,21 +333,12 @@ TabDisplay::on_paint(Canvas &canvas)
       const int offsetx = (rc.right - rc.left - bmp->get_size().cx / 2) / 2;
       const int offsety = (rc.bottom - rc.top - bmp->get_size().cy) / 2;
 
-      if (inverse) // black background
-        canvas.copy_not(rc.left + offsetx,
-                    rc.top + offsety,
-                    bmp->get_size().cx / 2,
-                    bmp->get_size().cy,
-                    *bmp,
-                    bmp->get_size().cx / 2, 0);
-
-      else
-        canvas.copy(rc.left + offsetx,
-                    rc.top + offsety,
-                    bmp->get_size().cx / 2,
-                    bmp->get_size().cy,
-                    *bmp,
-                    bmp->get_size().cx / 2, 0);
+      canvas.copy_and(rc.left + offsetx,
+                      rc.top + offsety,
+                      bmp->get_size().cx / 2,
+                      bmp->get_size().cy,
+                      *bmp,
+                      bmp->get_size().cx / 2, 0);
 
     } else {
       canvas.formatted_text(&rcTextFinal, theTabBar.GetButtonCaption(i),

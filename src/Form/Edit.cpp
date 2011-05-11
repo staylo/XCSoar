@@ -149,7 +149,6 @@ WndProperty::WndProperty(ContainerWindow &parent,
                          int X, int Y,
                          int Width, int Height,
                          int CaptionWidth,
-                         Color _background_color,
                          const WindowStyle style,
                          const EditWindowStyle edit_style,
                          DataChangeCallback_t DataChangeNotify)
@@ -173,7 +172,7 @@ WndProperty::WndProperty(ContainerWindow &parent,
   ::SetWindowText(hWnd, Caption);
 #endif
 
-  SetBackColor(_background_color);
+  SetBackColor(dialog_prefs.form_background);
 
   if (InstCount == 0) {
     hBmpLeft32.load(IDB_DLGBUTTONLEFT32);
@@ -390,13 +389,13 @@ WndProperty::on_paint(Canvas &canvas)
 {
   /* background and selector */
   if (edit.has_focus()) {
-    canvas.clear(GetBackColor().highlight());
+    canvas.clear(dialog_prefs.focus_background);
     PaintSelector(canvas, get_client_rect());
   } else {
     /* don't need to erase the background when it has been done by the
        parent window already */
 #ifdef HAVE_CLIPPING
-    canvas.clear(GetBackColor());
+    canvas.clear(dialog_prefs.form_background);
 #endif
   }
 
@@ -406,7 +405,7 @@ WndProperty::on_paint(Canvas &canvas)
      used by the polar configuration panel.  This concept needs to be
      redesigned. */
   if ((mCaptionWidth == 0 || mCaptionWidth >= 8) && !mCaption.empty()) {
-    canvas.set_text_color(GetForeColor());
+    canvas.set_text_color(dialog_prefs.widget_text);
     canvas.background_transparent();
     canvas.select(*GetFont());
 

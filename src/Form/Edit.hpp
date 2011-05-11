@@ -142,7 +142,6 @@ public:
    */
   WndProperty(ContainerWindow &parent, const TCHAR *Caption,
               int X, int Y, int Width, int Height, int CaptionWidth,
-              Color _background_color,
               const WindowStyle style,
               const EditWindowStyle edit_style,
               DataChangeCallback_t DataChangeNotify);

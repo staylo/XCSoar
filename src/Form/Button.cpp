@@ -22,11 +22,20 @@ Copyright_License {
 */
 
 #include "Form/Button.hpp"
+#include "Screen/Canvas.hpp"
 #include "Screen/Fonts.hpp"
 #include "Screen/Key.h"
+#include "Screen/Color.hpp"
+#include "Asset.hpp"
+
+ButtonWindowStyle
+WndButton::custom_painting(ButtonWindowStyle style) const {
+  style.enable_custom_painting();
+  return style;
+}
 
 WndButton::WndButton(ContainerWindow &parent,
-    const TCHAR *Caption, int X, int Y, int Width, int Height,
+                     const TCHAR *Caption, int X, int Y, int Width, int Height,
                      const ButtonWindowStyle style,
     ClickNotifyCallback_t Function,
     LeftRightNotifyCallback_t LeftFunction,
@@ -35,7 +44,7 @@ WndButton::WndButton(ContainerWindow &parent,
     mOnLeftNotify(LeftFunction),
     mOnRightNotify(RightFunction)
 {
-  set(parent, Caption, X, Y, Width, Height, style);
+  set(parent, Caption, X, Y, Width, Height, custom_painting(style));
   set_font(Fonts::MapBold);
 }
 
@@ -114,4 +123,46 @@ WndButton::on_key_down(unsigned key_code)
   return ButtonWindow::on_key_down(key_code);
 }
 
+void
+WndButton::on_paint(Canvas &canvas)
+{
+  // Get button PixelRect and shrink it to make room for the selector/focus
+  PixelRect rc = get_client_rect();
 
+  // Draw button to the background
+  canvas.draw_button(rc, is_down());
+
+  // If button has text on it
+  tstring caption = get_text();
+  if (caption.empty())
+    return;
+
+  canvas.null_pen();
+  canvas.black_brush();
+
+  // Setup drawing of text
+  canvas.set_text_color(is_enabled() ?
+                        dialog_prefs.widget_text : dialog_prefs.widget_disabled);
+  canvas.background_transparent();
+  canvas.select(Fonts::MapBold);
+
+  PixelRect focus_rc = rc;
+  InflateRect(&focus_rc, -3, -3);
+
+  // Draw focus rectangle
+  if (has_focus()) {
+    canvas.fill_focus(focus_rc);
+    canvas.draw_focus(focus_rc);
+  }
+
+  // If button is pressed, offset the text for 3D effect
+  if (is_down())
+    OffsetRect(&rc, 1, 1);
+
+  // Draw text centered
+  PixelSize tsize = canvas.text_size(caption.c_str());
+  RasterPoint org;
+  org.x = (rc.right+rc.left-tsize.cx)/2;
+  org.y = (rc.top+rc.bottom-tsize.cy)/2;
+  canvas.text(org.x, org.y, caption.c_str());
+}

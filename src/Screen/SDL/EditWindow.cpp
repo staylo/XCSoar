@@ -41,13 +41,13 @@ EditWindow::on_paint(Canvas &canvas)
 
   if (is_enabled()) {
     if (is_read_only())
-      canvas.clear(Color(0xe0, 0xe0, 0xe0));
+      canvas.clear(dialog_prefs.choice_background);
     else
-      canvas.clear_white();
-    canvas.set_text_color(COLOR_BLACK);
+      canvas.clear(dialog_prefs.control_background);
+    canvas.set_text_color(dialog_prefs.widget_text);
   } else {
-    canvas.clear(COLOR_LIGHT_GRAY);
-    canvas.set_text_color(COLOR_DARK_GRAY);
+    canvas.clear(dialog_prefs.choice_background);
+    canvas.set_text_color(dialog_prefs.widget_disabled);
   }
 
   canvas.background_transparent();

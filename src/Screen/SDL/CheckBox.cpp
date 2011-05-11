@@ -155,23 +155,27 @@ CheckBox::on_cancel_mode()
 void
 CheckBox::on_paint(Canvas &canvas)
 {
-  Brush brush(pressed ? COLOR_GRAY : COLOR_WHITE);
+  const Color& widget_color = pressed ? dialog_prefs.select_background :
+    (has_focus()? dialog_prefs.focus_background : dialog_prefs.control_background);
+
+  // background for control
+  Brush brush(widget_color);
   canvas.select(brush);
 
-  if (has_focus())
-    canvas.select(Pen(Layout::Scale(1) + 1, COLOR_BLACK));
-  else if (is_enabled())
-    canvas.black_pen();
+  // draw filled box with outline
+  if (is_enabled())
+    canvas.select(Pen(Layout::Scale(1) + 1, dialog_prefs.widget_text));
   else
-    canvas.select(Pen(1, COLOR_GRAY));
+    canvas.select(Pen(1, widget_color));
   canvas.rectangle(2, 2, canvas.get_height() - 4, canvas.get_height() - 4);
 
+  // draw x mark
   if (checked) {
     canvas.line(4, 4, canvas.get_height() - 8, canvas.get_height() - 8);
     canvas.line(canvas.get_height() - 8, 4, 4, canvas.get_height() - 8);
   }
 
-  canvas.set_text_color(is_enabled() ? COLOR_BLACK : COLOR_GRAY);
+  canvas.set_text_color(is_enabled() ? dialog_prefs.widget_text : dialog_prefs.widget_disabled);
   canvas.background_transparent();
   canvas.text(canvas.get_height() + 2, 2, text.c_str());
 

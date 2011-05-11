@@ -99,9 +99,10 @@ WndListFrame::on_killfocus()
 void
 WndListFrame::DrawItems(Canvas &canvas, unsigned start, unsigned end) const
 {
-  const Color text_color = COLOR_BLACK;
-  const Color background_color = COLOR_WHITE;
-  const Color selected_background_color = COLOR_LIGHT_GRAY;
+  const Color text_color = dialog_prefs.widget_text;
+  const Color background_color = dialog_prefs.control_background;
+  const Color selected_background_color = has_focus()?
+    dialog_prefs.focus_background : dialog_prefs.choice_background;
 
   PixelRect rc = item_rect(start);
 

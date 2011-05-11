@@ -45,6 +45,7 @@ WndSymbolButton::on_paint(Canvas &canvas)
   if (has_focus()) {
     PixelRect focus_rc = rc;
     InflateRect(&focus_rc, -3, -3);
+    canvas.fill_focus(focus_rc);
     canvas.draw_focus(focus_rc);
   }
 
@@ -122,7 +123,7 @@ WndSymbolButton::on_paint(Canvas &canvas)
     Bitmap launcher1_bitmap(IDB_LAUNCHER1);
     canvas.clear_white();
     if (is_down())
-      canvas.invert_stretch_transparent(launcher1_bitmap, COLOR_YELLOW);
+      canvas.invert_stretch_transparent(launcher1_bitmap, dialog_prefs.select_background);
     else
       canvas.stretch_transparent(launcher1_bitmap, COLOR_BLUE);
   }
@@ -132,7 +133,7 @@ WndSymbolButton::on_paint(Canvas &canvas)
     Bitmap launcher2_bitmap(IDB_LAUNCHER2);
     canvas.clear_white();
     if (is_down())
-      canvas.invert_stretch_transparent(launcher2_bitmap, COLOR_YELLOW);
+      canvas.invert_stretch_transparent(launcher2_bitmap, dialog_prefs.select_background);
     else
       canvas.stretch_transparent(launcher2_bitmap, COLOR_BLUE);
   }
@@ -151,4 +152,10 @@ WndSymbolButton::on_paint(Canvas &canvas)
     canvas.fill_rectangle(rc, COLOR_YELLOW);
   }
 
+}
+
+ButtonWindowStyle
+WndSymbolButton::custom_painting(ButtonWindowStyle style) const {
+  style.enable_custom_painting();
+  return style;
 }

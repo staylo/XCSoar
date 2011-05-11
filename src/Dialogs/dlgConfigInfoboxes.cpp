@@ -347,7 +347,6 @@ dlgConfigInfoboxesShowModal(SingleWindow &parent,
   else
     edit_style.sunken_edge();
 
-  const Color background_color = wf->GetBackColor();
   const int x = rc.left;
   const unsigned width = rc.right - rc.left - Layout::FastScale(2);
   const unsigned height = Layout::Scale(22);
@@ -368,7 +367,7 @@ dlgConfigInfoboxesShowModal(SingleWindow &parent,
 
   edit_select = new WndProperty(client_area, _("InfoBox"),
                                 x, y, width, height, caption_width,
-                                background_color, style, edit_style,
+                                style, edit_style,
                                 NULL);
 
   DataFieldEnum *dfe = new DataFieldEnum(OnSelectAccess);
@@ -384,7 +383,7 @@ dlgConfigInfoboxesShowModal(SingleWindow &parent,
 
   edit_content = new WndProperty(client_area, _("Content"),
                                  x, y, width, height, caption_width,
-                                 background_color, style, edit_style,
+                                 style, edit_style,
                                  NULL);
 
   dfe = new DataFieldEnum(OnContentAccess);

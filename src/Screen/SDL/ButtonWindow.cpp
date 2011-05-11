@@ -141,7 +141,7 @@ void
 ButtonWindow::on_paint(Canvas &canvas)
 {
   if (has_focus()) {
-    Pen pen(Layout::Scale(1), COLOR_BLACK);
+    Pen pen(Layout::Scale(1), dialog_prefs.shade_background);
     canvas.select(pen);
     canvas.hollow_brush();
     canvas.rectangle(-1, -1, canvas.get_width(), canvas.get_height());
@@ -155,7 +155,7 @@ ButtonWindow::on_paint(Canvas &canvas)
 
   canvas.draw_button(get_client_rect(), down);
 
-  canvas.set_text_color(is_enabled() ? COLOR_BLACK : COLOR_GRAY);
+  canvas.set_text_color(is_enabled() ? dialog_prefs.widget_text : dialog_prefs.widget_disabled);
   canvas.background_transparent();
   canvas.formatted_text(&rc, text.c_str(), get_text_style());
 }

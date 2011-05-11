@@ -27,6 +27,7 @@ Copyright_License {
 
 #include "Util/StaticArray.hpp"
 #include "Form/Tabbed.hpp"
+#include "Screen/Color.hpp"
 
 class Bitmap;
 class WndOwnerDrawFrame;
@@ -201,7 +202,8 @@ public:
  * @param height Height of tab bar box in the parent window
  */
  TabDisplay(TabBarControl& _theTabBar, unsigned left, unsigned top,
-     unsigned width, unsigned height, bool _flipOrientation = false);
+            unsigned width, unsigned height,
+            bool _flipOrientation = false);
 
 public:
   void trigger_invalidate() { invalidate(); }

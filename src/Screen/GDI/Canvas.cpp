@@ -358,3 +358,11 @@ Canvas::stretch(const Bitmap &src)
   PixelSize size = src.get_size();
   stretch(src, 0, 0, size.cx, size.cy);
 }
+
+
+void
+Canvas::fill_focus(PixelRect rc)
+{
+  fill_rectangle(rc, dialog_prefs.focus_background);
+}
+

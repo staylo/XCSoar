@@ -38,7 +38,7 @@ Copyright_License {
 #define COLOR_BLACK Color(0x00, 0x00, 0x00)
 #define COLOR_GRAY Color(0x80, 0x80, 0x80)
 #define COLOR_LIGHT_GRAY Color(0xc0, 0xc0, 0xc0)
-#define COLOR_DARK_GRAY Color(0x4, 0x40, 0x40)
+#define COLOR_DARK_GRAY Color(0x40, 0x40, 0x40)
 #define COLOR_RED Color(0xff, 0x00, 0x00)
 #define COLOR_GREEN Color(0x00, 0xff, 0x00)
 #define COLOR_BLUE Color(0x00, 0x00, 0xff)
@@ -60,5 +60,20 @@ Color light_color(Color c);
 Color dark_color(Color c);
 
 Color desaturate(Color c);
+
+struct DialogPreferences {
+  DialogPreferences();
+  Color form_background;
+  Color focus_background;
+  Color select_background;
+  Color widget_background;
+  Color widget_text;
+  Color widget_disabled;
+  Color control_background;
+  Color choice_background;
+  Color shade_background;
+};
+
+extern DialogPreferences dialog_prefs;
 
 #endif
