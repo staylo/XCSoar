@@ -52,7 +52,8 @@ enum DialogTabStyle_t {
 
 enum InfoBoxBorderAppearance_t {
   apIbBox = 0,
-  apIbTab
+  apIbTab,
+  apIbShade
 };
 
 enum AircraftSymbol_t {

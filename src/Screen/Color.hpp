@@ -72,6 +72,11 @@ struct DialogPreferences {
   Color control_background;
   Color choice_background;
   Color shade_background;
+  Color infobox_light_shade;
+  Color infobox_neutral_shade;
+  Color infobox_dark_shade;
+  Color infobox_light_text;
+  Color infobox_dark_text;
   Color titlebar_normal;
   Color titlebar_alert;
 };

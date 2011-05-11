@@ -777,7 +777,7 @@
       </Edit>
     
       <Edit Name="prpAppInfoBoxBorder" Caption="InfoBox border" Expert="1" X="2" Width="-2" Height="22" CaptionWidth="100"
-        Help="Two styles for infobox borders are available:&#10;[Box] Draws boxes around each infobox.&#10;[Tab] Draws a tab at the top of the infobox across the title.">
+        Help="The following styles for infobox borders are available:&#10;[Box] Draws boxes around each infobox.&#10;[Tab] Draws a tab at the top of the infobox across the title. &#10;[Shade] Draws a shaded area behind the title.">
         <DataField DataType="enum" />
       </Edit>
 

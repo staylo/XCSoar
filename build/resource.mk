@@ -11,6 +11,12 @@ BMP_SPLASH_160 = $(PNG_SPLASH_160:.png=.bmp)
 PNG_SPLASH_80 = $(patsubst Data/graphics/%.svg,output/data/graphics/%_80.png,$(SVG_SPLASH))
 BMP_SPLASH_80 = $(PNG_SPLASH_80:.png=.bmp)
 
+SVG_INFOBOX = Data/graphics/infobox.svg Data/graphics/infoboxi.svg
+PNG_INFOBOX_160 = $(patsubst Data/graphics/%.svg,output/data/graphics/%_160.png,$(SVG_INFOBOX))
+BMP_INFOBOX_160 = $(PNG_INFOBOX_160:.png=.bmp)
+PNG_INFOBOX_80 = $(patsubst Data/graphics/%.svg,output/data/graphics/%_80.png,$(SVG_INFOBOX))
+BMP_INFOBOX_80 = $(PNG_INFOBOX_80:.png=.bmp)
+
 SVG_TITLE = Data/graphics/title.svg
 PNG_TITLE_110 = $(patsubst Data/graphics/%.svg,output/data/graphics/%_110.png,$(SVG_TITLE))
 BMP_TITLE_110 = $(PNG_TITLE_110:.png=.bmp)
@@ -80,6 +86,23 @@ $(BMP_SPLASH_80): %.bmp: %.png
 	@$(NQ)echo "  BMP     $@"
 	$(Q)$(IM_PREFIX)convert $< -background white -layers flatten +matte +dither -compress none -type optimize -colors 256 $@
 
+######## infobox background
+
+$(PNG_INFOBOX_160): output/data/graphics/%_160.png: Data/graphics/%.svg | output/data/graphics/dirstamp
+	@$(NQ)echo "  SVG     $@"
+	$(Q)rsvg-convert --width=112 $< -o $@
+$(PNG_INFOBOX_80): output/data/graphics/%_80.png: Data/graphics/%.svg | output/data/graphics/dirstamp
+	@$(NQ)echo "  SVG     $@"
+	$(Q)rsvg-convert --width=56 $< -o $@
+
+# convert to uncompressed 8-bit BMP
+$(BMP_INFOBOX_160): %.bmp: %.png
+	@$(NQ)echo "  BMP     $@"
+	$(Q)$(IM_PREFIX)convert $< -background white -layers flatten +matte +dither -compress none -type optimize -colors 256 $@
+$(BMP_INFOBOX_80): %.bmp: %.png
+	@$(NQ)echo "  BMP     $@"
+	$(Q)$(IM_PREFIX)convert $< -background white -layers flatten +matte +dither -compress none -type optimize -colors 256 $@
+
 ####### version
 
 # render from SVG to PNG
@@ -132,8 +155,9 @@ ifeq ($(TARGET),ANDROID)
 RESOURCE_FILES += $(patsubst po/%.po,$(OUT)/po/%.mo,$(wildcard po/*.po))
 else
 RESOURCE_FILES += $(wildcard Data/bitmaps/*.bmp)
-RESOURCE_FILES += $(BMP_ICONS) $(BMP_ICONS_160) 
+RESOURCE_FILES += $(BMP_ICONS) $(BMP_ICONS_160)
 RESOURCE_FILES += $(BMP_SPLASH_160) $(BMP_SPLASH_80)
+RESOURCE_FILES += $(BMP_INFOBOX_160) $(BMP_INFOBOX_80)
 RESOURCE_FILES += $(BMP_TITLE_320) $(BMP_TITLE_110)
 RESOURCE_FILES += $(BMP_LAUNCH_FLY_224) $(BMP_LAUNCH_SIM_224)
 endif

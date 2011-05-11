@@ -62,6 +62,7 @@ InfoBoxWindow::InfoBoxWindow(ContainerWindow &_parent, int X, int Y, int Width, 
   set(parent, X, Y, Width, Height, style);
 
   mValueUnit = unUndef;
+  invalid = true;
 
   mTitle.clear();
   mValue.clear();
@@ -186,6 +187,7 @@ InfoBoxWindow::SetValueInvalid()
 {
   SetValue(_T("---"));
   SetValueUnit(unUndef);
+  invalid = true;
 }
 
 void
@@ -202,6 +204,12 @@ InfoBoxWindow::PaintTitle(Canvas &canvas)
   int halftextwidth;
 
   canvas.set_text_color(look.get_title_color(colorTitle));
+
+  if (Appearance.InfoBoxBorder == apIbShade) {
+    canvas.select(look.shade_brush);
+    canvas.null_pen();
+    canvas.rectangle(recTitle.left, recTitle.top, recTitle.right+1, recTitle.bottom+1);
+  }
 
   const Font &font = *look.title.font;
   canvas.select(font);
@@ -335,7 +343,29 @@ InfoBoxWindow::PaintSelector(Canvas &canvas)
 void
 InfoBoxWindow::Paint(Canvas &canvas)
 {
-  canvas.clear(look.background_brush);
+  if (Appearance.InfoBoxBorder == apIbShade) {
+    const PixelSize sz = look.background_bitmap.get_size();
+
+    if (!invalid) {
+      if (Appearance.InverseInfoBox) {
+        canvas.stretch(0, recValueAndComment.top,
+                       get_width(), get_height()-recValueAndComment.top,
+                       look.background_bitmap, 0, 0, sz.cx, sz.cy);
+      } else {
+        canvas.stretch(0, recValueAndComment.top,
+                       get_width(), get_height()-recValueAndComment.top,
+                       look.background_bitmap, 0, 0, sz.cx, sz.cy);
+      }
+    } else {
+      if (Appearance.InverseInfoBox) {
+        canvas.clear(dialog_prefs.infobox_dark_shade);
+      } else {
+        canvas.clear(dialog_prefs.infobox_light_shade);
+      }
+    }
+  } else {
+    canvas.clear(look.background_brush);
+  }
 
   if (content != NULL)
     content->on_custom_paint(*this, canvas);
@@ -343,6 +373,16 @@ InfoBoxWindow::Paint(Canvas &canvas)
   canvas.background_transparent();
 
   PaintTitle(canvas);
+
+  if (invalid && (Appearance.InfoBoxBorder == apIbShade)) {
+    canvas.select(look.shade_brush);
+    canvas.null_pen();
+    canvas.rectangle(recValueAndComment.left,
+                     recValueAndComment.top,
+                     recValueAndComment.right,
+                     recValueAndComment.bottom);
+  }
+
   PaintComment(canvas);
   PaintValue(canvas);
 
@@ -401,6 +441,7 @@ bool
 InfoBoxWindow::UpdateContent()
 {
   if (content != NULL) {
+    invalid = false;
     content->Update(*this);
     return true;
   }

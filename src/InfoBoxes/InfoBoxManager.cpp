@@ -44,6 +44,7 @@ Copyright_License {
 #include "Dialogs/ComboPicker.hpp"
 #include "Profile/InfoBoxConfig.hpp"
 #include "Interface.hpp"
+#include "resource.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -288,8 +289,8 @@ InfoBoxManager::DisplayInfoBox()
   if (InfoBoxesHidden)
     return;
 
-  int DisplayType[InfoBoxPanelConfig::MAX_INFOBOXES];
   static int DisplayTypeLast[InfoBoxPanelConfig::MAX_INFOBOXES];
+  static bool last_invalid[InfoBoxPanelConfig::MAX_INFOBOXES];
 
   // JMW note: this is updated every GPS time step
 
@@ -298,19 +299,26 @@ InfoBoxManager::DisplayInfoBox()
     // should apply to the function DoCalculationsSlow()
     // Do not put calculations here!
 
-    DisplayType[i] = GetCurrentType(i);
+    int DisplayType = GetCurrentType(i);
 
-    bool needupdate = ((DisplayType[i] != DisplayTypeLast[i]) || first);
+    bool needupdate = ((DisplayType != DisplayTypeLast[i]) || first);
 
     if (needupdate) {
-      InfoBoxes[i]->SetTitle(gettext(InfoBoxFactory::GetCaption(DisplayType[i])));
-      InfoBoxes[i]->SetContentProvider(InfoBoxFactory::Create(DisplayType[i]));
+      InfoBoxes[i]->SetTitle(gettext(InfoBoxFactory::GetCaption(DisplayType)));
+      InfoBoxes[i]->SetContentProvider(InfoBoxFactory::Create(DisplayType));
       InfoBoxes[i]->SetID(i);
     }
 
-    InfoBoxes[i]->UpdateContent();
+    if (InfoBoxes[i]->UpdateContent()) {
+      // check if need to repaint entire window due to validity
+      bool invalid = InfoBoxes[i]->get_invalid();
+      if (invalid != last_invalid[i]) {
+        InfoBoxes[i]->invalidate();
+        last_invalid[i] = invalid;
+      }
+    }
 
-    DisplayTypeLast[i] = DisplayType[i];
+    DisplayTypeLast[i] = DisplayType;
   }
 
   Paint();
@@ -421,7 +429,8 @@ InfoBoxManager::Paint()
 int
 InfoBoxManager::GetInfoBoxBorder(unsigned i)
 {
-  if (Appearance.InfoBoxBorder == apIbTab)
+  if ((Appearance.InfoBoxBorder == apIbTab) ||
+      (Appearance.InfoBoxBorder == apIbShade))
     return 0;
 
   unsigned border = 0;
@@ -528,13 +537,27 @@ static void
 InfoBoxLookDefaults(InfoBoxLook &info_box_look)
 {
   info_box_look.value.fg_color
-    = info_box_look.title.fg_color
     = info_box_look.comment.fg_color
     = Appearance.InverseInfoBox ? COLOR_WHITE : COLOR_BLACK;
+
+  info_box_look.title.fg_color = Appearance.InverseInfoBox ?
+    dialog_prefs.infobox_dark_text : dialog_prefs.infobox_light_text;
+
   info_box_look.background_brush.set(Appearance.InverseInfoBox
                                      ? COLOR_BLACK : COLOR_WHITE);
+  info_box_look.shade_brush.set(Appearance.InverseInfoBox ?
+                                dialog_prefs.infobox_dark_shade :
+                                dialog_prefs.infobox_light_shade);
 
-  Color border_color = Color(128, 128, 128);
+  if (Appearance.InverseInfoBox) {
+    info_box_look.background_bitmap.load(Layout::ScaleEnabled()?
+                                         IDB_INFOBOXI_HD : IDB_INFOBOXI);
+  } else {
+    info_box_look.background_bitmap.load(Layout::ScaleEnabled()?
+                                         IDB_INFOBOX_HD : IDB_INFOBOX);
+  }
+
+  const Color border_color = dialog_prefs.infobox_neutral_shade;
   info_box_look.border_pen.set(InfoBoxWindow::BORDER_WIDTH, border_color);
   info_box_look.selector_pen.set(IBLSCALE(1) + 2,
                                  info_box_look.value.fg_color);

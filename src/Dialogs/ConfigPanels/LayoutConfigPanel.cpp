@@ -121,6 +121,7 @@ LayoutConfigPanel::Init(WndForm *_wf)
     dfe = (DataFieldEnum*)wp->GetDataField();
     dfe->addEnumText(_("Box"));
     dfe->addEnumText(_("Tab"));
+    dfe->addEnumText(_("Shade"));
     dfe->Set(Appearance.InfoBoxBorder);
     wp->RefreshDisplay();
   }

@@ -49,6 +49,8 @@ class Angle;
 struct InfoBoxLook {
   Pen border_pen, selector_pen;
   Brush background_brush;
+  Brush shade_brush;
+  Bitmap background_bitmap;
 
   struct {
     Color fg_color;
@@ -103,6 +105,7 @@ private:
   StaticString<32> mComment;
   Units_t mValueUnit;
   int mID;
+  bool invalid;
 
   /** a timer which returns keyboard focus back to the map window after a while */
   timer_t focus_timer;
@@ -247,6 +250,10 @@ public:
   }
   const PixelRect get_value_and_comment_rect() const {
     return recValueAndComment;
+  }
+
+  bool get_invalid() const {
+    return invalid;
   }
 
 protected:
