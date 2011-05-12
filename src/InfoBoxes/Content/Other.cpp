@@ -26,6 +26,7 @@ Copyright_License {
 #include "InfoBoxes/InfoBoxWindow.hpp"
 #include "Interface.hpp"
 #include "HorizonRenderer.hpp"
+#include "Appearance.hpp"
 #include "Hardware/Battery.hpp"
 #include "OS/SystemLoad.hpp"
 #include "OS/MemInfo.hpp"
@@ -166,7 +167,15 @@ void
 InfoBoxContentHorizon::on_custom_paint(InfoBoxWindow &infobox, Canvas &canvas)
 {
   if (CommonInterface::Calculated().acceleration.Available) {
-    DrawHorizon(canvas, infobox.get_value_and_comment_rect(),
+    const PixelRect rc = infobox.get_value_and_comment_rect();
+    if (Appearance.InfoBoxBorder == apIbShade) {
+      const Color& col = Appearance.InverseInfoBox?
+        dialog_prefs.infobox_dark_shade:
+        dialog_prefs.infobox_light_shade;
+
+      canvas.fill_rectangle(rc.left, rc.top, rc.right, rc.bottom, col);
+    }
+    DrawHorizon(canvas, rc,
                 CommonInterface::Calculated().acceleration);
   }
 }
