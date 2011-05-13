@@ -48,6 +48,7 @@ SymbolsConfigPanel::Init(WndForm *_wf)
     dfe = (DataFieldEnum*)wp->GetDataField();
     dfe->addEnumText(_("Arrow head"));
     dfe->addEnumText(_("Full arrow"));
+    dfe->addEnumText(_("Striped"));
     dfe->Set(XCSoarInterface::SettingsMap().WindArrowStyle);
     wp->RefreshDisplay();
   }
@@ -122,9 +123,14 @@ SymbolsConfigPanel::Save()
   bool changed = false;
   WndProperty *wp;
 
-  changed |= SaveFormProperty(*wf, _T("prpWindArrowStyle"),
-                              szProfileWindArrowStyle,
-                              XCSoarInterface::SetSettingsMap().WindArrowStyle);
+  wp = (WndProperty*)wf->FindByName(_T("prpWindArrowStyle"));
+  if (wp) {
+    if (XCSoarInterface::SettingsMap().WindArrowStyle != (WindArrowStyle_t)wp->GetDataField()->GetAsInteger()) {
+      XCSoarInterface::SetSettingsMap().WindArrowStyle = (WindArrowStyle_t)wp->GetDataField()->GetAsInteger();
+      Profile::Set(szProfileWindArrowStyle, (int)XCSoarInterface::SettingsMap().WindArrowStyle);
+      changed = true;
+    }
+  }
 
   changed |= SaveFormProperty(*wf, _T("prpTrail"),
                               szProfileSnailTrail,

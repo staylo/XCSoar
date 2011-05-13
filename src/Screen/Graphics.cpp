@@ -275,8 +275,8 @@ Graphics::Initialise()
 
   hpIsoline.set(Pen::DASH, Layout::Scale(1), IsolineColor);
 
-  hpWind.set(Layout::Scale(1), dark_color(COLOR_GRAY));
-  hbWind.set(COLOR_GRAY);
+  hbWind.set(Color(0x31,0x31,0x67));
+  hpWind.set(Layout::Scale(1), Color(0x55,0x55,0xb3));
 
   hpTaskActive.set(Pen::DASH, Layout::Scale(2), Graphics::TaskColor);
   hpTaskInactive.set(Pen::DASH, Layout::Scale(1), Graphics::TaskColor);

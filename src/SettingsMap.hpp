@@ -87,6 +87,11 @@ enum DisplayTrackBearing_t {
   dtbAuto
 };
 
+enum WindArrowStyle_t {
+  waArrow = 0,
+  waTail,
+  waStriped
+};
 
 // user interface options
 
@@ -117,7 +122,8 @@ struct SETTINGS_MAP {
   bool SnailScaling;
   /** 0: standard, 1: seeyou colors */
   SnailType_t SnailType;
-  int WindArrowStyle;
+  /** Style of rendering of wind arrow at aircraft (see enum above) */
+  WindArrowStyle_t WindArrowStyle;
   /** What type of text to draw next to the waypoint icon */
   DisplayTextType_t DisplayTextType;
   /** Which arrival height to display next to waypoint labels */

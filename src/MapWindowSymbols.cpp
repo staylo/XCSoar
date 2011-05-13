@@ -59,14 +59,19 @@ MapWindow::DrawWind(Canvas &canvas, const RasterPoint &Start,
     tsize.cx = tsize.cx / 2;
   }
 
-  canvas.select(Graphics::hpWind);
-  canvas.select(Graphics::hbWind);
-
-  int wmag = iround(4 * wind.norm);
+  Angle angle = (wind.bearing - render_projection.GetScreenAngle()).as_bearing();
 
   int kx = tsize.cx / Layout::FastScale(1) / 2;
 
-  RasterPoint Arrow[7] = {
+  RasterPoint value_location;
+
+  const WindArrowStyle_t& style = SettingsMap().WindArrowStyle;
+
+  if ((style == waTail) || (style == waArrow)) {
+
+    int wmag = iround(4 * wind.norm);
+
+    RasterPoint Arrow[7] = {
       { 0, -20 },
       { -6, -26 },
       { 0, -20 },
@@ -74,31 +79,76 @@ MapWindow::DrawWind(Canvas &canvas, const RasterPoint &Start,
       { 0, -20 },
       { 8 + kx, -24 },
       { -8 - kx, -24 }
-  };
-
-  for (int i = 1; i < 4; i++)
-    Arrow[i].y -= wmag;
-
-  PolygonRotateShift(Arrow, 7, Start.x, Start.y,
-                     wind.bearing - render_projection.GetScreenAngle());
-
-  canvas.polygon(Arrow, 5);
-
-  if (SettingsMap().WindArrowStyle == 1) {
-    RasterPoint Tail[2] = {
-      { 0, Layout::FastScale(-20) },
-      { 0, Layout::FastScale(-26 - min(20, wmag) * 3) },
     };
 
-    Angle angle = (wind.bearing - render_projection.GetScreenAngle()).as_bearing();
-    PolygonRotateShift(Tail, 2, Start.x, Start.y, angle);
+    for (int i = 1; i < 4; i++)
+      Arrow[i].y -= wmag;
 
-    // optionally draw dashed line
-    Pen dash_pen(Pen::DASH, 1, COLOR_BLACK);
-    canvas.select(dash_pen);
-    canvas.line(Tail[0], Tail[1]);
-  }
+    PolygonRotateShift(Arrow, 7, Start.x, Start.y, angle);
+    canvas.select(Graphics::hpWind);
+    canvas.select(Graphics::hbWind);
+    canvas.polygon(Arrow, 5);
 
+    if (SettingsMap().WindArrowStyle == waTail) {
+      // optionally draw dashed line
+
+      RasterPoint Tail[2] = {
+        { 0, Layout::FastScale(-20) },
+        { 0, Layout::FastScale(-26 - min(20, wmag) * 3) },
+      };
+
+      PolygonRotateShift(Tail, 2, Start.x, Start.y, angle);
+
+      Pen dash_pen(Pen::DASH, 1, COLOR_BLACK);
+      canvas.select(dash_pen);
+      canvas.line(Tail[0], Tail[1]);
+    }
+    if (Arrow[5].y >= Arrow[6].y) {
+      value_location = Arrow[5];
+    } else {
+      value_location = Arrow[6];
+    }
+  } else if (style == waStriped) {
+
+    int wmag = iround(3 * wind.norm);
+
+    RasterPoint Arrow[5] = {
+      { 0, -20 },
+      { -wmag/5-4, -26 -wmag },
+      { wmag/5+4, -26 -wmag},
+      { 6 + kx, -24 },
+      { -6 - kx, -24 }
+    };
+
+    PolygonRotateShift(Arrow, 5, Start.x, Start.y, angle);
+
+    // draw background triangle
+    canvas.null_pen();
+    canvas.select(Graphics::hbWind);
+    canvas.polygon(Arrow, 3);
+
+    // draw background triangle
+    canvas.white_pen();
+    canvas.hollow_brush();
+    for (int i=1; i+1<wmag; i+= 4) {
+      RasterPoint Line[2] = {{ -i/5-4, -26-i }, { i/5+4, -26-i}};
+      PolygonRotateShift(Line, 2, Start.x, Start.y, angle);
+      canvas.line(Line[0], Line[1]);
+    }
+
+    // draw outline
+    canvas.select(Graphics::hpWind);
+    canvas.polygon(Arrow, 3);
+
+    if (Arrow[3].y >= Arrow[4].y) {
+      value_location = Arrow[3];
+    } else {
+      value_location = Arrow[4];
+    }
+
+  } else assert(0);
+
+  // draw value
   _stprintf(sTmp, _T("%i"), iround(Units::ToUserWindSpeed(wind.norm)));
 
   canvas.set_text_color(COLOR_BLACK);
@@ -106,11 +156,7 @@ MapWindow::DrawWind(Canvas &canvas, const RasterPoint &Start,
   TextInBoxMode_t TextInBoxMode;
   TextInBoxMode.Align = Center;
   TextInBoxMode.Mode = Outlined;
-
-  if (Arrow[5].y >= Arrow[6].y)
-    TextInBox(canvas, sTmp, Arrow[5].x - kx, Arrow[5].y, TextInBoxMode, rc);
-  else
-    TextInBox(canvas, sTmp, Arrow[6].x - kx, Arrow[6].y, TextInBoxMode, rc);
+  TextInBox(canvas, sTmp, value_location.x - kx, value_location.y, TextInBoxMode, rc);
 }
 
 void

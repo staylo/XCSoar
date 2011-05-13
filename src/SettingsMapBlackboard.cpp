@@ -37,7 +37,7 @@ SettingsMapBlackboard::SettingsMapBlackboard()
   settings_map.AutoZoom = false;
   settings_map.SnailScaling = true;
   settings_map.SnailType = stStandardVario;
-  settings_map.WindArrowStyle = 0;
+  settings_map.WindArrowStyle = waArrow;
   settings_map.DisplayTextType = DISPLAYFIRSTFIVE;
   settings_map.WaypointArrivalHeightDisplay = WP_ARRIVAL_HEIGHT_GLIDE;
   settings_map.LandableRenderMode = RoundedBlack;

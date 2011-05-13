@@ -392,8 +392,7 @@ Profile::Use()
   if (Get(szProfileRiskGamma, Temp))
     settings_computer.risk_gamma = fixed(Temp) / 10;
 
-  if (Get(szProfileWindArrowStyle, Temp))
-    settings_map.WindArrowStyle = Temp;
+  GetEnum(szProfileWindArrowStyle, settings_map.WindArrowStyle);
 
   Get(szProfileDisableAutoLogger,
       settings_computer.DisableAutoLogger);
