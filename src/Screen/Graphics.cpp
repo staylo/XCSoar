@@ -450,14 +450,22 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
   int iwidth;
   int minwidth = Layout::Scale(2);
 
+  Color color;
   for (int i = 0; i < NUMSNAILCOLORS; i++) {
     short ih = i * 200 / (NUMSNAILCOLORS - 1);
-    Color color = (settings_map.SnailType == stAltitude) ?
-      ColorRampLookup(ih, snail_colors_alt, sizeof(snail_colors_alt)/sizeof(ColorRamp)) :
-      (settings_map.SnailType == stSeeYouVario) ?
-      ColorRampLookup(ih, snail_colors_vario2, sizeof(snail_colors_vario2)/sizeof(ColorRamp)) :
-      ColorRampLookup(ih, snail_colors_vario, sizeof(snail_colors_vario)/sizeof(ColorRamp));
-
+    switch (settings_map.SnailType) {
+    case stAltitude:
+      color = ColorRampLookup(ih, snail_colors_alt,
+                              sizeof(snail_colors_alt)/sizeof(snail_colors_alt[0]));
+      break;
+    case stSeeYouVario:
+      color = ColorRampLookup(ih, snail_colors_vario2,
+                              sizeof(snail_colors_vario2)/sizeof(snail_colors_vario2[0]));
+      break;
+    case stStandardVario:
+      color = ColorRampLookup(ih, snail_colors_vario,
+                              sizeof(snail_colors_vario)/sizeof(snail_colors_vario[0]));
+    }
     if (i < NUMSNAILCOLORS / 2 ||
         !settings_map.SnailScaling)
       iwidth = minwidth;
@@ -473,14 +481,16 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
 void
 Graphics::InitLandableIcons()
 {
-  if (Appearance.IndLandable == wpLandableWinPilot) {
+  switch (Appearance.IndLandable) {
+  case wpLandableWinPilot:
     AirportReachableIcon.load_big(IDB_REACHABLE, IDB_REACHABLE_HD);
     AirportMarginalIcon.load_big(IDB_MARGINAL, IDB_MARGINAL_HD);
     AirportUnreachableIcon.load_big(IDB_LANDABLE, IDB_LANDABLE_HD);
     FieldReachableIcon.load_big(IDB_REACHABLE, IDB_REACHABLE_HD);
     FieldMarginalIcon.load_big(IDB_MARGINAL, IDB_MARGINAL_HD);
     FieldUnreachableIcon.load_big(IDB_LANDABLE, IDB_LANDABLE_HD);
-  } else if (Appearance.IndLandable == wpLandableAltA) {
+    break;
+  case wpLandableAltA:
     AirportReachableIcon.load_big(IDB_AIRPORT_REACHABLE,
                                   IDB_AIRPORT_REACHABLE_HD);
     AirportMarginalIcon.load_big(IDB_AIRPORT_MARGINAL,
@@ -493,7 +503,8 @@ Graphics::InitLandableIcons()
                                IDB_OUTFIELD_MARGINAL_HD);
     FieldUnreachableIcon.load_big(IDB_OUTFIELD_UNREACHABLE,
                                   IDB_OUTFIELD_UNREACHABLE_HD);
-  } else if (Appearance.IndLandable == wpLandableAltB) {
+    break;
+  case wpLandableAltB:
     AirportReachableIcon.load_big(IDB_AIRPORT_REACHABLE,
                                   IDB_AIRPORT_REACHABLE_HD);
     AirportMarginalIcon.load_big(IDB_AIRPORT_MARGINAL2,
@@ -506,6 +517,7 @@ Graphics::InitLandableIcons()
                                IDB_OUTFIELD_MARGINAL2_HD);
     FieldUnreachableIcon.load_big(IDB_OUTFIELD_UNREACHABLE2,
                                   IDB_OUTFIELD_UNREACHABLE2_HD);
+    break;
   }
 }
 
