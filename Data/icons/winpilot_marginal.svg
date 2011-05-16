@@ -8,16 +8,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   width="19"
-   height="19"
+   version="1.0"
+   width="12"
+   height="12"
    id="svg2816"
    inkscape:version="0.46"
    sodipodi:docname="winpilot_marginal.svg"
    sodipodi:version="0.32"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
-     id="metadata11">
+     id="metadata9">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -28,7 +28,7 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     pagecolor="#ffffff"
+     pagecolor="#ff00ff"
      bordercolor="#666666"
      borderopacity="1"
      objecttolerance="10"
@@ -36,17 +36,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="802"
-     inkscape:window-height="814"
-     id="namedview9"
-     showgrid="false"
-     inkscape:zoom="11.8"
-     inkscape:cx="-6.2288136"
-     inkscape:cy="10"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-width="1280"
+     inkscape:window-height="774"
+     id="namedview7"
+     showgrid="true"
+     inkscape:zoom="23.6"
+     inkscape:cx="4.8352731"
+     inkscape:cy="9.1339101"
+     inkscape:window-x="214"
+     inkscape:window-y="81"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1-7" />
+     inkscape:current-layer="layer2"
+     borderlayer="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2384"
+       visible="true"
+       enabled="true" />
+  </sodipodi:namedview>
   <defs
      id="defs2818">
     <inkscape:perspective
@@ -55,42 +62,104 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="20 : 10 : 1"
        inkscape:persp3d-origin="10 : 6.6666667 : 1"
-       id="perspective13" />
+       id="perspective11" />
     <inkscape:perspective
-       id="perspective2824"
+       id="perspective2825"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
        inkscape:vp_z="1 : 0.5 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2823"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       id="filter3165"
+       inkscape:label="filter1"
+       x="-0.1">
+      <feGaussianBlur
+         stdDeviation="0.5"
+         id="feGaussianBlur3167"
+         result="result0"
+         in="SourceAlpha" />
+      <feMerge
+         id="feMerge3169">
+        <feMergeNode
+           inkscape:collect="always"
+           id="feMergeNode3171"
+           in="result0" />
+        <feMergeNode
+           inkscape:collect="always"
+           id="feMergeNode3173"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
   <g
+     transform="translate(-4,-1.5)"
+     id="layer1" />
+  <g
      inkscape:groupmode="layer"
-     id="layer1"
-     inkscape:label="MASK_Image">
+     id="layer2"
+     inkscape:label="MASK_Image"
+     transform="translate(0,-8.5)">
+    <path
+       style="opacity:0.98999999000000005;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.50000000000000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-dashoffset:12.30000049000000040;stroke-opacity:1"
+       d="M 0 5 L 0 7 L 2.15625 7 C 2.0736847 6.6798354 2 6.3459512 2 6 C 2 5.6540488 2.0736847 5.3201646 2.15625 5 L 0 5 z M 9.84375 5 C 9.9263153 5.3201646 10 5.6540488 10 6 C 10 6.3459512 9.9263153 6.6798354 9.84375 7 L 12 7 L 12 5 L 9.84375 5 z "
+       transform="translate(0,8.5)"
+       id="rect2386" />
+    <path
+       style="opacity:0.98999999000000005;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.50000000000000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-dashoffset:12.30000049000000040;stroke-opacity:1"
+       d="M 5 0 L 5 2.15625 C 5.3201646 2.0736847 5.6540488 2 6 2 C 6.3459512 2 6.6798354 2.0736847 7 2.15625 L 7 0 L 5 0 z M 5 9.84375 L 5 12 L 7 12 L 7 9.84375 C 6.6798354 9.9263153 6.3459512 10 6 10 C 5.6540488 10 5.3201646 9.9263153 5 9.84375 z "
+       transform="translate(0,8.5)"
+       id="rect3158" />
     <g
-       transform="translate(0,3)"
-       id="layer1-7">
+       id="g3177"
+       transform="matrix(1.0909091,0,0,1.0909091,-0.5909091,-1.3181829)"
+       style="fill:#fffff0;fill-opacity:0">
       <path
-         d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
-         transform="matrix(0.95,0,0,0.95,0,-3)"
-         id="path2830"
-         style="opacity:0.98999999;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-      <path
-         d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
-         transform="matrix(0.85,0,0,0.85,1,-2)"
-         id="path2830-4"
-         style="opacity:0.98999999000000005;fill:#cc3000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-      <path
-         d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
-         transform="matrix(0.55,0,0,0.55,4,1)"
-         id="path2830-4-5"
-         style="opacity:0.98999999;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-      <path
-         d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
-         transform="matrix(0.45,0,0,0.45,5,2)"
-         id="path2830-4-5-9"
-         style="opacity:0.98999999000000005;fill:#b839f9;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+         style="opacity:0.98999999;fill:#fffff0;fill-opacity:0;fill-rule:evenodd;stroke:none"
+         id="path3179"
+         d="M 11,14.5 C 11,16.985281 8.9852814,19 6.5,19 C 4.0147186,19 2,16.985281 2,14.5 C 2,12.014719 4.0147186,10 6.5,10 C 8.9852814,10 11,12.014719 11,14.5 L 11,14.5 z" />
+      <rect
+         y="13.5"
+         x="1"
+         height="2"
+         width="11"
+         id="rect3181"
+         style="opacity:0.98999999;fill:#fffff0;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-dasharray:none;stroke-dashoffset:12.30000049;stroke-opacity:1" />
+      <rect
+         transform="matrix(0,1,-1,0,0,0)"
+         y="-7.5"
+         x="9.000001"
+         height="2"
+         width="11"
+         id="rect3183"
+         style="opacity:0.98999999;fill:#fffff0;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-dasharray:none;stroke-dashoffset:12.30000049;stroke-opacity:1" />
     </g>
+    <path
+       d="M 10,14.5 C 10,16.709139 8.2091391,18.5 6.0000001,18.5 C 3.7908611,18.5 2,16.709139 2,14.5 C 2,12.290861 3.7908611,10.5 6.0000001,10.5 C 8.2091391,10.5 10,12.290861 10,14.5 L 10,14.5 z"
+       id="path2830-4-5-9"
+       style="opacity:0.98999999000000005;fill:#c25524;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999994000000003;stroke-opacity:1" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-dasharray:none;stroke-dashoffset:12.30000049;stroke-opacity:1"
+       id="path2501"
+       sodipodi:sides="3"
+       sodipodi:cx="-10"
+       sodipodi:cy="-1"
+       sodipodi:r1="3.5084746"
+       sodipodi:r2="1.5"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M -10,-4.5084746 L -6.9615719,0.75423729 L -13.038428,0.75423729 L -10,-4.5084746 z"
+       transform="translate(16,15.5)" />
   </g>
 </svg>
