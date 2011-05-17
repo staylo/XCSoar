@@ -22,7 +22,7 @@ Copyright_License {
 */
 
 #include "FileLineReader.hpp"
-
+#include "windows.h"
 char *
 FileLineReaderA::read()
 {

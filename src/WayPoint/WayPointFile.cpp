@@ -141,6 +141,8 @@ WayPointFile::Parse(Waypoints &way_points,
       return false;
 
     double filesize = std::max(reader.size(), 1l);
+//////
+
 
     // Read through the lines of the file
     TCHAR *line;

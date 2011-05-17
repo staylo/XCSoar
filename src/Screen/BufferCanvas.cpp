@@ -61,8 +61,10 @@ BufferCanvas::set(const Canvas &canvas)
 void BufferCanvas::reset()
 {
   VirtualCanvas::reset();
-  if (bitmap != NULL)
-    ::DeleteObject(bitmap);
+  if (bitmap != NULL){
+    bool deleteobjectbool = ::DeleteObject(bitmap);
+    assert (deleteobjectbool!=0);
+  }
 }
 
 void BufferCanvas::resize(unsigned _width, unsigned _height)

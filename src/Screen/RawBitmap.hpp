@@ -211,6 +211,7 @@ public:
 #elif defined(_WIN32_WCE) && _WIN32_WCE < 0x0400
     /* StretchDIBits() is bugged on PPC2002, workaround follows */
     HDC source_dc = ::CreateCompatibleDC(dest_canvas);
+    assert ( source_dc != NULL );
     ::SelectObject(source_dc, bitmap);
     ::StretchBlt(dest_canvas, 0, 0,
                  dest_width, dest_height,

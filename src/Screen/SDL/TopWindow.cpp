@@ -65,7 +65,7 @@ TopWindow::set(const TCHAR *cls, const TCHAR *text,
 #ifndef ANDROID
 #ifdef _UNICODE
   char text2[_tcslen(text) * 4];
-  ::WideCharToMultiByte(CP_UTF8, 0, text, -1, text2, sizeof(text2),
+  ::WideCharToMultiByte(CP_ACP, 0, text, -1, text2, sizeof(text2),
                         NULL, NULL);
 #else
   const char *text2 = text;

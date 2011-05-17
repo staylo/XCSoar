@@ -36,7 +36,7 @@ ConvertLineReader::ConvertLineReader(LineReader<char> &_source, charset cs)
 #ifdef _UNICODE
   switch (cs) {
   case UTF8:
-    code_page = CP_UTF8;
+    code_page = CP_ACP;
     break;
 
   case WINDOWS_1252:
@@ -44,7 +44,7 @@ ConvertLineReader::ConvertLineReader(LineReader<char> &_source, charset cs)
     break;
 
   default:
-    code_page = CP_UTF8;
+    code_page = CP_ACP;
   }
 #else
   // XXX initialize iconv?
@@ -68,23 +68,23 @@ ConvertLineReader::read()
 {
   char *narrow = source.read();
 
-  if (narrow == NULL)
+  if (narrow == NULL){
     return NULL;
-
+}
   // Check if there is byte order mark in front
   if (narrow[0] == (char)0xEF &&
       narrow[1] == (char)0xBB &&
-      narrow[2] == (char)0xBF)
+      narrow[2] == (char)0xBF){
     // -> if so, skip it
     narrow += 3;
-
+}
 #ifdef _UNICODE
   size_t narrow_length = strlen(narrow);
 
   TCHAR *t = tbuffer.get(narrow_length + 1);
-  if (t == NULL)
+  if (t == NULL){
     return NULL;
-
+}
   if (narrow_length == 0) {
     t[0] = _T('\0');
     return t;
@@ -98,11 +98,10 @@ ConvertLineReader::read()
   default:
     int length = MultiByteToWideChar(code_page, 0, narrow, narrow_length,
                                      t, narrow_length);
-    if (length == 0)
+    if (length == 0){
       return NULL;
-
+}
     t[length] = _T('\0');
-
     break;
   }
 

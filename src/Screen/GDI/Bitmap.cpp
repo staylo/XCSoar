@@ -92,7 +92,9 @@ Bitmap::load_stretch(unsigned id, unsigned zoom)
   ::DeleteDC(src_dc);
   ::DeleteDC(dest_dc);
 
-  ::DeleteObject(bitmap);
+  bool deleteobjectbool = ::DeleteObject(bitmap);
+  assert (deleteobjectbool!=0);
+
   bitmap = dest_bitmap;
 
   return true;
@@ -176,7 +178,8 @@ void
 Bitmap::reset()
 {
   if (bitmap != NULL) {
-    DeleteObject(bitmap);
+    bool deleteobjectbool = DeleteObject(bitmap);
+    assert (deleteobjectbool!=0);
     bitmap = NULL;
   }
 }

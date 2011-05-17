@@ -47,7 +47,7 @@ BatchTextWriter::writeln(const TCHAR *line)
 
   size_t wide_length = _tcslen(line);
   char narrow[wide_length * 4 + 1];
-  int narrow_length = ::WideCharToMultiByte(CP_UTF8, 0, line, wide_length,
+  int narrow_length = ::WideCharToMultiByte(CP_ACP, 0, line, wide_length,
                                             narrow, sizeof(narrow),
                                             NULL, NULL);
   if (narrow_length == 0 && wide_length > 0)

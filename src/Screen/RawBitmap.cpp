@@ -121,7 +121,8 @@ RawBitmap::~RawBitmap()
 #elif defined(ENABLE_SDL)
   ::SDL_FreeSurface(surface);
 #elif defined(_WIN32_WCE) && _WIN32_WCE < 0x0400
-  ::DeleteObject(bitmap);
+    bool deleteobjectbool = ::DeleteObject(bitmap);
+    assert (deleteobjectbool!=0);
 #else
   delete[] buffer;
 #endif

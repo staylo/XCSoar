@@ -99,7 +99,7 @@ gettext(const TCHAR* text)
   size_t wide_length = _tcslen(text);
   char original[wide_length * 4 + 1];
 
-  if (::WideCharToMultiByte(CP_UTF8, 0, text, -1,
+  if (::WideCharToMultiByte(CP_ACP, 0, text, -1,
                             original, sizeof(original), NULL, NULL) <= 0)
     return text;
 
@@ -109,7 +109,7 @@ gettext(const TCHAR* text)
     return text;
 
   TCHAR translation2[strlen(translation) + 1];
-  if (::MultiByteToWideChar(CP_UTF8, 0, translation, -1, translation2,
+  if (::MultiByteToWideChar(CP_ACP, 0, translation, -1, translation2,
                             sizeof(translation2) / sizeof(translation2[0])) <= 0)
     return text;
 

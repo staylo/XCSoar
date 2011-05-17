@@ -163,18 +163,25 @@ Graphics::Initialise()
 
   LoadUnitSymbols();
 
+LogStartUp(_T("Initialise brushes graphics"));
   AlarmBrush.set(Color::RED);
   WarningBrush.set(Color(0xFF, 0xA2, 0x00));
   TrafficBrush.set(Color::GREEN);
 
+LogStartUp(_T("Initialise large graphics"));
   hFLARMTraffic.load_big(IDB_FLARMTRAFFIC, IDB_FLARMTRAFFIC_HD);
+LogStartUp(_T("Initialise large graphics 2"));
   hTerrainWarning.load_big(IDB_TERRAINWARNING, IDB_TERRAINWARNING_HD);
+LogStartUp(_T("Initialise large graphics 3"));
   hGPSStatus1.load_big(IDB_GPSSTATUS1, IDB_GPSSTATUS1_HD, false);
+LogStartUp(_T("Initialise large graphics 4"));
   hGPSStatus2.load_big(IDB_GPSSTATUS2, IDB_GPSSTATUS2_HD, false);
+LogStartUp(_T("Initialise large graphics 5"));
   hLogger.load_big(IDB_LOGGER, IDB_LOGGER_HD);
   hLoggerOff.load_big(IDB_LOGGEROFF, IDB_LOGGEROFF_HD);
   hBmpTeammatePosition.load_big(IDB_TEAMMATE_POS, IDB_TEAMMATE_POS_HD);
 
+LogStartUp(_T("Initialise flight mode graphics"));
   hCruise.load_big(IDB_CRUISE, IDB_CRUISE_HD, false);
   hClimb.load_big(IDB_CLIMB, IDB_CLIMB_HD, false);
   hFinalGlide.load_big(IDB_FINALGLIDE, IDB_FINALGLIDE_HD, false);
@@ -193,6 +200,8 @@ Graphics::Initialise()
 #endif
 
   hAirspaceInterceptBitmap.load_big(IDB_AIRSPACEI, IDB_AIRSPACEI_HD);
+
+LogStartUp(_T("Initialise airspace graphics"));
 
 #ifndef ENABLE_SDL
   hAboveTerrainBitmap.load(IDB_ABOVETERRAIN);
@@ -219,6 +228,8 @@ Graphics::Initialise()
   hbFinalGlideBelowLandable.set(Color(0xFF, 180, 0x00));
   hbFinalGlideAbove.set(Color::GREEN);
 
+LogStartUp(_T("Initialise wind graphics"));
+
   hpWind.set(Layout::Scale(2), Color::BLACK);
 
   hpBearing.set(Layout::Scale(2), Color::BLACK);
@@ -241,6 +252,8 @@ Graphics::Initialise()
 
   hpAircraft.set(Layout::Scale(3), Color::WHITE);
   hpAircraftBorder.set(Layout::Scale(1), Color::BLACK);
+
+LogStartUp(_T("Initialise aircraft graphics"));
 }
 
 void

@@ -64,7 +64,7 @@ TextWriter::write(const TCHAR *s, size_t src_length)
   if (dest == NULL)
     return false;
 
-  int length = WideCharToMultiByte(CP_UTF8, 0, s, src_length,
+  int length = WideCharToMultiByte(CP_ACP, 0, s, src_length,
                                    dest, dest_size, NULL, NULL);
   if (length == 0)
     return false;
