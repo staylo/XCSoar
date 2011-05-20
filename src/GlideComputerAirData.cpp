@@ -87,6 +87,9 @@ GlideComputerAirData::ResetFlight(const bool full)
   thermallocator.Reset();
 
   windanalyser.reset();
+
+  wind_zig_zag.reset();
+  wind_ekf.reset();
 }
 
 /**
@@ -181,10 +184,17 @@ GlideComputerAirData::Wind()
   if ((SettingsComputer().AutoWindMode & D_AUTOWIND_ZIGZAG) &&
       Basic().AirspeedAvailable &&
       Basic().TrueAirspeed > SettingsComputer().glide_polar_task.get_Vtakeoff()) {
+
+    /*
     WindZigZagGlue::Result result = wind_zig_zag.Update(Basic(), calculated);
 
     if (result.quality > 0)
       SetWindEstimate(result.wind, result.quality);
+    */
+    WindEKFGlue::Result result = wind_ekf.Update(Basic(), calculated);
+    if (result.quality > 0)
+      SetWindEstimate(result.wind, result.quality);
+
   }
 }
 

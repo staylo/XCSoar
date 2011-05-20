@@ -29,6 +29,7 @@ Copyright_License {
 #include "ThermalLocator.hpp"
 #include "Wind/WindAnalyser.hpp"
 #include "Wind/WindZigZag.hpp"
+#include "Wind/WindEKF.hpp"
 #include "GPSClock.hpp"
 #include "Util/WindowFilter.hpp"
 
@@ -51,6 +52,7 @@ protected:
 private:
   ThermalLocator thermallocator;
   WindZigZagGlue wind_zig_zag;
+  WindEKFGlue wind_ekf;
   GPSClock airspace_clock;
 
   WindowFilter<30> vario_30s_filter;
