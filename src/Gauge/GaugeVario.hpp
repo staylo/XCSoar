@@ -68,21 +68,20 @@ public:
   bool ShowAveNeedle;
 
 private:
-  int nlength0, nlength1, nwidth, nline;
+  int nlength0, nlength1, nlength2, nlength3, nwidth;
   int xoffset;
   int yoffset;
 
-  Color colTextGray;
   Color colText;
+  Color colTextLabel;
   Color colTextBackgnd;
+  Color colSurround;
 
   Brush sinkBrush;
   Brush liftBrush;
-  Pen sinkPen;
-  Pen liftPen;
-  Pen sinkThickPen;
-  Pen liftThickPen;
-  Pen blankThickPen;
+  Brush surroundBrush;
+  Brush needleBrush;
+  Pen needlePen;
 
   Bitmap hBitmapClimb;
 
@@ -105,8 +104,7 @@ private:
   DrawInfo_t diLabelBottom;
   const UnitSymbol *unit_symbol;
 
-  RasterPoint polys[(gmax * 2 + 1) * 3];
-  RasterPoint lines[gmax * 2 + 1];
+  RasterPoint polys[(gmax * 2 + 1) * 5];
 
 public:
   GaugeVario(ContainerWindow &parent,
@@ -132,6 +130,8 @@ private:
   void MakePolygon(const int i);
   void MakeAllPolygons();
   RasterPoint *getPolygon(const int i);
+
+  fixed degrees_per_unit;
 
 public:
   // overloaded from Window

@@ -58,6 +58,7 @@
 #define IDB_OUTFIELD_UNREACHABLE        292
 #define IDB_OUTFIELD_UNREACHABLE_HD    5292
 #define IDB_VARIOSCALEA                 293
+#define IDB_VARIOSCALEA_HD             5293
 #define IDB_UNIT_MS                     294
 #define IDB_UNIT_KT                     295
 #define IDB_UNIT_FL                     296
@@ -73,6 +74,7 @@
 #define IDB_CLIMBSMALL                  313
 #define IDB_CLIMBSMALLINV               314
 #define IDB_VARIOSCALEC                 315
+#define IDB_VARIOSCALEC_HD             5315
 #define IDB_THERMALSOURCE               316
 #define IDB_THERMALSOURCE_HD           5316
 #define IDB_AIRSPACE6                   317

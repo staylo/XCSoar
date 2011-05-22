@@ -85,7 +85,11 @@ PNG5 := $(patsubst output/data/graphics/%.bmp,$(DRAWABLE_DIR)/%.png,$(BMP_INFOBO
 $(PNG5): $(DRAWABLE_DIR)/%.png: output/data/graphics/%.bmp | $(DRAWABLE_DIR)/dirstamp
 	$(Q)$(IM_PREFIX)convert $< $@
 
-PNG_FILES = $(DRAWABLE_DIR)/icon.png $(PNG1) $(PNG2) $(PNG3) $(PNG4) $(PNG5)
+PNG6 := $(patsubst output/data/graphics/%.bmp,$(DRAWABLE_DIR)/%.png,$(BMP_VARIO_80) $(BMP_VARIO_160))
+$(PNG6): $(DRAWABLE_DIR)/%.png: output/data/graphics/%.bmp | $(DRAWABLE_DIR)/dirstamp
+	$(Q)$(IM_PREFIX)convert $< $@
+
+PNG_FILES = $(DRAWABLE_DIR)/icon.png $(PNG1) $(PNG2) $(PNG3) $(PNG4) $(PNG5) $(PNG6)
 
 ifeq ($(TESTING),y)
 MANIFEST = android/testing/AndroidManifest.xml

@@ -56,10 +56,11 @@ GaugeVario::GaugeVario(ContainerWindow &parent,
    ShowBugs(false),
    ShowGross(true),
    ShowAveNeedle(false),
-   nlength0(Layout::Scale(15)),
-   nlength1(Layout::Scale(6)),
-   nwidth(Layout::Scale(4)),
-   nline(Layout::Scale(8)),
+   nlength0(Layout::Scale(16)),
+   nlength1(Layout::Scale(4)),
+   nlength2(Layout::Scale(6)),
+   nlength3(Layout::Scale(12)),
+   nwidth(Layout::Scale(3)),
    dirty(true), layout_initialised(false), needle_initialised(false),
    ballast_initialised(false), bugs_initialised(false)
 {
@@ -83,8 +84,11 @@ GaugeVario::GaugeVario(ContainerWindow &parent,
   set(parent, left, top, width, height, style);
 
   // load vario scale
-  hDrawBitMap.load(Units::GetUserVerticalSpeedUnit() == unKnots ?
-                   IDB_VARIOSCALEC : IDB_VARIOSCALEA);
+  hDrawBitMap.load(Layout::ScaleEnabled()?
+                   (Appearance.InverseInfoBox ?
+                   IDB_VARIOSCALEA_HD : IDB_VARIOSCALEC_HD):
+                   (Appearance.InverseInfoBox ?
+                    IDB_VARIOSCALEA : IDB_VARIOSCALEC));
 
   Color thesinkColor;
   Color theliftColor;
@@ -92,33 +96,34 @@ GaugeVario::GaugeVario(ContainerWindow &parent,
   if (Appearance.InverseInfoBox) {
     thesinkColor = Graphics::inv_sinkColor;
     theliftColor = Graphics::inv_liftColor;
+    colSurround = dialog_prefs.infobox_dark_shade;
+    colText = COLOR_WHITE;
+    colTextBackgnd = COLOR_BLACK;
+    colTextLabel = dialog_prefs.infobox_dark_text;
+    hBitmapClimb.load(IDB_CLIMBSMALLINV);
   } else {
     thesinkColor = Graphics::sinkColor;
     theliftColor = Graphics::liftColor;
-  }
-
-  sinkBrush.set(thesinkColor);
-  liftBrush.set(theliftColor);
-  sinkPen.set(1, thesinkColor);
-  liftPen.set(1, theliftColor);
-  sinkThickPen.set(Layout::Scale(5), thesinkColor);
-  liftThickPen.set(Layout::Scale(5), theliftColor);
-
-  if (Appearance.InverseInfoBox) {
-    colText = COLOR_WHITE;
-    colTextBackgnd = COLOR_BLACK;
-    colTextGray = Color(0xa0, 0xa0, 0xa0);
-    hBitmapClimb.load(IDB_CLIMBSMALLINV);
-  } else {
+    colSurround = dialog_prefs.infobox_light_shade;
     colText = COLOR_BLACK;
     colTextBackgnd = COLOR_WHITE;
-    colTextGray = Color((uint8_t)~0xa0, (uint8_t)~0xa0, (uint8_t)~0xa0);
+    colTextLabel = dialog_prefs.infobox_light_text;
     hBitmapClimb.load(IDB_CLIMBSMALL);
   }
-
-  blankThickPen.set(Layout::Scale(5), colTextBackgnd);
+  needlePen.set(1, colTextLabel);
+  needleBrush.set(colText);
+  surroundBrush.set(colSurround);
+  sinkBrush.set(thesinkColor);
+  liftBrush.set(theliftColor);
 
   unit_symbol = GetUnitSymbol(Units::Current.VerticalSpeedUnit);
+
+  if (Units::Current.VerticalSpeedUnit == unKnots) {
+    degrees_per_unit = fixed(GAUGEVARIOSWEEP)*Units::ToUserVSpeed(fixed_half)/ GAUGEVARIORANGE;
+    // 90 * 0.97 / 5
+  } else {
+    degrees_per_unit = fixed(GAUGEVARIOSWEEP) / GAUGEVARIORANGE;
+  }
 
   xoffset = get_right();
   yoffset = get_height() / 2 + get_top();
@@ -141,9 +146,10 @@ GaugeVario::on_paint_buffer(Canvas &canvas)
     orgBottom.x = get_right();
 
     // copy scale bitmap to memory DC
-    canvas.scale_copy(0, 0, hDrawBitMap,
-                      Appearance.InverseInfoBox ? 58 : 0, 0, 58, 120);
-
+    canvas.clear_white();
+    canvas.stretch(0, 0, canvas.get_width(), canvas.get_height(),
+                   hDrawBitMap, 0, 0, hDrawBitMap.get_size().cx,
+                   hDrawBitMap.get_size().cy);
     layout_initialised = true;
   }
 
@@ -234,38 +240,43 @@ void
 GaugeVario::MakePolygon(const int i)
 {
   RasterPoint *bit = getPolygon(i);
-  RasterPoint *bline = &lines[i + gmax];
+  const int width = get_width()*2;
+  const int height = get_height();
 
   const FastRotation r = FastRotation(Angle::degrees(fixed(i)));
   FastRotation::Pair p;
 
   p = r.Rotate(fixed(-xoffset + nlength0), fixed(nwidth));
   bit[0].x = (int)p.first + xoffset;
-  bit[0].y = (int)(p.second * 112 / 100) + yoffset + 1;
+  bit[0].y = (int)(p.second * height / width) + yoffset;
 
   p = r.Rotate(fixed(-xoffset + nlength0), fixed(-nwidth));
   bit[2].x = (int)p.first + xoffset;
-  bit[2].y = (int)(p.second * 112 / 100) + yoffset + 1;
+  bit[2].y = (int)(p.second * height / width) + yoffset;
 
   p = r.Rotate(fixed(-xoffset + nlength1), fixed_zero);
   bit[1].x = (int)p.first + xoffset;
-  bit[1].y = (int)(p.second * 112 / 100) + yoffset + 1;
+  bit[1].y = (int)(p.second * height / width) + yoffset;
 
-  p = r.Rotate(fixed(-xoffset + nline), fixed_zero);
-  bline->x = (int)p.first + xoffset;
-  bline->y = (int)(p.second * 112 / 100) + yoffset + 1;
+  p = r.Rotate(fixed(-xoffset + nlength3), fixed_zero);
+  bit[3].x = (int)p.first + xoffset;
+  bit[3].y = (int)(p.second * height / width) + yoffset;
+
+  p = r.Rotate(fixed(-xoffset + nlength2), fixed_zero);
+  bit[4].x = (int)p.first + xoffset;
+  bit[4].y = (int)(p.second * height / width) + yoffset;
 }
 
 RasterPoint *
 GaugeVario::getPolygon(int i)
 {
-  return polys + (i + gmax) * 3;
+  return polys + (i + gmax) * 5;
 }
 
 void
 GaugeVario::MakeAllPolygons()
 {
-  if (polys && lines)
+  if (polys)
     for (int i = -gmax; i <= gmax; i++)
       MakePolygon(i);
 }
@@ -302,7 +313,6 @@ GaugeVario::RenderZero(Canvas &canvas)
 int
 GaugeVario::ValueToNeedlePos(fixed Value)
 {
-  static fixed degrees_per_unit = fixed(GAUGEVARIOSWEEP) / GAUGEVARIORANGE;
   int i;
 
   if (!needle_initialised){
@@ -321,17 +331,7 @@ GaugeVario::RenderVarioLine(Canvas &canvas, int i, int sink, bool clear)
   if (i == sink)
     return;
 
-  canvas.select(clear ? blankThickPen :
-                        (i > sink ? liftThickPen: sinkThickPen));
-
-  if (i > sink)
-    canvas.polyline(lines + gmax + sink, i - sink);
-  else
-    canvas.polyline(lines + gmax + i, sink - i);
-
-  if (!clear) {
-    // clear up naked (sink) edge of polygon, this gives it a nice
-    // taper look
+  if (clear) {
     if (Appearance.InverseInfoBox) {
       canvas.black_brush();
       canvas.black_pen();
@@ -339,7 +339,34 @@ GaugeVario::RenderVarioLine(Canvas &canvas, int i, int sink, bool clear)
       canvas.white_brush();
       canvas.white_pen();
     }
-    canvas.polygon(getPolygon(sink), 3);
+  } else {
+    if (i>sink) {
+      canvas.select(liftBrush);
+    } else {
+      canvas.select(sinkBrush);
+    }
+    if (Appearance.InverseInfoBox) {
+      canvas.black_pen();
+    } else {
+      canvas.white_pen();
+    }
+  }
+
+  RasterPoint p[4];
+  const int i_min = (i>sink)? sink: i;
+  const int i_max = (i>sink)? i: sink;
+  const RasterPoint* p_last = getPolygon(i_min);
+  p[0] = p_last[3];
+  p[1] = p_last[4];
+  for (int j= i_min+1; j<= i_max; ++j) {
+    if ((j % 9 == 0) || (j== i_max)) {
+      p_last = getPolygon(j);
+      p[2] = p_last[4];
+      p[3] = p_last[3];
+      canvas.polygon(p, 4);
+      p[0] = p[3];
+      p[1] = p[2];
+    }
   }
 }
 
@@ -355,6 +382,10 @@ GaugeVario::RenderNeedle(Canvas &canvas, int i, bool average, bool clear)
   } else {
     canvas.black_brush();
     canvas.black_pen();
+  }
+  if (!clear && !average) {
+    canvas.select(needlePen);
+    canvas.select(needleBrush);
   }
 
   if (average)
@@ -421,7 +452,7 @@ GaugeVario::RenderValue(Canvas &canvas, int x, int y, DrawInfo_t *diValue,
 
   if (!is_persistent() || (dirty && _tcscmp(diLabel->lastText, Label) != 0)) {
     canvas.set_background_color(colTextBackgnd);
-    canvas.set_text_color(colTextGray);
+    canvas.set_text_color(colTextLabel);
     canvas.select(Fonts::Title);
     tsize = canvas.text_size(Label);
     diLabel->orgText.x = diLabel->recBkg.right - tsize.cx;
@@ -596,47 +627,39 @@ GaugeVario::RenderBallast(Canvas &canvas)
   if (!ballast_initialised) { // ontime init, origin and background rect
 
     PixelSize tSize;
-
-    // position of ballast label
-    orgLabel.x = 1;
-    orgLabel.y = get_top() + 2
-                 + Fonts::Title.get_capital_height() * 2
-                 - Fonts::Title.get_ascent_height();
-
-    // position of ballast value
-    orgValue.x = 1;
-    orgValue.y = get_top() + 1
-                 + Fonts::Title.get_capital_height()
-                 - Fonts::Title.get_ascent_height();
-
-    // set upper left corner
-    recLabelBk.left = orgLabel.x;
-    recLabelBk.top = orgLabel.y
-                     + Fonts::Title.get_ascent_height()
-                     - Fonts::Title.get_capital_height();
-
-    // set upper left corner
-    recValueBk.left = orgValue.x;
-    recValueBk.top = orgValue.y
-                     + Fonts::Title.get_ascent_height()
-                     - Fonts::Title.get_capital_height();
-
     // get max label size
     canvas.select(Fonts::Title);
     tSize = canvas.text_size(TextBal);
 
+    // position of ballast label
+    orgLabel.x = 0;
+    orgLabel.y = get_top() + IBLSCALE(1) + tSize.cy;
+
+    // position of ballast value
+    orgValue.x = 0;
+    orgValue.y = get_top();
+
+    // set upper left corner
+    recLabelBk.left = orgLabel.x;
+    recLabelBk.top = orgLabel.y;
+
+    // set upper left corner
+    recValueBk.left = orgValue.x;
+    recValueBk.top = orgValue.y;
+
     // update back rect with max label size
-    recLabelBk.right = recLabelBk.left + tSize.cx;
-    recLabelBk.bottom = recLabelBk.top +
-                        Fonts::Title.get_capital_height();
+    recLabelBk.right = recLabelBk.left + tSize.cx + IBLSCALE(2);
+    recLabelBk.bottom = recLabelBk.top + tSize.cy;
 
     // get max value size
     tSize = canvas.text_size(_T("100%"));
 
-    recValueBk.right = recValueBk.left + tSize.cx;
     // update back rect with max label size
-    recValueBk.bottom = recValueBk.top +
-                        Fonts::Title.get_capital_height();
+    recValueBk.right = recValueBk.left + tSize.cx + IBLSCALE(2);
+    recValueBk.bottom = recValueBk.top + tSize.cy;
+
+    orgLabel.x += IBLSCALE(1);
+    orgValue.x += IBLSCALE(1);
 
     ballast_initialised = true;
   }
@@ -649,27 +672,30 @@ GaugeVario::RenderBallast(Canvas &canvas)
     TCHAR Temp[18];
 
     canvas.select(Fonts::Title);
-    canvas.set_background_color(colTextBackgnd);
+    canvas.set_background_color(colSurround);
 
     if (lastBallast < fixed(0.001) || BALLAST < fixed(0.001)) {
       // new ballast is 0, hide label
-      if (BALLAST < fixed(0.001))
-        canvas.text_opaque(orgLabel.x, orgLabel.y, recLabelBk, _T(""));
-      else {
-        canvas.set_text_color(colTextGray);
+      if (BALLAST < fixed(0.001)) {
+        canvas.select(surroundBrush);
+        canvas.null_pen();
+        canvas.rectangle(recLabelBk.left, recLabelBk.top, recLabelBk.right, recLabelBk.bottom);
+      } else {
+        canvas.set_text_color(colTextLabel);
         // ols ballast was 0, show label
         canvas.text_opaque(orgLabel.x, orgLabel.y, recLabelBk, TextBal);
       }
     }
 
     // new ballast 0, hide value
-    if (BALLAST < fixed(0.001))
-      Temp[0] = _T('\0');
-    else
+    if (BALLAST < fixed(0.001)) {
+        canvas.rectangle(recValueBk.left, recValueBk.top, recValueBk.right, recValueBk.bottom);
+    } else {
       _stprintf(Temp, _T("%d%%"), (int)(BALLAST * 100));
 
-    canvas.set_text_color(colText);
-    canvas.text_opaque(orgValue.x, orgValue.y, recValueBk, Temp);
+      canvas.set_text_color(colText);
+      canvas.text_opaque(orgValue.x, orgValue.y, recValueBk, Temp);
+    }
 
     lastBallast = BALLAST;
   }
@@ -687,38 +713,30 @@ GaugeVario::RenderBugs(Canvas &canvas)
   if (!bugs_initialised) {
     PixelSize tSize;
 
-    orgLabel.x = 1;
-    orgLabel.y = get_bottom() - 2
-                 - Fonts::Title.get_capital_height()
-                 - Fonts::Title.get_ascent_height();
-
-    orgValue.x = 1;
-    orgValue.y = get_bottom() - 1
-                 - Fonts::Title.get_ascent_height();
-
-    recLabelBk.left = orgLabel.x;
-    recLabelBk.top = orgLabel.y
-                     + Fonts::Title.get_ascent_height()
-                     - Fonts::Title.get_capital_height();
-    recValueBk.left = orgValue.x;
-    recValueBk.top = orgValue.y
-                     + Fonts::Title.get_ascent_height()
-                     - Fonts::Title.get_capital_height();
-
     canvas.select(Fonts::Title);
     tSize = canvas.text_size(TextBug);
 
-    recLabelBk.right = recLabelBk.left + tSize.cx;
-    recLabelBk.bottom = recLabelBk.top
-                        + Fonts::Title.get_capital_height()
-                        + Fonts::Title.get_height()
-                        - Fonts::Title.get_ascent_height();
+    orgLabel.x = 0;
+    orgLabel.y = get_bottom() - tSize.cy*2 - IBLSCALE(1);
+
+    orgValue.x = 0;
+    orgValue.y = get_bottom() - tSize.cy;
+
+    recLabelBk.left = orgLabel.x;
+    recLabelBk.top = orgLabel.y;
+    recValueBk.left = orgValue.x;
+    recValueBk.top = orgValue.y;
+
+    recLabelBk.right = recLabelBk.left + tSize.cx + IBLSCALE(2);
+    recLabelBk.bottom = recLabelBk.top + tSize.cy;
 
     tSize = canvas.text_size(_T("100%"));
 
-    recValueBk.right = recValueBk.left + tSize.cx;
-    recValueBk.bottom = recValueBk.top +
-                        Fonts::Title.get_capital_height();
+    recValueBk.right = recValueBk.left + tSize.cx + IBLSCALE(2);
+    recValueBk.bottom = recValueBk.top + tSize.cy;
+
+    orgLabel.x += IBLSCALE(1);
+    orgValue.x += IBLSCALE(1);
 
     bugs_initialised = true;
   }
@@ -728,24 +746,27 @@ GaugeVario::RenderBugs(Canvas &canvas)
     TCHAR Temp[18];
 
     canvas.select(Fonts::Title);
-    canvas.set_background_color(colTextBackgnd);
+    canvas.set_background_color(colSurround);
 
     if (lastBugs > fixed(0.999) || BUGS > fixed(0.999)) {
-      if (BUGS > fixed(0.999))
-        canvas.text_opaque(orgLabel.x, orgLabel.y, recLabelBk, _T(""));
-      else {
-        canvas.set_text_color(colTextGray);
+      if (BUGS > fixed(0.999)) {
+        canvas.select(surroundBrush);
+        canvas.null_pen();
+        canvas.rectangle(recLabelBk.left, recLabelBk.top, recLabelBk.right, recLabelBk.bottom);
+      } else {
+        canvas.set_text_color(colTextLabel);
         canvas.text_opaque(orgLabel.x, orgLabel.y, recLabelBk, TextBug);
       }
     }
 
-    if (BUGS > fixed(0.999))
-      Temp[0] = _T('\0');
-    else
+    if (BUGS > fixed(0.999)) {
+        canvas.rectangle(recValueBk.left, recValueBk.top, recValueBk.right, recValueBk.bottom);
+    } else {
       _stprintf(Temp, _T("%d%%"), (int)((fixed_one - BUGS) * 100));
 
-    canvas.set_text_color(colText);
-    canvas.text_opaque(orgValue.x, orgValue.y, recValueBk, Temp);
+      canvas.set_text_color(colText);
+      canvas.text_opaque(orgValue.x, orgValue.y, recValueBk, Temp);
+    }
 
     lastBugs = BUGS;
   }
