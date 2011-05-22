@@ -33,41 +33,56 @@ AirspaceRendererSettings::SetDefaults()
   altitude_mode = ALLON;
   clip_altitude = 1000;
 
-  std::fill(display, display + AIRSPACECLASSCOUNT, true);
-  display[CLASSG] = false;
-
 #ifndef ENABLE_OPENGL
   transparency = false;
   fill_mode = AS_FILL_DEFAULT;
 #endif
 
-  brushes[0] = 2;
-  brushes[1] = 0;
-  brushes[2] = 0;
-  brushes[3] = 0;
-  brushes[4] = 3;
-  brushes[5] = 3;
-  brushes[6] = 3;
-  brushes[7] = 3;
-  brushes[8] = 0;
-  brushes[9] = 3;
-  brushes[10] = 2;
-  brushes[11] = 3;
-  brushes[12] = 3;
-  brushes[13] = 3;
+  SetDefaultModes();
+  SetDefaultColors();
+}
 
-  colours[0] = 5;
-  colours[1] = 0;
-  colours[2] = 0;
-  colours[3] = 10;
-  colours[4] = 0;
-  colours[5] = 0;
-  colours[6] = 10;
-  colours[7] = 2;
-  colours[8] = 0;
-  colours[9] = 10;
-  colours[10] = 9;
-  colours[11] = 3;
-  colours[12] = 7;
-  colours[13] = 7;
+void
+AirspaceRendererSettings::SetDefaultModes()
+{
+  std::fill(display, display + AIRSPACECLASSCOUNT, true);
+  display[CLASSG] = false;
+}
+
+void
+AirspaceRendererSettings::SetDefaultColors()
+{
+  brushes[OTHER] = 7;
+  brushes[RESTRICT] = 5;
+  brushes[PROHIBITED] = 6;
+  brushes[DANGER] = 6;
+  brushes[CLASSA] = 1;
+  brushes[CLASSB] = 1;
+  brushes[CLASSC] = 2;
+  brushes[CLASSD] = 2;
+  brushes[CLASSE] = 3;
+  brushes[CLASSF] = 3;
+  brushes[CLASSG] = 4;
+  brushes[CTR] = 7;
+  brushes[TMZ] = 7;
+  brushes[WAVE] = 2;
+  brushes[NOGLIDER] = 6;
+  brushes[AATASK] = 2;
+
+  colours[OTHER] = 2;
+  colours[RESTRICT] = 5;
+  colours[PROHIBITED] = 3;
+  colours[DANGER] = 3;
+  colours[CLASSA] = 15;
+  colours[CLASSB] = 9;
+  colours[CLASSC] = 14;
+  colours[CLASSD] = 8;
+  colours[CLASSE] = 13;
+  colours[CLASSF] = 7;
+  colours[CLASSG] = 2;
+  colours[CTR] = 10;
+  colours[TMZ] = 11;
+  colours[NOGLIDER] = 2;
+  colours[WAVE] = 12;
+  colours[AATASK] = 8;
 }

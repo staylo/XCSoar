@@ -44,17 +44,21 @@ struct AirspaceWarningConfig {
   AirspaceWarningConfig()
     :WarningTime(30), AcknowledgementTime(30),
      AltWarningMargin(100) {
-    std::fill(class_warnings, class_warnings + AIRSPACECLASSCOUNT, true);
-    class_warnings[CLASSE] = false;
-    class_warnings[CLASSF] = false;
-    class_warnings[CLASSG] = false;
-    class_warnings[AATASK] = false;
+    default_modes();
   }
 
   bool class_enabled(AirspaceClass_t cls) const {
     assert(cls >= 0 && cls < AIRSPACECLASSCOUNT);
 
     return class_warnings[cls];
+  }
+
+  void default_modes() {
+    std::fill(class_warnings, class_warnings + AIRSPACECLASSCOUNT, true);
+    class_warnings[CLASSE] = false;
+    class_warnings[CLASSF] = false;
+    class_warnings[CLASSG] = false;
+    class_warnings[AATASK] = false;
   }
 };
 

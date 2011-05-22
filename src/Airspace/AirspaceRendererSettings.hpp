@@ -83,6 +83,8 @@ struct AirspaceRendererSettings {
   int colours[AIRSPACECLASSCOUNT];
 
   void SetDefaults();
+  void SetDefaultModes();
+  void SetDefaultColors();
 };
 
 #endif

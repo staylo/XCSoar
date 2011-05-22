@@ -105,15 +105,8 @@ OnAirspaceListEnter(unsigned ItemIndex)
     CommonInterface::SetSettingsMap().airspace;
 
   if (colormode) {
-    int c = dlgAirspaceColoursShowModal();
-    if (c >= 0) {
-      renderer.colours[ItemIndex] = c;
-      ActionInterface::SendSettingsMap();
-      Profile::SetAirspaceColor(ItemIndex, renderer.colours[ItemIndex]);
-      changed = true;
-      Graphics::InitAirspacePens(renderer);
-    }
 
+    // do patterns first in case we had a silly color choice
 #ifndef ENABLE_SDL
 #ifdef HAVE_ALPHA_BLEND
     if (!renderer.transparency || !AlphaBlendAvailable()) {
@@ -129,6 +122,16 @@ OnAirspaceListEnter(unsigned ItemIndex)
     }
 #endif
 #endif
+
+    int c = dlgAirspaceColoursShowModal();
+    if (c >= 0) {
+      renderer.colours[ItemIndex] = c;
+      ActionInterface::SendSettingsMap();
+      Profile::SetAirspaceColor(ItemIndex, renderer.colours[ItemIndex]);
+      changed = true;
+      Graphics::InitAirspacePens(renderer);
+    }
+
   } else {
     renderer.display[ItemIndex] = !renderer.display[ItemIndex];
     if (!renderer.display[ItemIndex])

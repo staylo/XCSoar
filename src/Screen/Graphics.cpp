@@ -225,22 +225,22 @@ const Color Graphics::inv_sinkColor = Color(0xc5,0x57,0x25);
 const Color Graphics::inv_liftColor = Color(0x57,0xab,0x00);
 
 const Color Graphics::Colours[] = {
-  COLOR_RED,
-  COLOR_GREEN,
-  COLOR_BLUE,
-  COLOR_YELLOW,
-  COLOR_MAGENTA,
-  COLOR_CYAN,
-  dark_color(COLOR_RED),
-  dark_color(COLOR_GREEN),
-  dark_color(COLOR_BLUE),
-  dark_color(COLOR_YELLOW),
-  dark_color(COLOR_MAGENTA),
-  dark_color(COLOR_CYAN),
-  COLOR_WHITE,
-  COLOR_LIGHT_GRAY,
-  COLOR_GRAY,
   COLOR_BLACK,
+  COLOR_DARK_GRAY,
+  COLOR_GRAY,
+  COLOR_RED,
+  dark_color(burntOrange),
+  burntOrange,
+  light_color(burntOrange),
+  dark_color(COLOR_MAGENTA),
+  COLOR_MAGENTA,
+  light_color(COLOR_MAGENTA),
+  dark_color(COLOR_CYAN),
+  COLOR_CYAN,
+  light_color(COLOR_CYAN),
+  dark_color(COLOR_BLUE),
+  COLOR_BLUE,
+  light_color(COLOR_BLUE),
 };
 
 void
@@ -271,14 +271,14 @@ Graphics::Initialise()
 
   // airspace brushes and colors
 #ifndef ENABLE_SDL
-  hAirspaceBitmap[0].load(IDB_AIRSPACE0);
-  hAirspaceBitmap[1].load(IDB_AIRSPACE1);
-  hAirspaceBitmap[2].load(IDB_AIRSPACE2);
-  hAirspaceBitmap[3].load(IDB_AIRSPACE3);
-  hAirspaceBitmap[4].load(IDB_AIRSPACE4);
-  hAirspaceBitmap[5].load(IDB_AIRSPACE5);
-  hAirspaceBitmap[6].load(IDB_AIRSPACE6);
-  hAirspaceBitmap[7].load(IDB_AIRSPACE7);
+  hAirspaceBitmap[0].load(IDB_AIRSPACE0); // black
+  hAirspaceBitmap[1].load(IDB_AIRSPACE1); // full shade
+  hAirspaceBitmap[2].load(IDB_AIRSPACE2); // half shade
+  hAirspaceBitmap[3].load(IDB_AIRSPACE3); // third shade
+  hAirspaceBitmap[4].load(IDB_AIRSPACE4); // white
+  hAirspaceBitmap[5].load(IDB_AIRSPACE5); // side hash
+  hAirspaceBitmap[6].load(IDB_AIRSPACE6); // cross hatch
+  hAirspaceBitmap[7].load(IDB_AIRSPACE7); // plus
 #endif
 
   hAirspaceInterceptBitmap.load_big(IDB_AIRSPACEI, IDB_AIRSPACEI_HD);
