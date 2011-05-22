@@ -287,3 +287,4 @@ WayPointGlue::SaveWaypoints(const Waypoints &way_points)
 
   return result;
 }
+
