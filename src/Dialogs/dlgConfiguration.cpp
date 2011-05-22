@@ -22,6 +22,7 @@ Copyright_License {
 */
 
 #include "Dialogs/Internal.hpp"
+#include "Dialogs/Message.hpp"
 #include "Screen/Busy.hpp"
 #include "Screen/Key.h"
 #include "Form/CheckBox.hpp"
@@ -52,6 +53,8 @@ Copyright_License {
 #include "ConfigPanels/TaskDefaultsConfigPanel.hpp"
 #include "ConfigPanels/InfoBoxesConfigPanel.hpp"
 #include "ConfigPanels/ExperimentalConfigPanel.hpp"
+#include "Screen/Graphics.hpp"
+#include "Profile/AirspaceConfig.hpp"
 
 #include <assert.h>
 
@@ -77,6 +80,7 @@ enum config_page {
   PAGE_LAYOUT,
   PAGE_DISPLAY_PAGES,
   PAGE_INFOBOX_MODES,
+  PAGE_RESET,
   PAGE_EXPERIMENTAL,
 };
 
@@ -102,6 +106,7 @@ static const TCHAR *const captions[] = {
   N_("Interface Appearance"),
   N_("InfoBox Pages"),
   N_("InfoBox Modes"),
+  N_("Defaults"),
   N_("Experimental Features"),
 };
 
@@ -109,6 +114,7 @@ static const TCHAR *const captions[] = {
 static config_page current_page;
 static WndForm *wf = NULL;
 TabbedControl *configuration_tabbed;
+static bool defaults_changed;
 
 static void
 PageSwitched()
@@ -199,6 +205,42 @@ FormKeyDown(gcc_unused WndForm &Sender, unsigned key_code)
   }
 }
 
+
+static void
+OnDefaultAirspaceColorsClicked(gcc_unused WndButton &Sender)
+{
+  if (MessageBoxX(_("Are you sure?"), _T("Set default airspace colors"),
+                  MB_YESNO | MB_ICONQUESTION) != IDYES)
+    return;
+
+  AirspaceRendererSettings &renderer =
+    CommonInterface::SetSettingsMap().airspace;
+
+  CommonInterface::SetSettingsMap().airspace.SetDefaultColors();
+  Graphics::InitAirspacePens(renderer);
+  for (unsigned i=0; i< AIRSPACECLASSCOUNT; ++i) {
+    Profile::SetAirspaceBrush(i, renderer.brushes[i]);
+    Profile::SetAirspaceColor(i, renderer.colours[i]);
+  }
+  defaults_changed = true;
+}
+
+static void
+OnDefaultAirspaceModesClicked(gcc_unused WndButton &Sender)
+{
+  if (MessageBoxX(_("Are you sure?"), _T("Set default airspace modes"),
+                  MB_YESNO | MB_ICONQUESTION) != IDYES)
+    return;
+
+  CommonInterface::SetSettingsMap().airspace.SetDefaultModes();
+  CommonInterface::SetSettingsComputer().airspace.warnings.default_modes();
+  for (unsigned i=0; i< AIRSPACECLASSCOUNT; ++i) {
+    Profile::SetAirspaceMode(i);
+  }
+  defaults_changed = true;
+}
+
+
 static CallBackTableEntry CallBackTable[] = {
   DeclareCallBackEntry(AirspaceConfigPanel::OnAirspaceColoursClicked),
   DeclareCallBackEntry(AirspaceConfigPanel::OnAirspaceModeClicked),
@@ -220,6 +262,8 @@ static CallBackTableEntry CallBackTable[] = {
   DeclareCallBackEntry(UnitsConfigPanel::OnUTCData),
   DeclareCallBackEntry(WayPointDisplayConfigPanel::OnRenderingTypeData),
   DeclareCallBackEntry(OnUserLevel),
+  DeclareCallBackEntry(OnDefaultAirspaceModesClicked),
+  DeclareCallBackEntry(OnDefaultAirspaceColorsClicked),
   DeclareCallBackEntry(NULL)
 };
 
@@ -285,6 +329,7 @@ PrepareConfigurationDialog()
 void dlgConfigurationShowModal(void)
 {
   PrepareConfigurationDialog();
+  defaults_changed = false;
 
   if (wf->ShowModal() != mrOK) {
     delete wf;
@@ -323,7 +368,7 @@ void dlgConfigurationShowModal(void)
   // conversion problems with other values
   changed |= UnitsConfigPanel::Save();
 
-  if (changed) {
+  if (changed || defaults_changed) {
     Profile::Save();
     LogDebug(_T("Configuration: Changes saved"));
     if (requirerestart)

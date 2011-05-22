@@ -829,6 +829,11 @@
       <Button Name="cmdInfoBoxesPanel7" Expert="1" X="2" Width="-2" Height="22"/>
     </Panel>
 
+    <Panel Name="frmReset">
+      <Button Name="cmdDefaultAirspaceModes" Caption="Default airspace modes" X="2" Width="-2" Height="22" OnClick="OnDefaultAirspaceModesClicked" />
+      <Button Name="cmdDefaultAirspaceColors" Caption="Default airspace colours" X="2" Width="-2" Height="22" OnClick="OnDefaultAirspaceColorsClicked" />
+    </Panel>
+
     <Panel Name="frmSpecials">
       <Edit Name="prpAppInfoBoxModel" Caption="Device model" X="2" Width="-2" Height="22" CaptionWidth="150"
         Help="Select your PNA model to make full use of its hardware capabilities. If it is not included, use Generic type.">
