@@ -94,10 +94,11 @@ add_border(WindowStyle style)
 WndForm::WndForm(SingleWindow &_main_window,
                  int X, int Y, int Width, int Height,
                  const TCHAR *Caption,
-                 const WindowStyle style):
+                 const WindowStyle style,
+                 const bool alert):
   main_window(_main_window),
   mModalResult(0),
-  mColorTitle(Color(0, 77, 124)),
+  mColorTitle(alert? dialog_prefs.titlebar_alert: dialog_prefs.titlebar_normal),
   mhTitleFont(&Fonts::MapBold),
   mOnTimerNotify(NULL), mOnKeyDownNotify(NULL)
 {
@@ -108,7 +109,7 @@ WndForm::WndForm(SingleWindow &_main_window,
   // Create ClientWindow
 
 #ifdef EYE_CANDY
-  bitmap_title.load(IDB_DIALOGTITLE);
+  bitmap_title.load(alert? IDB_DIALOGTITLE_ALERT: IDB_DIALOGTITLE);
 #endif
 
   WindowStyle client_style;
@@ -116,7 +117,7 @@ WndForm::WndForm(SingleWindow &_main_window,
   client_area.set(*this, mClientRect.left, mClientRect.top,
                   mClientRect.right - mClientRect.left,
                   mClientRect.bottom - mClientRect.top, client_style);
-  client_area.SetBackColor(Color(0xe2, 0xdc, 0xbe));
+  client_area.SetBackColor(dialog_prefs.form_background);
 
 #if !defined(ENABLE_SDL) && !defined(NDEBUG)
   ::SetWindowText(hWnd, mCaption.c_str());

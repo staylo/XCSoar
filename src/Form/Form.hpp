@@ -147,10 +147,13 @@ public:
    * @param Y y-Coordinate of the Window
    * @param Width Width of the Window
    * @param Height Height of the Window
+   * @param style Style of window
+   * @param alert Whether to display with alert style title bar
    */
   WndForm(SingleWindow &_main_window, int X, int Y, int Width, int Height,
           const TCHAR *Caption = _T(""),
-          const WindowStyle style = WindowStyle());
+          const WindowStyle style = WindowStyle(),
+          const bool alert = false);
 
   /** Destructor */
   virtual ~WndForm();

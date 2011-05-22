@@ -28,6 +28,6 @@ Copyright_License {
 #include <tchar.h>
 
 int
-MessageBoxX(const TCHAR *lpText, const TCHAR *lpCaption, unsigned uType);
+MessageBoxX(const TCHAR *lpText, const TCHAR *lpCaption, unsigned uType, const bool alert=false);
 
 #endif

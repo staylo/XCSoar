@@ -71,6 +71,7 @@ IDB_CLOCK_HD            BITMAP  DISCARDABLE     "../output/data/icons/clock_160.
 
 #ifdef EYE_CANDY
 IDB_DIALOGTITLE         BITMAP  DISCARDABLE     "bitmaps/dialog_title.bmp"
+IDB_DIALOGTITLE_ALERT   BITMAP  DISCARDABLE     "bitmaps/dialog_title_alert.bmp"
 #endif
 IDB_DLGBUTTONLEFT32     BITMAP  DISCARDABLE     "bitmaps/dialog_button_left_32x32.bmp"
 IDB_DLGBUTTONRIGHT32    BITMAP  DISCARDABLE     "bitmaps/dialog_button_right_32x32.bmp"

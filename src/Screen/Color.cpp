@@ -63,7 +63,9 @@ DialogPreferences::DialogPreferences():
   infobox_neutral_shade(Color(0xb0,0xa0,0x4e)),
   infobox_dark_shade(Color(0x41,0x3b,0x1d)),
   infobox_light_text(Color(0x16,0x36,0x8b)),
-  infobox_dark_text(Color(0x80,0xff,0xff))
+  infobox_dark_text(Color(0x80,0xff,0xff)),
+  titlebar_normal(Color(0, 77, 124)),
+  titlebar_alert(Color(0xb9,0x3c,0x00))
 {
 }
 

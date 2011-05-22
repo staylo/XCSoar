@@ -60,10 +60,11 @@ protected:
  * @param lpText Text displayed inside the MessageBox
  * @param lpCaption Text displayed in the Caption of the MessageBox
  * @param uType Type of MessageBox to display (OK+Cancel, Yes+No, etc.)
+ * @param alert Whether to display as an alert message (high visibility)
  * @return
  */
 int
-MessageBoxX(const TCHAR *lpText, const TCHAR *lpCaption, unsigned uType)
+MessageBoxX(const TCHAR *lpText, const TCHAR *lpCaption, unsigned uType, bool alert)
 {
   WndFrame *wText = NULL;
   int X, Y, Width, Height;
@@ -99,7 +100,7 @@ MessageBoxX(const TCHAR *lpText, const TCHAR *lpCaption, unsigned uType)
 
   WndForm wf(XCSoarInterface::main_window,
              X, Y, Width, Height, lpCaption,
-             style);
+             style, alert);
   ContainerWindow &client_area = wf.GetClientAreaWindow();
 
   // Create text element

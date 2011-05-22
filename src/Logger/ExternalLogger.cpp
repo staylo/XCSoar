@@ -53,7 +53,7 @@ DeviceDeclare(DeviceDescriptor *dev, const Declaration &decl)
       DeclaredToDevice = true;
     } else {
       MessageBoxX(_("Error occured,\nTask NOT declared!"),
-                  dev->GetName(), MB_OK| MB_ICONERROR);
+                  dev->GetName(), MB_OK| MB_ICONERROR, true);
     }
   }
 
@@ -96,7 +96,7 @@ ExternalLogger::CheckDeclaration(void)
 
   if (MessageBoxX(_("OK to invalidate declaration?"),
                   _("Task declared"),
-     MB_YESNO| MB_ICONQUESTION) == IDYES){
+                  MB_YESNO| MB_ICONQUESTION, true) == IDYES){
     DeclaredToDevice = false;
     return true;
   }

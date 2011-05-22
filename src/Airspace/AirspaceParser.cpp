@@ -154,7 +154,7 @@ ShowParseWarning(int line, const TCHAR* str)
   _stprintf(sTmp, _T("%s: %d\r\n\"%s\"\r\n%s."),
             _("Parse Error at Line"), line, str,
             _("Line skipped."));
-  return (MessageBoxX(sTmp, _("Airspace"), MB_OKCANCEL) == IDOK);
+  return (MessageBoxX(sTmp, _("Airspace"), MB_OKCANCEL, true) == IDOK);
 
 }
 
@@ -885,7 +885,7 @@ ReadAirspace(Airspaces &airspace_database, TLineReader &reader)
     return false;
 
   if (filetype == ftUnknown) {
-    MessageBoxX(_("Unknown Filetype."), _("Airspace"), MB_OK);
+    MessageBoxX(_("Unknown Filetype."), _("Airspace"), MB_OK, true);
     return false;
   }
 

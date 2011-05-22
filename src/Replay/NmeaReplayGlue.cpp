@@ -97,7 +97,7 @@ void
 NmeaReplayGlue::on_bad_file()
 {
   MessageBoxX(_("Could not open NMEA file!"),
-              _("Flight replay"), MB_OK | MB_ICONINFORMATION);
+              _("Flight replay"), MB_OK | MB_ICONINFORMATION, true);
 }
 
 bool

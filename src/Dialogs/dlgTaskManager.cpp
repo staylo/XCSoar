@@ -151,10 +151,10 @@ dlgTaskManager::CommitTaskChanges()
 
   MessageBoxX(getTaskValidationErrors(
     active_task->get_factory().getValidationErrors()),
-    _("Validation Errors"), MB_ICONEXCLAMATION);
+              _("Validation Errors"), MB_ICONEXCLAMATION, true);
 
   return (MessageBoxX(_("Task not valid. Changes will be lost.\nContinue?"),
-                      _("Task Manager"), MB_YESNO | MB_ICONQUESTION) == IDYES);
+                      _("Task Manager"), MB_YESNO | MB_ICONQUESTION, true) == IDYES);
 }
 
 bool

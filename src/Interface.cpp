@@ -124,7 +124,7 @@ XCSoarInterface::CheckShutdown()
     return true;
 
   return MessageBoxX(_("Quit program?"), _T("XCSoar"),
-                     MB_YESNO | MB_ICONQUESTION) == IDYES;
+                     MB_YESNO | MB_ICONQUESTION, true) == IDYES;
 }
 
 // Debounce input buttons (does not matter which button is pressed)

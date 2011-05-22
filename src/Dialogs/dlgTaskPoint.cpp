@@ -436,7 +436,7 @@ static void
 OnRemoveClicked(gcc_unused WndButton &Sender)
 {
   if (MessageBoxX(_("Remove task point?"),
-                        _("Task Point"), MB_YESNO | MB_ICONQUESTION) != IDYES)
+                  _("Task Point"), MB_YESNO | MB_ICONQUESTION, true) != IDYES)
     return;
 
   if (!ordered_task->get_factory().remove(active_index))

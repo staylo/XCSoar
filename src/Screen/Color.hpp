@@ -72,6 +72,8 @@ struct DialogPreferences {
   Color control_background;
   Color choice_background;
   Color shade_background;
+  Color titlebar_normal;
+  Color titlebar_alert;
 };
 
 extern DialogPreferences dialog_prefs;

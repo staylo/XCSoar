@@ -285,7 +285,7 @@ OnReplaceClicked(gcc_unused WndButton &button)
 
   case INVALID:
     MessageBoxX(_("Task would not be valid after the change."), _("Error"),
-                MB_OK | MB_ICONEXCLAMATION);
+                MB_OK | MB_ICONEXCLAMATION, true);
     break;
   }
 }
@@ -383,7 +383,7 @@ OnInsertInTaskClicked(gcc_unused WndButton &button)
   case UNMODIFIED:
   case INVALID:
     MessageBoxX(_("Task would not be valid after the change."), _("Error"),
-                MB_OK | MB_ICONEXCLAMATION);
+                MB_OK | MB_ICONEXCLAMATION, true);
     break;
   }
 }
@@ -482,7 +482,7 @@ OnGotoAndClearTaskClicked(gcc_unused WndButton &button)
     return;
 
   if ((ordered_task_size() > 2) && MessageBoxX(_("Clear current task?"),
-                        _("Goto and clear task"), MB_YESNO | MB_ICONQUESTION) != IDYES)
+                                               _("Goto and clear task"), MB_YESNO | MB_ICONQUESTION, true) != IDYES)
     return;
 
   switch (goto_and_clear_task(*selected_waypoint)) {
@@ -494,7 +494,7 @@ OnGotoAndClearTaskClicked(gcc_unused WndButton &button)
   case UNMODIFIED:
   case INVALID:
     MessageBoxX(_("Unknown error creating task."), _("Error"),
-                MB_OK | MB_ICONEXCLAMATION);
+                MB_OK | MB_ICONEXCLAMATION, true);
     break;
   }
 }
@@ -518,7 +518,7 @@ OnAppendInTaskClicked(gcc_unused WndButton &button)
   case UNMODIFIED:
   case INVALID:
     MessageBoxX(_("Task would not be valid after the change."), _("Error"),
-                MB_OK | MB_ICONEXCLAMATION);
+                MB_OK | MB_ICONEXCLAMATION, true);
     break;
   }
 }
@@ -596,7 +596,7 @@ OnRemoveFromTaskClicked(gcc_unused WndButton &button)
 
   case INVALID:
     MessageBoxX(_("Task would not be valid after the change."), _("Error"),
-                MB_OK | MB_ICONEXCLAMATION);
+                MB_OK | MB_ICONEXCLAMATION, true);
     break;
   }
 }
