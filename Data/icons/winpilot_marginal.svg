@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,8 +12,10 @@
    width="19"
    height="19"
    id="svg2816"
-   inkscape:version="0.48.1 "
-   sodipodi:docname="winpilot_marginal.svg">
+   inkscape:version="0.46"
+   sodipodi:docname="winpilot_marginal.svg"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
      id="metadata11">
     <rdf:RDF>
@@ -35,15 +36,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1424"
-     inkscape:window-height="988"
+     inkscape:window-width="802"
+     inkscape:window-height="814"
      id="namedview9"
      showgrid="false"
      inkscape:zoom="11.8"
      inkscape:cx="-6.2288136"
      inkscape:cy="10"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1-7" />
   <defs
@@ -79,7 +80,7 @@
          d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
          transform="matrix(0.85,0,0,0.85,1,-2)"
          id="path2830-4"
-         style="opacity:0.98999999000000005;fill:#e04040;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+         style="opacity:0.98999999000000005;fill:#cc3000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
       <path
          d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
          transform="matrix(0.55,0,0,0.55,4,1)"
@@ -89,7 +90,7 @@
          d="M 20,10 A 10,10 0 1 1 0,10 10,10 0 1 1 20,10 z"
          transform="matrix(0.45,0,0,0.45,5,2)"
          id="path2830-4-5-9"
-         style="opacity:0.98999999;fill:#ff00ff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+         style="opacity:0.98999999000000005;fill:#b839f9;fill-opacity:1;fill-rule:evenodd;stroke:none" />
     </g>
   </g>
 </svg>

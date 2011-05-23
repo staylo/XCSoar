@@ -47,3 +47,24 @@ Color desaturate(Color c) {
                (c.green()+a)/2,
                (c.blue()+a)/2);
 }
+
+
+DialogPreferences::DialogPreferences():
+  form_background(Color(0xe2,0xdc,0xbe)),
+  focus_background(Color(0x37,0xb7,0xef)),
+  select_background(COLOR_YELLOW),
+  widget_background(Color(0xd4,0xd0,0xc8)),
+  widget_text(COLOR_BLACK),
+  widget_disabled(COLOR_GRAY),
+  control_background(COLOR_WHITE),
+  choice_background(COLOR_LIGHT_GRAY),
+  shade_background(dark_color(form_background)),
+  infobox_light_shade(Color(0x97,0xb5,0xc3)), // Color(0xe2,0xdc,0xbe)
+  infobox_neutral_shade(Color(0xb0,0xa0,0x4e)),
+  infobox_dark_shade(Color(0x41,0x3b,0x1d)),
+  infobox_light_text(Color(0x16,0x36,0x8b)),
+  infobox_dark_text(Color(0x80,0xff,0xff))
+{
+}
+
+DialogPreferences dialog_prefs;

@@ -169,15 +169,18 @@ MapWindow::DrawCompass(Canvas &canvas, const PixelRect &rc) const
   Start.y = IBLSCALE(19) + rc.top;
   Start.x = rc.right - IBLSCALE(19);
 
-  RasterPoint Arrow[5] = { { 0, -13 }, { -6, 10 }, { 0, 4 }, { 6, 10 }, { 0, -13 } };
-
-  canvas.select(Graphics::hpCompass);
-  canvas.select(Graphics::hbCompass);
+  RasterPoint Arrow[5] = { { 0, -13 }, { -6, 10 }, { 0, 8 }, { 6, 10 }, { 0, -13 } };
 
   // North arrow
   PolygonRotateShift(Arrow, 5, Start.x, Start.y,
                      Angle::native(fixed_zero) - render_projection.GetScreenAngle());
-  canvas.polygon(Arrow, 5);
+
+  canvas.select(Graphics::hpCompass1);
+  canvas.select(Graphics::hbCompass1);
+  canvas.polygon(Arrow, 3);
+  canvas.select(Graphics::hpCompass2);
+  canvas.select(Graphics::hbCompass2);
+  canvas.polygon(Arrow+2, 3);
 }
 
 void

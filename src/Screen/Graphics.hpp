@@ -117,7 +117,8 @@ namespace Graphics {
   extern Pen hpWind;
   extern Pen hpBearing;
   extern Pen hpBestCruiseTrack;
-  extern Pen hpCompass;
+  extern Pen hpCompass1;
+  extern Pen hpCompass2;
   extern Pen hpFinalGlideAbove;
   extern Pen hpFinalGlideBelow;
   extern Pen hpFinalGlideBelowLandable;
@@ -128,7 +129,9 @@ namespace Graphics {
   extern Pen TracePen;
   extern Pen ContestPen[3];
 
-  extern Brush hbCompass;
+  extern Brush hbCompass1;
+  extern Brush hbCompass2;
+  extern Brush hbThermalBand;
   extern Brush hbBestCruiseTrack;
   extern Brush hbFinalGlideBelow;
   extern Brush hbFinalGlideBelowLandable;

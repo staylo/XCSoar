@@ -53,7 +53,7 @@ RenderObservationZone::draw_style(Canvas &canvas,
       /* past task point */
       return false;
 
-    Color color = Graphics::Colours[settings.colours[AATASK]];
+    Color color = Graphics::TaskColor;
 #ifdef ENABLE_OPENGL
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

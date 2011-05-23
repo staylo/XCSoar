@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,8 +12,10 @@
    width="11"
    height="11"
    id="svg2816"
-   inkscape:version="0.48.1 "
-   sodipodi:docname="alt2_marginal_field.svg">
+   inkscape:version="0.46"
+   sodipodi:docname="alt2_marginal_field.svg"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
      id="metadata9">
     <rdf:RDF>
@@ -43,8 +44,8 @@
      inkscape:zoom="11.8"
      inkscape:cx="-28.125835"
      inkscape:cy="10"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-x="50"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer2" />
   <defs
@@ -96,7 +97,7 @@
     <path
        d="m 11,13.5 a 5.5,5.5 0 0 1 -11,0 5.5,5.5 0 1 1 11,0 z"
        id="path2830-4-5"
-       style="opacity:0.98999999000000005;fill:#ffa200;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+       style="opacity:0.98999999000000005;fill:#c25524;fill-opacity:1;fill-rule:evenodd;stroke:none" />
   </g>
   <g
      inkscape:groupmode="layer"

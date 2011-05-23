@@ -77,7 +77,8 @@ Pen Graphics::hpWind;
 Pen Graphics::hpIsoline;
 Pen Graphics::hpBearing;
 Pen Graphics::hpBestCruiseTrack;
-Pen Graphics::hpCompass;
+Pen Graphics::hpCompass1;
+Pen Graphics::hpCompass2;
 Pen Graphics::hpFinalGlideAbove;
 Pen Graphics::hpFinalGlideBelow;
 Pen Graphics::hpFinalGlideBelowLandable;
@@ -89,7 +90,9 @@ Pen Graphics::TracePen;
 Pen Graphics::ContestPen[3];
 
 Brush Graphics::hbCanopy;
-Brush Graphics::hbCompass;
+Brush Graphics::hbCompass1;
+Brush Graphics::hbCompass2;
+Brush Graphics::hbThermalBand;
 Brush Graphics::hbBestCruiseTrack;
 Brush Graphics::hbFinalGlideBelow;
 Brush Graphics::hbFinalGlideBelowLandable;
@@ -172,30 +175,54 @@ Graphics::GetAirspaceBrushByClass(const int i,
 }
 #endif
 
+#define COLOR_alertSafe Color(0x31, 0x68, 0xe8) // lightblue1 lt 55 #3168e8
+#define COLOR_alertWarning Color(0xeb, 0x68, 0x2e) // orange1 lt 55 #eb682e
+#define COLOR_alertAlarm Color(0xe6, 0x38, 0x00) // red1 lt 45 #e63800
+#define COLOR_task Color(0x86, 0x46, 0xa0) // pink0 lt 45 #8646a0
+#define COLOR_bearing Color(0x18, 0x30, 0x51) // lightblue0 lt 20 #183051
+#define COLOR_bearing_d Color(0x0f, 0x20, 0x39) // lightblue0 lt 13 #0f2039
+#define COLOR_wind Color(0x27, 0x47, 0x74) // lightblue0 lt 30 #274774
+#define COLOR_wind_l Color(0x4b, 0x82, 0xce) // lightblue0 lt 55 #4b82ce
+#define COLOR_fgabove Color(0x4d, 0x99, 0x00) // green0 lt 30 #4d9900
+#define COLOR_fgbelow Color(0xc0, 0x3a, 0x0c) // red0 lt 40 #c03a0c
+#define COLOR_fgbelowlandable Color(0xd5, 0x80, 0x5e) // orange0 lt 60 #d5805e
+#define COLOR_fgabove_d Color(0x24, 0x4d, 0x00) // green0 lt 15 #244d00
+#define COLOR_fgbelow_d Color(0x7b, 0x22, 0x05) // red0 lt 25 #7b2205
+#define COLOR_fgbelowlandable_d Color(0x8f, 0x54, 0x3d) // orange0 lt 40 #8f543d
+#define COLOR_ground Color(0x7f, 0x4a, 0x35) // orange0 lt 35 #7f4a35
+#define COLOR_ground_d Color(0x5c, 0x34, 0x24) // orange0 lt 25 #5c3424
+#define COLOR_sky Color(0x67, 0xad, 0xff) // lightblue0 lt 70 #67adff
+#define COLOR_sky_d Color(0x44, 0x76, 0xbc) // lightblue0 lt 50 #4476bc
+#define COLOR_landable_g Color(0x5b, 0xb3, 0x00) // green0 lt 35 #5bb300
+#define COLOR_landable_m Color(0xb8, 0x39, 0xf9) // pink1 lt 60 #b839f9
+#define COLOR_landable_o Color(0xc2, 0x55, 0x24) // orange1 lt 45 #c25524
+#define COLOR_landable_r Color(0xcc, 0x30, 0x00) // red1 lt 40 #cc3000
+#define COLOR_landable_n Color(0x99, 0x99, 0x99) // white1 lt 60 #999999
+
 const Color Graphics::inv_redColor = Color(0xff, 0x70, 0x70);
 const Color Graphics::inv_blueColor = Color(0x90, 0x90, 0xff);
 const Color Graphics::inv_yellowColor = COLOR_YELLOW;
 const Color Graphics::inv_greenColor = COLOR_GREEN;
 const Color Graphics::inv_magentaColor = COLOR_MAGENTA;
 
-const Color Graphics::cAlertSafe = Color(0x1d,0x9b,0xc5);
-const Color Graphics::cAlertWarning = Color(0xfe,0x84,0x38);
-const Color Graphics::cAlertAlarm = Color(0xfb,0x35,0x2f);
+const Color Graphics::cAlertSafe = COLOR_alertSafe;
+const Color Graphics::cAlertWarning = COLOR_alertWarning;
+const Color Graphics::cAlertAlarm = COLOR_alertAlarm;
 
-static Color clrSepia(0x78,0x31,0x18);
-const Color Graphics::GroundColor = Color(0x80,0x45,0x15);
-const Color Graphics::skyColor = Color(0x0a,0xb9,0xf3);
+const Color Graphics::GroundColor = COLOR_ground;
+const Color Graphics::skyColor = COLOR_sky;
 const Color Graphics::seaColor = Color(0xbd,0xc5,0xd5); // ICAO open water area
 
+static Color burntOrange(0xff,0x5a,0x00);
 // Magenta ICAO color is 0x65,0x23,0x1c
-const Color Graphics::TaskColor = Color(0x62,0x4e,0x90);
-const Color Graphics::IsolineColor = BearingColor;
-const Color Graphics::BearingColor = Color(0x3e,0x30,0x5f);
+const Color Graphics::TaskColor = COLOR_task;
+const Color Graphics::BearingColor = COLOR_bearing;
+const Color Graphics::IsolineColor = COLOR_bearing;
 
-const Color Graphics::inv_sinkColor = Color(0xc4, 0x80, 0x1e);
-const Color Graphics::inv_liftColor = Color(0x1e, 0xf1, 0x73);
-const Color Graphics::sinkColor = Color(0xa3,0x69,0x0d);
-const Color Graphics::liftColor = Color(0x19,0x94,0x03);
+const Color Graphics::sinkColor = Color(0xc5,0x57,0x25);
+const Color Graphics::liftColor = Color(0x57,0xab,0x00);
+const Color Graphics::inv_sinkColor = Color(0xc5,0x57,0x25);
+const Color Graphics::inv_liftColor = Color(0x57,0xab,0x00);
 
 const Color Graphics::Colours[] = {
   COLOR_RED,
@@ -275,8 +302,13 @@ Graphics::Initialise()
 
   hpIsoline.set(Pen::DASH, Layout::Scale(1), IsolineColor);
 
-  hbWind.set(Color(0x31,0x31,0x67));
-  hpWind.set(Layout::Scale(1), Color(0x55,0x55,0xb3));
+  hbWind.set(COLOR_wind_l);
+  hpWind.set(Layout::Scale(1), COLOR_wind);
+
+  hbCompass1.set(COLOR_wind_l);
+  hpCompass1.set(Layout::Scale(1), COLOR_wind);
+  hbCompass2.set(COLOR_wind);
+  hpCompass2.set(Layout::Scale(1), COLOR_wind_l);
 
   hpTaskActive.set(Pen::DASH, Layout::Scale(2), Graphics::TaskColor);
   hpTaskInactive.set(Pen::DASH, Layout::Scale(1), Graphics::TaskColor);
@@ -302,27 +334,26 @@ Graphics::Initialise()
   hBmpTrafficWarning.load_big(IDB_TRAFFIC_WARNING, IDB_TRAFFIC_WARNING_HD, false);
   hBmpTrafficAlarm.load_big(IDB_TRAFFIC_ALARM, IDB_TRAFFIC_ALARM_HD, false);
 
-  hbCompass.set(Color(207, 207, 207));
+  hbThermalBand.set(COLOR_sky);
+  hpThermalBand.set(Layout::Scale(1), COLOR_sky_d);
 
-  hbFinalGlideBelow.set(COLOR_RED);
-  hpFinalGlideBelow.set(Layout::Scale(1), dark_color(COLOR_RED));
+  hbFinalGlideBelow.set(COLOR_fgbelow);
+  hpFinalGlideBelow.set(Layout::Scale(1), COLOR_fgbelow_d);
 
-  hbFinalGlideBelowLandable.set(COLOR_ORANGE);
-  hpFinalGlideBelowLandable.set(Layout::Scale(1), dark_color(COLOR_ORANGE));
+  hbFinalGlideBelowLandable.set(COLOR_fgbelowlandable);
+  hpFinalGlideBelowLandable.set(Layout::Scale(1), COLOR_fgbelowlandable_d);
 
-  hbFinalGlideAbove.set(COLOR_GREEN);
-  hpFinalGlideAbove.set(Layout::Scale(1), dark_color(COLOR_GREEN));
+  hbFinalGlideAbove.set(COLOR_fgabove);
+  hpFinalGlideAbove.set(Layout::Scale(1), COLOR_fgabove_d);
 
-  hpBearing.set(Layout::Scale(2), BearingColor);
-  hpBestCruiseTrack.set(Layout::Scale(1), dark_color(BearingColor));
-  hbBestCruiseTrack.set(BearingColor);
-
-  hpCompass.set(Layout::Scale(1), COLOR_GRAY);
+  hpBearing.set(Layout::Scale(2), COLOR_bearing);
+  hpBestCruiseTrack.set(Layout::Scale(1), COLOR_bearing_d);
+  hbBestCruiseTrack.set(COLOR_bearing);
 
   hpMapScale.set(Layout::Scale(1), COLOR_BLACK);
 
-  hpTerrainLine.set(Pen::DASH, Layout::Scale(1), clrSepia);
-  hpTerrainLineThick.set(Pen::DASH, Layout::Scale(2), clrSepia);
+  hpTerrainLine.set(Pen::DASH, Layout::Scale(1), COLOR_ground_d);
+  hpTerrainLineThick.set(Pen::DASH, Layout::Scale(2), COLOR_ground_d);
 
   TracePen.set(2, Color(50, 243, 45));
   ContestPen[0].set(Layout::Scale(1)+2, COLOR_RED);
@@ -345,12 +376,12 @@ Graphics::Initialise()
   hbCanopy.set(COLOR_CYAN);
 
     // used for landable rendering
-  hbGreen.set(COLOR_GREEN);
+  hbGreen.set(COLOR_landable_g);
   hbWhite.set(COLOR_WHITE);
-  hbMagenta.set(COLOR_MAGENTA);
-  hbOrange.set(COLOR_ORANGE);
-  hbRed.set(COLOR_RED);
-  hbLightGray.set(COLOR_LIGHT_GRAY);
+  hbMagenta.set(COLOR_landable_m);
+  hbOrange.set(COLOR_landable_o);
+  hbRed.set(COLOR_landable_r);
+  hbLightGray.set(COLOR_landable_n);
   hbNotReachableTerrain.set(light_color(COLOR_RED));
 
   hbGround.set(GroundColor);
@@ -378,9 +409,27 @@ void
 Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
 {
   const ColorRamp snail_colors_vario[] = {
-    {0,   0xc4, 0x80, 0x1e}, // sinkColor
-    {100, 0xa0, 0xa0, 0xa0},
-    {200, 0x1e, 0xf1, 0x73} // liftColor
+    {0, 0xd6, 0x5e, 0x29},
+    {10, 0xcd, 0x5a, 0x27},
+    {20, 0xc5, 0x56, 0x25},
+    {30, 0xbc, 0x52, 0x23},
+    {40, 0xb2, 0x4d, 0x20},
+    {50, 0xaa, 0x49, 0x1e},
+    {60, 0x9f, 0x44, 0x1c},
+    {70, 0x96, 0x40, 0x1a},
+    {80, 0x8e, 0x3c, 0x18},
+    {90, 0x84, 0x38, 0x15},
+    {100, 0x4d, 0x4d, 0x4d},
+    {110, 0x40, 0x80, 0x00},
+    {120, 0x47, 0x8e, 0x00},
+    {130, 0x4f, 0x9c, 0x00},
+    {140, 0x57, 0xab, 0x00},
+    {150, 0x5f, 0xb9, 0x00},
+    {160, 0x66, 0xc7, 0x00},
+    {170, 0x6e, 0xd5, 0x00},
+    {180, 0x76, 0xe3, 0x00},
+    {190, 0x7d, 0xf1, 0x00},
+    {200, 0x85, 0xff, 0x00},
   };
 
   const ColorRamp snail_colors_vario2[] = {
@@ -404,10 +453,10 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
   for (int i = 0; i < NUMSNAILCOLORS; i++) {
     short ih = i * 200 / (NUMSNAILCOLORS - 1);
     Color color = (settings_map.SnailType == stAltitude) ?
-                  ColorRampLookup(ih, snail_colors_alt, 5) :
-                  (settings_map.SnailType == stSeeYouVario) ?
-                  ColorRampLookup(ih, snail_colors_vario2, 4) :
-                  ColorRampLookup(ih, snail_colors_vario, 3);
+      ColorRampLookup(ih, snail_colors_alt, sizeof(snail_colors_alt)/sizeof(ColorRamp)) :
+      (settings_map.SnailType == stSeeYouVario) ?
+      ColorRampLookup(ih, snail_colors_vario2, sizeof(snail_colors_vario2)/sizeof(ColorRamp)) :
+      ColorRampLookup(ih, snail_colors_vario, sizeof(snail_colors_vario)/sizeof(ColorRamp));
 
     if (i < NUMSNAILCOLORS / 2 ||
         !settings_map.SnailScaling)
@@ -535,7 +584,10 @@ Graphics::Deinitialise()
   hBmpTrafficWarning.reset();
   hBmpTrafficAlarm.reset();
 
-  hbCompass.reset();
+  hbCompass1.reset();
+  hbCompass2.reset();
+  hpCompass1.reset();
+  hpCompass2.reset();
 
   hbBestCruiseTrack.reset();
   hbFinalGlideBelow.reset();
@@ -551,7 +603,6 @@ Graphics::Deinitialise()
 
   hpBearing.reset();
   hpBestCruiseTrack.reset();
-  hpCompass.reset();
 
   hpFinalGlideBelow.reset();
   hpFinalGlideBelowLandable.reset();

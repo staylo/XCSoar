@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,8 +12,10 @@
    width="19"
    height="19"
    id="svg2816"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="finalglide.svg">
+   inkscape:version="0.46"
+   sodipodi:docname="mode_finalglide.svg"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
      id="metadata15">
     <rdf:RDF>
@@ -42,10 +43,10 @@
      inkscape:zoom="23.6"
      inkscape:cx="7.1176627"
      inkscape:cy="9.2123413"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer2"
      showguides="true"
      inkscape:guide-bbox="true" />
   <defs
@@ -138,7 +139,8 @@
      transform="translate(0,-13)">
     <path
        d="m 2.4750221,15 c -0.4179772,0 -0.5940153,0.331219 -0.389992,0.734997 L 9.131057,29.696525 c 0.204023,0.404633 0.538043,0.404633 0.742067,0 L 16.915539,15.734997 C 17.118659,15.331219 16.942625,15 16.524644,15 L 2.4750221,15 z"
-       id="path114" />
+       id="path114"
+       style="fill:#bdc5d5;fill-opacity:1" />
     <rect
        width="7"
        height="2.9999998"
