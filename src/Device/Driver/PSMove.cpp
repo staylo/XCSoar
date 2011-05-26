@@ -87,20 +87,22 @@ void
 PSMoveDevice::OnSysTicker(const NMEA_INFO &basic,
                           const DERIVED_INFO &calculated)
 {
-  char tbuf[100];
-  double Vx = basic.GroundSpeed*basic.track.cos();
-  double Vy = basic.GroundSpeed*basic.track.sin();
-  double Vz = -calculated.GPSVario;
+  if (basic.LocationAvailable) {
+    char tbuf[100];
+    double Vx = basic.GroundSpeed*basic.track.cos();
+    double Vy = basic.GroundSpeed*basic.track.sin();
+    double Vz = -calculated.GPSVario;
 
-  sprintf(tbuf, "PAHRR,%f,%f,%f,%f,%f,%f",
-          (double)basic.Location.Longitude.value_degrees(),
-          (double)basic.Location.Latitude.value_degrees(),
-          (double)basic.GPSAltitude,
-          Vx,
-          Vy,
-          Vz);
+    sprintf(tbuf, "PAHRR,%f,%f,%f,%f,%f,%f",
+            (double)basic.Location.Longitude.value_degrees(),
+            (double)basic.Location.Latitude.value_degrees(),
+            (double)basic.GPSAltitude,
+            Vx,
+            Vy,
+            Vz);
 
-  PortWriteNMEA(port, tbuf);
+    PortWriteNMEA(port, tbuf);
+  }
 }
 
 static Device *
