@@ -99,7 +99,10 @@ ComputeNavAltitude(NMEA_INFO &basic,
 static void
 ComputeDynamics(NMEA_INFO &basic, const DERIVED_INFO &calculated)
 {
-  if (calculated.flight.Flying &&
+  if (basic.acceleration.AttitudeAvailable) {
+    // nothing to do, already have it
+
+  } else if (calculated.flight.Flying &&
       (positive(basic.GroundSpeed) || calculated.wind.is_non_zero())) {
 
     // estimate bank angle (assuming balanced turn)
@@ -108,12 +111,8 @@ ComputeDynamics(NMEA_INFO &basic, const DERIVED_INFO &calculated)
           * calculated.TrueAirspeed * fixed_inv_g).value_radians());
 
       basic.acceleration.BankAngle = Angle::radians(angle);
-      if (!basic.acceleration.Available)
-        basic.acceleration.Gload = fixed_one / max(fixed_small, fabs(cos(angle)));
     } else {
       basic.acceleration.BankAngle = Angle::native(fixed_zero);
-      if (!basic.acceleration.Available)
-        basic.acceleration.Gload = fixed_one;
     }
 
     // estimate pitch angle (assuming balanced turn)
@@ -126,10 +125,10 @@ ComputeDynamics(NMEA_INFO &basic, const DERIVED_INFO &calculated)
   } else {
     basic.acceleration.BankAngle = Angle::native(fixed_zero);
     basic.acceleration.PitchAngle = Angle::native(fixed_zero);
-
-    if (!basic.acceleration.Available)
-      basic.acceleration.Gload = fixed_one;
   }
+
+  if (!basic.acceleration.Available)
+    basic.acceleration.Gload = fixed_one / max(fixed_small, fabs(basic.acceleration.BankAngle.cos()));
 }
 
 void

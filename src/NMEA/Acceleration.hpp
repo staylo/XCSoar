@@ -40,6 +40,11 @@ struct ACCELERATION_STATE
   Angle PitchAngle;
 
   /**
+   * Is Attitude information available?
+   */
+  bool AttitudeAvailable;
+
+  /**
    * Is G-load information available?
    * @see Gload
    */
@@ -54,6 +59,7 @@ struct ACCELERATION_STATE
 
   void reset() {
     Available = false;
+    AttitudeAvailable = false;
   }
 
   /**

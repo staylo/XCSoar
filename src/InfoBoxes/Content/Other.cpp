@@ -166,7 +166,8 @@ InfoBoxContentFreeRAM::Update(InfoBoxWindow &infobox)
 void
 InfoBoxContentHorizon::on_custom_paint(InfoBoxWindow &infobox, Canvas &canvas)
 {
-  if (CommonInterface::Calculated().acceleration.Available) {
+  if (CommonInterface::Calculated().acceleration.Available ||
+      CommonInterface::Calculated().acceleration.AttitudeAvailable) {
     const PixelRect rc = infobox.get_value_and_comment_rect();
     if (Appearance.InfoBoxBorder == apIbShade) {
       const Color& col = Appearance.InverseInfoBox?
@@ -184,7 +185,8 @@ void
 InfoBoxContentHorizon::Update(InfoBoxWindow &infobox)
 {
   infobox.SetComment(_T(""));
-  if (!CommonInterface::Calculated().acceleration.Available) {
+  if (!(CommonInterface::Calculated().acceleration.Available ||
+        CommonInterface::Calculated().acceleration.AttitudeAvailable)) {
     infobox.SetInvalid();
     return;
   }

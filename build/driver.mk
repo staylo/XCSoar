@@ -32,6 +32,7 @@ DRIVER_SOURCES = \
 	$(DRIVER_SRC_DIR)/NmeaOut.cpp \
 	$(DRIVER_SRC_DIR)/PosiGraph.cpp \
 	$(DRIVER_SRC_DIR)/Vega.cpp \
+	$(DRIVER_SRC_DIR)/PSMove.cpp \
 	$(DRIVER_SRC_DIR)/Volkslogger.cpp \
 	$(DRIVER_SRC_DIR)/XCOM760.cpp \
 	$(DRIVER_SRC_DIR)/ILEC.cpp \

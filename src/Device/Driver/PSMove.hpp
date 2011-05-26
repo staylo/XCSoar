@@ -21,23 +21,9 @@ Copyright_License {
 }
 */
 
-#include "Math/Angle.hpp"
-#include "NMEA/Acceleration.hpp"
+#ifndef XCSOAR_DEVICE_DRIVER_PSMOVE_HPP
+#define XCSOAR_DEVICE_DRIVER_PSMOVE_HPP
 
-void
-ACCELERATION_STATE::complement(const ACCELERATION_STATE &add)
-{
-  /* calculated: BankAngle, PitchAngle */
+extern const struct DeviceRegister psmove_device_driver;
 
-  if (!Available && add.Available) {
-    Gload = add.Gload;
-    Available = add.Available;
-  }
-
-  if (!AttitudeAvailable && add.AttitudeAvailable) {
-    BankAngle = add.BankAngle;
-    PitchAngle = add.PitchAngle;
-    AttitudeAvailable = add.AttitudeAvailable;
-  }
-}
-
+#endif
