@@ -60,7 +60,10 @@ struct ACCELERATION_STATE
   void reset() {
     Available = false;
     AttitudeAvailable = false;
+    Counter = 0;
   }
+
+  unsigned Counter;
 
   /**
    * Adds data from the specified object, unless already present in

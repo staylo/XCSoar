@@ -406,10 +406,13 @@ void
 InfoBoxManager::ProcessTimer()
 {
   static Validity last;
+  static unsigned last_accel;
 
-  if (XCSoarInterface::Basic().Connected.Modified(last)) {
+  if (XCSoarInterface::Basic().Connected.Modified(last)
+      || (last_accel != XCSoarInterface::Basic().acceleration.Counter)) {
     SetDirty();
     last = XCSoarInterface::Basic().Connected;
+    last_accel = XCSoarInterface::Basic().acceleration.Counter;
   }
 
   InfoBoxDrawIfDirty();
