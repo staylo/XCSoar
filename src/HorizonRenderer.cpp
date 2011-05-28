@@ -54,7 +54,7 @@ DrawHorizon(Canvas &canvas, const PixelRect &rc,
   Brush hbHorizonSky(Graphics::skyColor);
   Pen hpHorizonGround(IBLSCALE(1), dark_color(Graphics::GroundColor));
 
-#define fixed_div fixed(1.0 / 50.0)
+#define fixed_div fixed(1.0 / 35.0)
 #define fixed_89 fixed_int_constant(89)
 
   fixed phi = max(-fixed_89, min(fixed_89,
@@ -75,11 +75,31 @@ DrawHorizon(Canvas &canvas, const PixelRect &rc,
   canvas.select(Graphics::hbGround);
   canvas.segment(center.x, center.y, radius, alpha1, alpha2, true);
 
+  const int s = radius/10;
+
+  // draw 10 degree lines
+  canvas.white_pen();
+  canvas.line(center.x-2*s, center.y+3*s, center.x+2*s, center.y+3*s);
+  canvas.line(center.x-2*s, center.y-3*s, center.x+2*s, center.y-3*s);
+  canvas.line(center.x-3*s, center.y+6*s, center.x+3*s, center.y+6*s);
+  canvas.line(center.x-3*s, center.y-6*s, center.x+3*s, center.y-6*s);
+
   // draw aircraft symbol
   Pen aircraft_pen(IBLSCALE(2), COLOR_BLACK);
   canvas.select(aircraft_pen);
-  canvas.line(center.x + radius / 2, center.y, center.x - radius / 2, center.y);
-  canvas.line(center.x, center.y - radius / 4, center.x, center.y);
+
+  RasterPoint aircraft_w[7] = {{6*s, 0},
+                               {2*s, 0},
+                               {s, s},
+                               {0, 0},
+                               {-s, s},
+                               {-2*s, 0},
+                               {-6*s, 0}};
+  for (int i=0; i<7; ++i) {
+    aircraft_w[i].x += center.x;
+    aircraft_w[i].y += center.y;
+  }
+  canvas.polyline(aircraft_w, 7);
 
   // draw 45 degree dash marks
   const unsigned rr2p = uround(radius * fixed_sqrt_half) + IBLSCALE(1);
