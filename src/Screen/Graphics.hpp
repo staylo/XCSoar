@@ -131,7 +131,6 @@ namespace Graphics {
 
   extern Brush hbCompass1;
   extern Brush hbCompass2;
-  extern Brush hbThermalBand;
   extern Brush hbBestCruiseTrack;
   extern Brush hbFinalGlideBelow;
   extern Brush hbFinalGlideBelowLandable;
@@ -212,6 +211,8 @@ namespace Graphics {
   extern CrossSectionLook cross_section;
   extern FlarmTrafficLook flarm_gauge;
   extern FlarmTrafficLook flarm_dialog;
+
+  extern const Color attitudeGround;
 };
 
 #endif

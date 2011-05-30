@@ -50,30 +50,52 @@ DrawHorizon(Canvas &canvas, const PixelRect &rc,
   is the case or not.
   */
 
-  Pen hpHorizonSky(IBLSCALE(1), dark_color(Graphics::skyColor));
   Brush hbHorizonSky(Graphics::skyColor);
-  Pen hpHorizonGround(IBLSCALE(1), dark_color(Graphics::GroundColor));
+  Pen hpHorizonSky(IBLSCALE(1), dark_color(Graphics::skyColor));
+  Brush hbHorizonGround(Graphics::attitudeGround);
+  Pen hpHorizonGround(IBLSCALE(1), Graphics::GroundColor);
 
-#define fixed_div fixed(1.0 / 35.0)
+#define fixed_max_pitch fixed(35.0)
+  
+  if (acceleration.PitchAngle.value_degrees() >= fixed_max_pitch) {
+
+    // all sky
+    canvas.select(hpHorizonSky);
+    canvas.select(hbHorizonSky);
+    canvas.circle(center.x, center.y, radius);
+
+  } else if (acceleration.PitchAngle.value_degrees() <= -fixed_max_pitch) {
+
+    // all ground
+    canvas.select(hpHorizonGround);
+    canvas.select(hbHorizonGround);
+    canvas.circle(center.x, center.y, radius);
+
+  } else { // part sky/part ground visible
+
+#define fixed_div fixed(1.0 / fixed_max_pitch)
 #define fixed_89 fixed_int_constant(89)
+    
+    // JMW todo: why limit phi to 90 degrees?
 
-  fixed phi = max(-fixed_89, min(fixed_89,
-      acceleration.BankAngle.value_degrees()));
-  fixed alpha = fixed_rad_to_deg * acos(max(-fixed_one, min(fixed_one,
-      acceleration.PitchAngle.value_degrees() * fixed_div)));
-  fixed sphi = fixed_180 - phi;
-  Angle alpha1 = Angle::degrees(sphi - alpha);
-  Angle alpha2 = Angle::degrees(sphi + alpha);
+    const fixed phi = max(-fixed_89, min(fixed_89,
+                                         acceleration.BankAngle.value_degrees()));
+    const fixed alpha = fixed_rad_to_deg * acos(max(-fixed_one, min(fixed_one,
+                                                                    acceleration.PitchAngle.value_degrees() * fixed_div)));
+    const fixed sphi = fixed_180 - phi;
+    const Angle alpha1 = Angle::degrees(sphi - alpha);
+    const Angle alpha2 = Angle::degrees(sphi + alpha);
 
-  // draw sky part
-  canvas.select(hpHorizonSky);
-  canvas.select(hbHorizonSky);
-  canvas.segment(center.x, center.y, radius, alpha2, alpha1, true);
+    // draw sky part
+    canvas.select(hpHorizonSky);
+    canvas.select(hbHorizonSky);
+    canvas.segment(center.x, center.y, radius, alpha2, alpha1, true);
 
-  // draw ground part
-  canvas.select(hpHorizonGround);
-  canvas.select(Graphics::hbGround);
-  canvas.segment(center.x, center.y, radius, alpha1, alpha2, true);
+    // draw ground part
+    canvas.select(hpHorizonGround);
+    canvas.select(hbHorizonGround);
+    canvas.segment(center.x, center.y, radius, alpha1, alpha2, true);
+  }
 
   const int s = radius/10;
 

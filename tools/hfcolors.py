@@ -95,6 +95,7 @@ def define_cols():
     sel_color("fgbelowlandable_d", "orange", 0, 40)
     sel_color("ground", "orange", 0, 35)
     sel_color("ground_d", "orange", 0, 25)
+    sel_color("ground_l", "orange", 0, 45)
     sel_color("sky", "lightblue", 0, 70)
     sel_color("sky_d", "lightblue", 0, 50)
     sel_color("landable_g", "green", 0, 35)

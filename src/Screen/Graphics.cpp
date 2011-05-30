@@ -92,7 +92,6 @@ Pen Graphics::ContestPen[3];
 Brush Graphics::hbCanopy;
 Brush Graphics::hbCompass1;
 Brush Graphics::hbCompass2;
-Brush Graphics::hbThermalBand;
 Brush Graphics::hbBestCruiseTrack;
 Brush Graphics::hbFinalGlideBelow;
 Brush Graphics::hbFinalGlideBelowLandable;
@@ -191,6 +190,7 @@ Graphics::GetAirspaceBrushByClass(const int i,
 #define COLOR_fgbelowlandable_d Color(0x8f, 0x54, 0x3d) // orange0 lt 40 #8f543d
 #define COLOR_ground Color(0x7f, 0x4a, 0x35) // orange0 lt 35 #7f4a35
 #define COLOR_ground_d Color(0x5c, 0x34, 0x24) // orange0 lt 25 #5c3424
+#define COLOR_ground_l Color(0xa1, 0x5f, 0x45) // orange0 lt 45 #a15f45
 #define COLOR_sky Color(0x67, 0xad, 0xff) // lightblue0 lt 70 #67adff
 #define COLOR_sky_d Color(0x44, 0x76, 0xbc) // lightblue0 lt 50 #4476bc
 #define COLOR_landable_g Color(0x5b, 0xb3, 0x00) // green0 lt 35 #5bb300
@@ -223,6 +223,8 @@ const Color Graphics::sinkColor = Color(0xc5,0x57,0x25);
 const Color Graphics::liftColor = Color(0x57,0xab,0x00);
 const Color Graphics::inv_sinkColor = Color(0xc5,0x57,0x25);
 const Color Graphics::inv_liftColor = Color(0x57,0xab,0x00);
+
+const Color Graphics::attitudeGround = COLOR_ground_l;
 
 const Color Graphics::Colours[] = {
   COLOR_BLACK,
@@ -333,9 +335,6 @@ Graphics::Initialise()
   hBmpTrafficSafe.load_big(IDB_TRAFFIC_SAFE, IDB_TRAFFIC_SAFE_HD, false);
   hBmpTrafficWarning.load_big(IDB_TRAFFIC_WARNING, IDB_TRAFFIC_WARNING_HD, false);
   hBmpTrafficAlarm.load_big(IDB_TRAFFIC_ALARM, IDB_TRAFFIC_ALARM_HD, false);
-
-  hbThermalBand.set(COLOR_sky);
-  hpThermalBand.set(Layout::Scale(1), COLOR_sky_d);
 
   hbFinalGlideBelow.set(COLOR_fgbelow);
   hpFinalGlideBelow.set(Layout::Scale(1), COLOR_fgbelow_d);
