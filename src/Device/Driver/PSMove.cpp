@@ -77,6 +77,8 @@ PSMoveDevice::PAHRS(NMEAInputLine& line, struct NMEA_INFO *info)
     info->acceleration.PitchAngle = Angle::degrees(value);
   if (line.read_checked(value))
     yaw = Angle::degrees(value);
+  if (line.read_checked(value))
+    info->ProvideTotalEnergyVario(value);
 
   info->acceleration.AttitudeAvailable = true;
   info->acceleration.Counter++;
