@@ -39,6 +39,9 @@ struct ACCELERATION_STATE
   /** Estimated pitch angle */
   Angle PitchAngle;
 
+  /** Estimated compass heading */
+  Angle Heading;
+
   /**
    * Is Attitude information available?
    */

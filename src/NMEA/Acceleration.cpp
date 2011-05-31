@@ -37,6 +37,7 @@ ACCELERATION_STATE::complement(const ACCELERATION_STATE &add)
   if (!AttitudeAvailable && add.AttitudeAvailable) {
     BankAngle = add.BankAngle;
     PitchAngle = add.PitchAngle;
+    Heading = add.Heading;
     AttitudeAvailable = add.AttitudeAvailable;
     Counter = add.Counter;
   }

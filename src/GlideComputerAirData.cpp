@@ -249,6 +249,12 @@ GlideComputerAirData::Heading()
 {
   const NMEA_INFO &basic = Basic();
   DERIVED_INFO &calculated = SetCalculated();
+
+  if (calculated.acceleration.AttitudeAvailable) {
+    calculated.Heading = calculated.acceleration.Heading;
+    return;
+  }
+
   const SpeedVector wind = calculated.wind;
 
   if ((positive(basic.GroundSpeed) || wind.is_non_zero()) && Calculated().flight.Flying) {
