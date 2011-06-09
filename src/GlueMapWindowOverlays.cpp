@@ -88,7 +88,10 @@ void
 GlueMapWindow::DrawFlightMode(Canvas &canvas, const PixelRect &rc) const
 {
   int offset = 0;
-
+  int Height;
+  TCHAR WarningText[80];
+  WarningText[0] = '\0';
+  PixelSize TextSize = canvas.text_size(WarningText);
   // draw logger status
   if (logger != NULL && logger->isLoggerActive()) {
     bool flip = (Basic().DateTime.second % 2) == 0;
@@ -122,23 +125,38 @@ GlueMapWindow::DrawFlightMode(Canvas &canvas, const PixelRect &rc) const
   const FLARM_STATE &flarm = Basic().flarm;
   if (!flarm.available || (flarm.GetActiveTrafficCount()==0))
     return;
+  _tcscat(WarningText, _T(" FLARM "));
+
+  canvas.select(Fonts::Title);
+  canvas.background_opaque();
+
+  Height = Fonts::Title.get_capital_height() + IBLSCALE(2);
+  int y = rc.bottom - Height;
+
+  TextSize = canvas.text_size(WarningText);
+  y-= Layout::Scale(5);
+
+  offset += TextSize.cx + Layout::Scale(5);
+  canvas.fill_rectangle(rc.right - offset - Layout::Scale(1), y - Layout::Scale(1), rc.right - offset + TextSize.cx + Layout::Scale(1), y + TextSize.cy + Layout::Scale(1), COLOR_BLACK);
+
   switch (flarm.alarm_level) {
   case 0:
-    bmp = &Graphics::hBmpTrafficSafe;
+    canvas.set_background_color(COLOR_WHITE);
+    canvas.set_text_color(COLOR_BLACK);
     break;
   case 1:
-    bmp = &Graphics::hBmpTrafficWarning;
+    canvas.set_background_color(COLOR_YELLOW);
+    canvas.set_text_color(COLOR_BLACK);
     break;
   case 2:
   case 3:
-    bmp = &Graphics::hBmpTrafficAlarm;
+  default:
+    canvas.set_background_color(COLOR_RED);
+    canvas.set_text_color(COLOR_WHITE);
     break;
   };
 
-  offset += bmp->get_size().cx + Layout::Scale(6);
-
-  bmp->draw(canvas, rc.right - offset,
-            rc.bottom - bmp->get_size().cy - Layout::Scale(2));
+  canvas.text(rc.right - offset, y, WarningText);
 }
 
 void
