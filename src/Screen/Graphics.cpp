@@ -38,6 +38,8 @@ Copyright_License {
 
 Pen Graphics::hpSnail[NUMSNAILCOLORS];
 Pen Graphics::hpSnailVario[NUMSNAILCOLORS];
+Brush Graphics::hpSnailVarioNegative[NUMSNAILCOLORS];
+int Graphics::hSnailVarioNegative[NUMSNAILCOLORS];
 
 #ifdef HAVE_HATCHED_BRUSH
 Bitmap Graphics::hAboveTerrainBitmap;
@@ -232,6 +234,9 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
 
     hpSnail[i].set(minwidth, color);
     hpSnailVario[i].set(iwidth, color);
+    hpSnailVarioNegative[i].set(color);
+    hSnailVarioNegative[i]= NUMSNAILCOLORS - i; //max(minwidth, (i - NUMSNAILCOLORS / 2) *
+                             // Layout::Scale(32) / NUMSNAILCOLORS);
   }
 }
 
@@ -314,5 +319,7 @@ Graphics::Deinitialise()
   for (unsigned i = 0; i < NUMSNAILCOLORS; i++) {
     hpSnail[i].reset();
     hpSnailVario[i].reset();
+    hpSnailVarioNegative[i].reset();
+    hSnailVarioNegative[i] = 0;
   }
 }

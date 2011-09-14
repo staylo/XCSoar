@@ -51,6 +51,8 @@ namespace Graphics {
 
   extern Pen hpSnail[NUMSNAILCOLORS];
   extern Pen hpSnailVario[NUMSNAILCOLORS];
+  extern Brush hpSnailVarioNegative[NUMSNAILCOLORS];
+  extern int hSnailVarioNegative[NUMSNAILCOLORS];
 
 #ifdef HAVE_HATCHED_BRUSH
   extern Bitmap hAboveTerrainBitmap;
