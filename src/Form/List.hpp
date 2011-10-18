@@ -25,6 +25,7 @@ Copyright_License {
 #define XCSOAR_FORM_LIST_HPP
 
 #include "Screen/PaintWindow.hpp"
+#include "KineticManager.hpp"
 #include "Form/ScrollBar.hpp"
 #include "Compiler.h"
 
@@ -73,6 +74,9 @@ protected:
   CursorCallback_t CursorCallback;
   PaintItemCallback_t PaintItemCallback;
 
+  KineticManager kinetic;
+  timer_t kinetic_timer;
+
 public:
   /**
    * Constructor of the WndListFrame class
@@ -88,6 +92,8 @@ public:
                UPixelScalar Width, UPixelScalar Height,
                const WindowStyle style,
                UPixelScalar _item_height);
+
+  ~WndListFrame();
 
   /** Sets the function to call when a ListItem is chosen */
   void SetActivateCallback(ActivateCallback_t cb) {
@@ -259,6 +265,8 @@ protected:
    */
   virtual void on_paint(Canvas &canvas);
   virtual void on_paint(Canvas &canvas, const PixelRect &dirty);
+
+  virtual bool on_timer(timer_t id);
 };
 
 #endif

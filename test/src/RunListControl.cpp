@@ -76,7 +76,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     client_area.get_height() - 4,
                     style, normal_font.get_height() + 4);
   list.SetPaintItemCallback(PaintItemCallback);
-  list.SetLength(64);
+  list.SetLength(1024);
   list.set_focus();
 
   form.ShowModal();

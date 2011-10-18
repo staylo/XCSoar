@@ -29,6 +29,11 @@ Copyright_License {
 #include "Form/Button.hpp"
 #include "DataField/Base.hpp"
 
+class SingleWindow;
+class WndForm;
+class WndButton;
+class TabBarControl;
+
 class InfoBoxContentAltitude : public InfoBoxContent
 {
 public:

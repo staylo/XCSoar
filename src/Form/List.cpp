@@ -57,7 +57,9 @@ WndListFrame::WndListFrame(ContainerWindow &parent, const DialogLook &_look,
   dragging(false),
   ActivateCallback(NULL),
   CursorCallback(NULL),
-  PaintItemCallback(NULL)
+  PaintItemCallback(NULL),
+  kinetic(1000),
+  kinetic_timer(0)
 {
   set(parent, X, Y, Width, Height, style);
 }
@@ -336,6 +338,10 @@ bool
 WndListFrame::on_key_down(unsigned key_code)
 {
   scroll_bar.drag_end(this);
+  if (kinetic_timer) {
+    kill_timer(kinetic_timer);
+    kinetic_timer = 0;
+  }
 
   switch (key_code) {
 #ifdef GNAV
@@ -409,6 +415,8 @@ WndListFrame::on_mouse_up(PixelScalar x, PixelScalar y)
     return true;
   } else if (dragging) {
     drag_end();
+    kinetic.MouseUp(GetPixelOrigin());
+    kinetic_timer = set_timer(1037, 30);
     return true;
   } else
     return PaintWindow::on_mouse_up(x, y);
@@ -436,6 +444,7 @@ WndListFrame::on_mouse_move(PixelScalar x, PixelScalar y, unsigned keys)
   } else if (dragging) {
     int new_origin = drag_y - y;
     SetPixelOrigin(new_origin);
+    kinetic.MouseMove(GetPixelOrigin());
     return true;
   }
 
@@ -448,6 +457,10 @@ WndListFrame::on_mouse_down(PixelScalar x, PixelScalar y)
   // End any previous drag
   scroll_bar.drag_end(this);
   drag_end();
+  if (kinetic_timer) {
+    kill_timer(kinetic_timer);
+    kinetic_timer = 0;
+  }
 
   RasterPoint Pos;
   Pos.x = x;
@@ -496,6 +509,7 @@ WndListFrame::on_mouse_down(PixelScalar x, PixelScalar y)
       SetCursorIndex(index);
 
       drag_y = GetPixelOrigin() + y;
+      kinetic.MouseDown(GetPixelOrigin());
       dragging = true;
       set_capture();
     }
@@ -509,6 +523,10 @@ WndListFrame::on_mouse_wheel(PixelScalar x, PixelScalar y, int delta)
 {
   scroll_bar.drag_end(this);
   drag_end();
+  if (kinetic_timer) {
+    kill_timer(kinetic_timer);
+    kinetic_timer = 0;
+  }
 
   if (delta > 0) {
     // scroll up
@@ -530,6 +548,32 @@ WndListFrame::on_cancel_mode()
 
   scroll_bar.drag_end(this);
   drag_end();
+  if (kinetic_timer) {
+    kill_timer(kinetic_timer);
+    kinetic_timer = 0;
+  }
 
   return false;
+}
+
+bool
+WndListFrame::on_timer(timer_t id)
+{
+  if (id == kinetic_timer) {
+    if (kinetic.IsSteady()) {
+      kill_timer(kinetic_timer);
+      kinetic_timer = 0;
+    } else
+      SetPixelOrigin(kinetic.GetPosition());
+
+    return true;
+  }
+
+  return PaintWindow::on_timer(id);
+}
+
+WndListFrame::~WndListFrame()
+{
+  if (kinetic_timer)
+    kill_timer(kinetic_timer);
 }
