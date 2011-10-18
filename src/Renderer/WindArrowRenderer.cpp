@@ -40,8 +40,13 @@ WindArrowRenderer::Draw(Canvas &canvas, const Angle screen_angle,
                         const SpeedVector wind, const RasterPoint pos,
                         const PixelRect rc, bool with_tail)
 {
-  canvas.select(Fonts::MapBold);
-  unsigned text_width = canvas.text_size(_T("99")).cx / 2;
+  canvas.select(Fonts::MapLabel);
+
+  TCHAR sTmp[12];
+  _stprintf(sTmp, _T("%i"), iround(Units::ToUserWindSpeed(wind.norm)));
+
+  unsigned text_width = canvas.text_size(sTmp).cx / 2;
+  unsigned text_height = canvas.text_size(sTmp).cy;
 
   canvas.select(Graphics::hpWind);
   canvas.select(Graphics::hbWind);
@@ -49,15 +54,16 @@ WindArrowRenderer::Draw(Canvas &canvas, const Angle screen_angle,
   int wmag = iround(4 * wind.norm);
 
   int kx = text_width / Layout::FastScale(1) / 2;
+  int ky = text_height / 2; // / Layout::FastScale(1) / 2;
 
   RasterPoint arrow[7] = {
-      { 0, -20 },
-      { -6, -26 },
-      { 0, -20 },
-      { 6, -26 },
-      { 0, -20 },
-      { 8 + kx, -24 },
-      { -8 - kx, -24 }
+      { 0, -16 },
+      { -4, -16 },
+      { 0, -16 },
+      { 4, -16 },
+      { 0, -16 },
+      { 6 + kx, -20 },
+      { -6 - kx, -20 }
   };
 
   for (int i = 1; i < 4; i++)
@@ -80,19 +86,20 @@ WindArrowRenderer::Draw(Canvas &canvas, const Angle screen_angle,
     canvas.line(tail[0], tail[1]);
   }
 
-  TCHAR sTmp[12];
-  _stprintf(sTmp, _T("%i"), iround(Units::ToUserWindSpeed(wind.norm)));
-
   canvas.set_text_color(COLOR_BLACK);
+  canvas.set_background_color(COLOR_WHITE);
 
   TextInBoxMode style;
   style.Align = Center;
-  style.Mode = Outlined;
+  style.Mode = RoundedBlack;
 
-  if (arrow[5].y >= arrow[6].y)
-    TextInBox(canvas, sTmp, arrow[5].x - kx, arrow[5].y, style, rc);
-  else
-    TextInBox(canvas, sTmp, arrow[6].x - kx, arrow[6].y, style, rc);
+  //_stprintf(sTmp, _T("%i"), text_width);
+
+  TextInBox(canvas, sTmp, arrow[2].x, arrow[2].y - ky, style, rc);
+  //if (arrow[5].y >= arrow[6].y)
+  //  TextInBox(canvas, sTmp, arrow[5].x - kx, arrow[5].y, style, rc);
+  //else
+  //  TextInBox(canvas, sTmp, arrow[6].x - kx, arrow[6].y, style, rc);
 }
 
 void

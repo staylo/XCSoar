@@ -130,6 +130,8 @@ Graphics::Initialise()
   hpWindTail.set(Pen::DASH, 1, COLOR_BLACK);
   hbWind.set(COLOR_GRAY);
 
+
+
   hBmpMapScaleLeft.load_big(IDB_MAPSCALE_LEFT, IDB_MAPSCALE_LEFT_HD, false);
   hBmpMapScaleRight.load_big(IDB_MAPSCALE_RIGHT, IDB_MAPSCALE_RIGHT_HD, false);
 
@@ -194,10 +196,15 @@ void
 Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
 {
   const ColorRamp snail_colors_vario[] = {
-    {0,   0xc4, 0x80, 0x1e}, // sinkColor
-    {100, 0xa0, 0xa0, 0xa0},
-    {200, 0x1e, 0xf1, 0x73} // liftColor
+    {0,   0xff, 0x3e, 0x00},
+    {100, 0x8f, 0x8f, 0x8f},
+    {200, 0x00, 0xff, 0x3e}
   };
+
+//    {0,   0xc4, 0x80, 0x1e}, // sinkColor
+//   {100, 0xa0, 0xa0, 0xa0},
+//    {200, 0x1e, 0xf1, 0x73} // liftColor
+//  };
 
   const ColorRamp snail_colors_vario2[] = {
     {0,   0x00, 0x00, 0xff},
@@ -232,7 +239,9 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
       iwidth = max(minwidth, (i - NUMSNAILCOLORS / 2) *
                              Layout::Scale(16) / NUMSNAILCOLORS);
 
-    hpSnail[i].set(minwidth, color);
+    int tinywidth = Layout::Scale(1);
+
+    hpSnail[i].set(tinywidth, color);
     hpSnailVario[i].set(iwidth, color);
     hpSnailVarioNegative[i].set(color);
     hSnailVarioNegative[i]= NUMSNAILCOLORS - i; //max(minwidth, (i - NUMSNAILCOLORS / 2) *
