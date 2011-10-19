@@ -68,6 +68,13 @@ ProtectedTaskManager::GetActiveWaypoint() const
   return NULL;
 }
 
+void
+ProtectedTaskManager::SetActiveWaypoint(const unsigned index)
+{
+  ExclusiveLease lease(*this);
+  lease->SetActiveTaskPoint(index);
+}
+
 bool
 ProtectedTaskManager::IsInSector (const unsigned index,
                                   const AircraftState &ref) const
