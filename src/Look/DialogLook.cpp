@@ -31,23 +31,23 @@ DialogLook::Initialise(const Font &caption_font,
                        const Font &_button_font,
                        const Font &list_font)
 {
-  caption.background_color = Color(0, 77, 124);
+  caption.background_color = Color(255, 255, 255);
   caption.text_color = COLOR_BLACK;
   caption.font = &caption_font;
 
-  SetBackgroundColor(Color(0xe2, 0xdc, 0xbe));
+  SetBackgroundColor(Color(0xff, 0xff, 0xff));
   text_color = COLOR_BLACK;
 
   text_font = &_text_font;
   button_font = &_button_font;
 
-  focused.text_color = COLOR_BLACK;
+  focused.text_color = COLOR_WHITE;
   focused.border_pen.set(Layout::FastScale(1) + 2, COLOR_BLACK);
 
   list.background_color = COLOR_WHITE;
   list.text_color = COLOR_BLACK;
-  list.selected.background_color = COLOR_LIGHT_GRAY;
-  list.selected.text_color = COLOR_BLACK;
+  list.selected.background_color = COLOR_BLACK;
+  list.selected.text_color = COLOR_WHITE;
   list.font = &list_font;
 }
 
