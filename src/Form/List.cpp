@@ -106,7 +106,6 @@ WndListFrame::DrawItems(Canvas &canvas, unsigned start, unsigned end) const
 {
   PixelRect rc = item_rect(start);
 
-  canvas.set_text_color(look.list.text_color);
   canvas.set_background_color(look.list.background_color);
   canvas.background_transparent();
   canvas.select(*look.list.font);
@@ -121,9 +120,12 @@ WndListFrame::DrawItems(Canvas &canvas, unsigned start, unsigned end) const
   unsigned last_item = min(length, end);
 
   for (unsigned i = start; i < last_item; i++) {
-    if (i == cursor)
+    if (i == cursor){
+      canvas.set_text_color(look.list.selected.text_color);
       canvas.fill_rectangle(rc, look.list.selected.background_color);
-    else
+    }
+    else{
+      canvas.set_text_color(look.list.text_color);
       canvas.fill_rectangle(rc, look.list.background_color);
 
     PaintItemCallback(canvas, rc, i);
