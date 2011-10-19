@@ -175,9 +175,13 @@ OnGotoClicked(gcc_unused WndButton &button)
 
   assert(selected_waypoint != NULL);
 
-  protected_task_manager->DoGoto(*selected_waypoint);
-  wf->SetModalResult(mrOK);
+  int TPIndex =  MapTaskManager::index_of_point_in_task(*selected_waypoint);
+  if (TPIndex >= 0)
+	protected_task_manager->SetActiveWaypoint(TPIndex);
+  else
+	protected_task_manager->DoGoto(*selected_waypoint);
 
+  wf->SetModalResult(mrOK);
   CommonInterface::main_window.full_redraw();
 }
 

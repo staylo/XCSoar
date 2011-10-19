@@ -77,6 +77,8 @@ public:
   gcc_pure
   const Waypoint* GetActiveWaypoint() const;
 
+  void SetActiveWaypoint(const unsigned index);
+
   void IncrementActiveTaskPoint(int offset);
   void IncrementActiveTaskPointArm(int offset);
 
