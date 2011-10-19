@@ -50,6 +50,8 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 import android.webkit.MimeTypeMap;
 
+import org.xcsoar.EinkScreen;
+
 class EventBridge {
   public static native void onKeyDown(int keyCode);
   public static native void onKeyUp(int keyCode);
@@ -231,6 +233,8 @@ class NativeView extends SurfaceView
     Log.d(TAG, "OpenGL version: " + gl.glGetString(GL10.GL_VERSION));
     Log.d(TAG, "OpenGL renderer: " + gl.glGetString(GL10.GL_RENDERER));
     Log.d(TAG, "OpenGL extensions: " + gl.glGetString(GL10.GL_EXTENSIONS));
+
+    N2EpdController.enterA2Mode();
   }
 
   /**
