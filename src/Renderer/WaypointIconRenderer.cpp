@@ -142,7 +142,9 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
                 fixed_int_constant(150);
   fixed radius = fixed_int_constant(10) * scale;
 
-  canvas.black_pen();
+
+  Pen pen(Layout::Scale(1), COLOR_WHITE); //black_pen();
+  canvas.select(pen);
   if (settings.landable_style == wpLandableWinPilot) {
     // Render landable with reachable state
     if (reachable != Unreachable) {
@@ -172,6 +174,7 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
   }
   DrawLandableBase(canvas, point, waypoint.IsAirport(), radius);
 
+  canvas.black_pen();
   // Render runway indication
   const Runway &runway = waypoint.runway;
   if (runway.IsDirectionDefined()) {
