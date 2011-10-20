@@ -127,7 +127,7 @@ WndListFrame::DrawItems(Canvas &canvas, unsigned start, unsigned end) const
     else{
       canvas.set_text_color(look.list.text_color);
       canvas.fill_rectangle(rc, look.list.background_color);
-
+    }
     PaintItemCallback(canvas, rc, i);
 
     if (has_focus() && i == cursor)
