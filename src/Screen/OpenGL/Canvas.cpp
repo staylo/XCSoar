@@ -199,6 +199,16 @@ Canvas::line_piece(const RasterPoint a, const RasterPoint b)
 }
 
 void
+Canvas::line_square_piece(const RasterPoint a, const RasterPoint b)
+{
+  pen.set();
+
+  const RasterPoint v[] = { {a.x, a.y}, {b.x, b.y} };
+    glVertexPointer(2, GL_VALUE, 0, &v[0].x);
+    glDrawArrays(GL_LINE_STRIP, 0, 2);
+}
+
+void
 Canvas::two_lines(PixelScalar ax, PixelScalar ay,
                   PixelScalar bx, PixelScalar by,
                   PixelScalar cx, PixelScalar cy)
