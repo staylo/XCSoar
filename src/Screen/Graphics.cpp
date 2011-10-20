@@ -38,6 +38,7 @@ Copyright_License {
 
 Pen Graphics::hpSnail[NUMSNAILCOLORS];
 Pen Graphics::hpSnailVario[NUMSNAILCOLORS];
+Pen Graphics::hpSnailVarioOutline[NUMSNAILCOLORS];
 
 #ifdef HAVE_HATCHED_BRUSH
 Bitmap Graphics::hAboveTerrainBitmap;

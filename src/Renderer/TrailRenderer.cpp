@@ -136,8 +136,17 @@ TrailRenderer::Draw(Canvas &canvas, const GlideComputer &glide_computer,
           canvas.select(Graphics::hpSnail[GetSnailColorIndex(colour_vario)]);
         else
           canvas.select(Graphics::hpSnailVario[GetSnailColorIndex(colour_vario)]);
+       if (negative(it->GetVario())){
+          canvas.null_pen();
+         canvas.black_brush();
+          canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, 3+uint(colour_vario));
+}
+        else
+         canvas.select(Graphics::hpSnailVarioOutline[GetSnailColorIndex(colour_vario)]);
+         canvas.line_square_piece(last_point, pt);
+          canvas.select(Graphics::hpSnailVario[GetSnailColorIndex(colour_vario)]);
+          canvas.line_piece(last_point, pt);
       }
-      canvas.line_piece(last_point, pt);
     }
     last_point = pt;
     last_valid = true;
