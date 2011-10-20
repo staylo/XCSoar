@@ -163,8 +163,8 @@ Graphics::Initialise()
 
   hpMapScale.Set(Layout::Scale(1), COLOR_BLACK);
 
-  hpTerrainLine.Set(Pen::DASH, Layout::Scale(1), clrSepia);
-  hpTerrainLineThick.Set(Pen::DASH, Layout::Scale(2), clrSepia);
+  hpTerrainLine.Set(Pen::DASH, Layout::Scale(2), clrSepia);
+  hpTerrainLineThick.Set(Pen::DASH, Layout::Scale(4), clrSepia);
 
   TracePen.Set(2, Color(50, 243, 45));
   ContestPen[0].Set(Layout::Scale(1)+2, COLOR_RED);
