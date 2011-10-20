@@ -263,6 +263,7 @@ public:
   }
 
   void line_piece(const RasterPoint a, const RasterPoint b);
+  void line_square_piece(const RasterPoint a, const RasterPoint b);
 
   void two_lines(PixelScalar ax, PixelScalar ay,
                  PixelScalar bx, PixelScalar by,
