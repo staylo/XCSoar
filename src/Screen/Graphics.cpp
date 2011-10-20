@@ -150,15 +150,15 @@ Graphics::Initialise()
   hbCompass.Set(Color(207, 207, 207));
 
   hbFinalGlideBelow.Set(COLOR_RED);
-  hpFinalGlideBelow.Set(Layout::Scale(1), DarkColor(COLOR_RED));
+  hpFinalGlideBelow.Set(Layout::Scale(1), COLOR_WHITE);
 
   hbFinalGlideBelowLandable.Set(COLOR_ORANGE);
-  hpFinalGlideBelowLandable.Set(Layout::Scale(1), DarkColor(COLOR_ORANGE));
+  hpFinalGlideBelowLandable.Set(Layout::Scale(1), COLOR_WHITE);
 
   hbFinalGlideAbove.Set(COLOR_GREEN);
-  hpFinalGlideAbove.Set(Layout::Scale(1), DarkColor(COLOR_GREEN));
+  hpFinalGlideAbove.Set(Layout::Scale(1), COLOR_WHITE);
 
-  hpCompass.Set(Layout::Scale(1), COLOR_GRAY);
+  hpCompass.Set(Layout::Scale(1), COLOR_WHITE);
 
   hpMapScale.Set(Layout::Scale(1), COLOR_BLACK);
 
