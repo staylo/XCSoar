@@ -42,14 +42,17 @@ EditWindow::on_paint(Canvas &canvas)
                    PixelScalar(canvas.get_height() - 4) };
 
   if (is_enabled()) {
-    if (is_read_only())
-      canvas.clear(Color(0xe0, 0xe0, 0xe0));
-    else
+    if (is_read_only()){
+      canvas.clear(COLOR_BLACK);
+      canvas.set_text_color(COLOR_WHITE);
+    }
+    else{
       canvas.clear_white();
-    canvas.set_text_color(COLOR_BLACK);
+      canvas.set_text_color(COLOR_BLACK);
+    }
   } else {
-    canvas.clear(COLOR_LIGHT_GRAY);
-    canvas.set_text_color(COLOR_DARK_GRAY);
+    canvas.clear(COLOR_BLACK);
+    canvas.set_text_color(COLOR_WHITE);
   }
 
   canvas.outline_rectangle(0, 0, canvas.get_width() - 1,
