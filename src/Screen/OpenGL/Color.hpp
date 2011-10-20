@@ -135,6 +135,7 @@ struct Color {
   Color
   Highlight() const
   {
+    return Color(r,g,b); //Disable for eink
 #ifdef HAVE_GLES
     return Color((r + 3) / 4., (g + 3) / 4., (b + 3) / 4.);
 #else
