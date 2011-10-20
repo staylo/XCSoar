@@ -163,8 +163,8 @@ Graphics::Initialise()
 
   hpMapScale.set(Layout::Scale(1), COLOR_BLACK);
 
-  hpTerrainLine.set(Pen::DASH, Layout::Scale(1), clrSepia);
-  hpTerrainLineThick.set(Pen::DASH, Layout::Scale(2), clrSepia);
+  hpTerrainLine.set(Pen::DASH, Layout::Scale(2), clrSepia);
+  hpTerrainLineThick.set(Pen::DASH, Layout::Scale(4), clrSepia);
 
   TracePen.set(2, Color(50, 243, 45));
   ContestPen[0].set(Layout::Scale(1)+2, COLOR_RED);
