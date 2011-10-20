@@ -388,7 +388,7 @@ Canvas::keyhole(PixelScalar x, PixelScalar y,
 void
 Canvas::draw_focus(PixelRect rc)
 {
-  outline_rectangle(rc.left, rc.top, rc.right, rc.bottom, COLOR_DARK_GRAY);
+  outline_rectangle(rc.left, rc.top, rc.right, rc.bottom, COLOR_WHITE);
 }
 
 void
