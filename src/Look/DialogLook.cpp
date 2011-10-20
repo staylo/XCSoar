@@ -41,13 +41,13 @@ DialogLook::Initialise(const Font &caption_font,
   text_font = &_text_font;
   button_font = &_button_font;
 
-  focused.text_color = COLOR_WHITE;
+  focused.text_color = COLOR_BLACK;
   focused.border_pen.set(Layout::FastScale(1) + 2, COLOR_BLACK);
 
   list.background_color = COLOR_WHITE;
   list.text_color = COLOR_BLACK;
-  list.selected.background_color = COLOR_BLACK;
-  list.selected.text_color = COLOR_WHITE;
+  list.selected.background_color = COLOR_WHITE;
+  list.selected.text_color = COLOR_BLACK;
   list.font = &list_font;
 }
 
