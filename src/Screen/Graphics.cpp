@@ -150,15 +150,15 @@ Graphics::Initialise()
   hbCompass.set(Color(207, 207, 207));
 
   hbFinalGlideBelow.set(COLOR_RED);
-  hpFinalGlideBelow.set(Layout::Scale(1), COLOR_WHITE);
+  hpFinalGlideBelow.set(Layout::Scale(2), COLOR_WHITE);
 
   hbFinalGlideBelowLandable.set(COLOR_ORANGE);
-  hpFinalGlideBelowLandable.set(Layout::Scale(1), COLOR_WHITE);
+  hpFinalGlideBelowLandable.set(Layout::Scale(2), COLOR_WHITE);
 
   hbFinalGlideAbove.set(COLOR_GREEN);
-  hpFinalGlideAbove.set(Layout::Scale(1), COLOR_WHITE);
+  hpFinalGlideAbove.set(Layout::Scale(2), COLOR_WHITE);
 
-  hpCompass.set(Layout::Scale(1), COLOR_WHITE);
+  hpCompass.set(Layout::Scale(2), COLOR_WHITE);
 
   hpMapScale.set(Layout::Scale(1), COLOR_BLACK);
 
