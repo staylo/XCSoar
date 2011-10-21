@@ -143,11 +143,10 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
   fixed radius = fixed_int_constant(10) * scale;
 
 
-  Pen pen(Layout::Scale(1), COLOR_WHITE); //black_pen();
-  canvas.select(pen);
   if (settings.landable_style == wpLandableWinPilot) {
     // Render landable with reachable state
     if (reachable != Unreachable) {
+      canvas.black_pen();
       canvas.select(reachable == ReachableTerrain
                     ? look.reachable_brush
                     : look.terrain_unreachable_brush);
@@ -172,6 +171,10 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
     else
       canvas.select(look.light_gray_brush);
   }
+
+  Pen pen(Layout::Scale(1), COLOR_WHITE); //black_pen();
+  canvas.select(pen);
+
   DrawLandableBase(canvas, point, waypoint.IsAirport(), radius);
 
   canvas.black_pen();
