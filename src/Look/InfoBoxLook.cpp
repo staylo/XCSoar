@@ -54,13 +54,13 @@ InfoBoxLook::Initialise(bool _inverse, bool use_colors)
   unit_font = &Fonts::InfoBoxUnits;
 #endif
 
-  colors[0] = border_color;
   if (use_colors) {
+    colors[0] = border_color;
     colors[1] = inverse ? COLOR_INVERSE_RED : COLOR_RED;
     colors[2] = inverse ? COLOR_INVERSE_BLUE : COLOR_BLUE;
     colors[3] = inverse ? COLOR_INVERSE_GREEN : COLOR_GREEN;
     colors[4] = inverse ? COLOR_INVERSE_YELLOW : COLOR_YELLOW;
     colors[5] = inverse ? COLOR_INVERSE_MAGENTA : COLOR_MAGENTA;
   } else
-    std::fill(colors + 1, colors + 6, border_color);
+    std::fill(colors, colors + 6, inverse ? COLOR_WHITE : COLOR_BLACK);
 }
