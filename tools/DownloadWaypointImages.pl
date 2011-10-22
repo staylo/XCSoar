@@ -8,6 +8,9 @@
 #         - images are in the subdirectory 'google' or 'bing'
 #         - errors are appended to errors.txt
 
+use Geo::Coordinates::OSGB qw(ll_to_grid);
+
+
 sub usage
 {
   my ($message) = @_;
@@ -41,7 +44,7 @@ USAGE
 if ($#ARGV != 1 && $#ARGV != 2) {
   usage('Wrong number of arguments!');
 }
-if ($ARGV[0] ne 'google' && $ARGV[0] ne 'bing') {
+if ($ARGV[0] ne 'google' && $ARGV[0] ne 'bing' && $ARGV[0] ne 'os') {
   usage('Invalid provider!');
 }
 
@@ -88,21 +91,34 @@ while ($line = <FILE>) {
     $image_name = "$provider/$image_name" .
                   ($provider eq 'google' ? '.png' : '.jpg');
     if ($wp_type >= 2 && $wp_type <= 5) {
+      if ($provider eq 'os'){
+	($easting,$northing) = ll_to_grid($lat,$lon);
+      }
       if (-e $image_name) {
         $res = 0;  # success
       } elsif ($errors_allowed > 0) {
         do {
           sleep(int(rand 5) + 1);  # avoid too much server stress
-          $cmd = "wget --retry-connrefused".
-                 ($provider eq 'google' ?
-                   " \"http://maps.googleapis.com/maps/api/staticmap?center=$lat,$lon&zoom=14&size=${width}x$height&maptype=hybrid&markers=color:green|size:small|$lat,$lon&sensor=false\"" :
-                   " \"http://www.bing.com/local/GetMap.ashx?c=$lat,$lon&z=14&w=$width&h=$height&b=h\"").
-                 " -O $image_name";
+	  SWITCH: {
+	    $provider eq  'google' && do { $cmd = " \"http://maps.googleapis.com/maps/api/staticmap?center=$lat,$lon&zoom=14&size=${width}x$height&maptype=terrain&markers=color:white|size:small|$lat,$lon&sensor=false\""; last SWITCH; };
+            $provider eq  'bing' && do { $cmd = " \"http://www.bing.com/local/GetMap.ashx?c=$lat,$lon&z=14&w=$width&h=$height&b=h\""; last SWITCH; };
+            $provider eq  'os' && do { $cmd = " \"http://getamap.ordnancesurvey.co.uk/getamap/jsp/map_print.jsp?mapX=$easting&mapY=$northing&zoomLevel=7&isNI=&mapAction=zoomabs&isGeo=y\""; last SWITCH; };
+	  }
+          $cmd = "wget --retry-connrefused". $cmd. " -O $image_name";
           $res = system($cmd);
           if ($res != 0) {
             print ERRLOG "$res $cmd\n";
             unlink $image_name;
             $errors_allowed--;
+          } elsif ($provider eq 'os') {
+            open FILE2,"$image_name";
+	    read FILE2,$file2,100000;
+            close FILE2;
+            if ($file2 =~ m/http:[^ ]*/g){
+	      $target = $&;
+	    }
+	    $cmd = "wget --retry-connrefused". " \"$target\"". " -O $image_name";
+	    $res = system($cmd);
           }
         } while ($res != 0 && $errors_allowed > 0);
       } else {
