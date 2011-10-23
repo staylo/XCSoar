@@ -254,7 +254,7 @@ GlueMapWindow::RenderTrail(Canvas &canvas, const RasterPoint aircraft_pos) const
 {
   unsigned min_time = 0;
   if (GetDisplayMode() == DM_CIRCLING) {
-    min_time = max(0, (int)Basic().time - 600);
+    min_time = max(0, (int)Basic().time - 180);
   } else {
     switch(SettingsMap().trail_length) {
     case TRAIL_OFF:
