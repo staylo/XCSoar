@@ -36,15 +36,15 @@ VarioLook::Initialise(bool _inverse, bool _colors,
   if (inverse) {
     background_color = COLOR_BLACK;
     text_color = COLOR_WHITE;
-    dimmed_text_color = Color(0xa0, 0xa0, 0xa0);
-    sink_color = Color(0xc4, 0x80, 0x1e);
-    lift_color = Color(0x1e, 0xf1, 0x73);
+    dimmed_text_color = COLOR_WHITE;
+    sink_color = COLOR_WHITE;
+    lift_color = COLOR_WHITE;
   } else {
     background_color = COLOR_WHITE;
     text_color = COLOR_BLACK;
-    dimmed_text_color = Color((uint8_t)~0xa0, (uint8_t)~0xa0, (uint8_t)~0xa0);
-    sink_color = Color(0xa3,0x69,0x0d);
-    lift_color = Color(0x19,0x94,0x03);
+    dimmed_text_color = COLOR_BLACK;
+    sink_color = COLOR_BLACK;
+    lift_color = COLOR_BLACK;
   }
 
   sink_brush.set(sink_color);
