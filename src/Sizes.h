@@ -16,7 +16,7 @@
 
 #define MAX_LOADSTRING 100
 
-#define NUMAIRSPACECOLORS 16
+#define NUMAIRSPACECOLORS 2
 #define NUMAIRSPACEBRUSHES 8
 
 // used by map window

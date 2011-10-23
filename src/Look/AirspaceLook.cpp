@@ -31,22 +31,8 @@ Copyright_License {
 #endif
 
 const Color AirspaceLook::colors[] = {
-  COLOR_RED,
-  COLOR_GREEN,
-  COLOR_BLUE,
-  COLOR_YELLOW,
-  COLOR_MAGENTA,
-  COLOR_CYAN,
-  dark_color(COLOR_RED),
-  dark_color(COLOR_GREEN),
-  dark_color(COLOR_BLUE),
-  dark_color(COLOR_YELLOW),
-  dark_color(COLOR_MAGENTA),
-  dark_color(COLOR_CYAN),
-  COLOR_WHITE,
-  COLOR_LIGHT_GRAY,
-  COLOR_GRAY,
   COLOR_BLACK,
+  COLOR_WHITE,
 };
 
 void
