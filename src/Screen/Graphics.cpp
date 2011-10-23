@@ -93,10 +93,10 @@ Brush Graphics::hbLightGray;
 Brush Graphics::hbNotReachableTerrain;
 Brush Graphics::hbGround;
 
-static Color clrSepia(0x78,0x31,0x18);
-const Color Graphics::GroundColor = Color(0x80,0x45,0x15);
-const Color Graphics::skyColor = Color(0x0a,0xb9,0xf3);
-const Color Graphics::seaColor = Color(0xbd,0xc5,0xd5); // ICAO open water area
+static Color clrSepia(COLOR_WHITE);
+const Color Graphics::GroundColor = COLOR_WHITE;
+const Color Graphics::skyColor = COLOR_WHITE;
+const Color Graphics::seaColor = COLOR_WHITE; // ICAO open water area
 
 void
 Graphics::Initialise()
