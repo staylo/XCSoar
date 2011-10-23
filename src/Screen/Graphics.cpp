@@ -233,7 +233,7 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
                    PixelScalar((i - NUMSNAILCOLORS / 2) *
                                Layout::Scale(16) / NUMSNAILCOLORS));
 
-    hpSnail[i].Set(minwidth, color);
+    hpSnail[i].Set(Layout::Scale(1), color);
     hpSnailVario[i].Set(iwidth, color);
     hpSnailVarioNegative[i].Set(color);
     hSnailVarioNegative[i]= NUMSNAILCOLORS - i; //max(minwidth, (i - NUMSNAILCOLORS / 2) *
