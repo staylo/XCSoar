@@ -38,6 +38,8 @@ Copyright_License {
 
 Pen Graphics::hpSnail[NUMSNAILCOLORS];
 Pen Graphics::hpSnailVario[NUMSNAILCOLORS];
+Brush Graphics::hpSnailVarioNegative[NUMSNAILCOLORS];
+int Graphics::hSnailVarioNegative[NUMSNAILCOLORS];
 
 #ifdef HAVE_HATCHED_BRUSH
 Bitmap Graphics::hAboveTerrainBitmap;
@@ -233,6 +235,9 @@ Graphics::InitSnailTrail(const SETTINGS_MAP &settings_map)
 
     hpSnail[i].Set(minwidth, color);
     hpSnailVario[i].Set(iwidth, color);
+    hpSnailVarioNegative[i].Set(color);
+    hSnailVarioNegative[i]= NUMSNAILCOLORS - i; //max(minwidth, (i - NUMSNAILCOLORS / 2) *
+                             // Layout::Scale(32) / NUMSNAILCOLORS);
   }
 }
 
@@ -315,5 +320,7 @@ Graphics::Deinitialise()
   for (unsigned i = 0; i < NUMSNAILCOLORS; i++) {
     hpSnail[i].Reset();
     hpSnailVario[i].Reset();
+    hpSnailVarioNegative[i].Reset();
+    hSnailVarioNegative[i] = 0;
   }
 }
