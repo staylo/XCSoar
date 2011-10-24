@@ -111,12 +111,12 @@ Normalize(RasterPoint *v, float length)
 }
 
 #if RASTER_POINT_SIZE == SHAPE_POINT_SIZE
-unsigned
-PolygonToTriangles(const RasterPoint *points, unsigned num_points,
-                   GLushort *triangles, unsigned min_distance)
+unsigned static
+_PolygonToTriangles(const RasterPoint *points, unsigned num_points,
+                    GLushort *triangles, unsigned min_distance)
 #else
 template <typename PT>
-static inline unsigned
+static unsigned
 _PolygonToTriangles(const PT *points, unsigned num_points,
                     GLushort *triangles, unsigned min_distance)
 #endif
@@ -223,12 +223,13 @@ _PolygonToTriangles(const PT *points, unsigned num_points,
   return t - triangles;
 }
 
-#if RASTER_POINT_SIZE != SHAPE_POINT_SIZE
 unsigned
 PolygonToTriangles(const RasterPoint *points, unsigned num_points,
-                   GLushort *triangles, unsigned min_distance)
+                   AllocatedArray<GLushort> &triangles, unsigned min_distance)
 {
-  return _PolygonToTriangles(points, num_points, triangles, min_distance);
+  triangles.grow_discard(3 * (num_points - 2));
+  return _PolygonToTriangles(points, num_points, triangles.begin(),
+                             min_distance);
 }
 
 unsigned
@@ -237,7 +238,6 @@ PolygonToTriangles(const ShapePoint *points, unsigned num_points,
 {
   return _PolygonToTriangles(points, num_points, triangles, min_distance);
 }
-#endif
 
 unsigned
 TriangleToStrip(GLushort *triangles, unsigned index_count,
@@ -369,16 +369,21 @@ TriangleToStrip(GLushort *triangles, unsigned index_count,
 
 unsigned
 LineToTriangles(const RasterPoint *points, unsigned num_points,
-                RasterPoint *strip, unsigned line_width, bool loop, bool tcap)
+                AllocatedArray<RasterPoint> &strip,
+                unsigned line_width, bool loop, bool tcap)
 {
   if (num_points < 2)
     return 0;
+
+  // allocate memory for triangle vertices
+  // max. size: 2*(num_points + (int)(loop || tcap))
+  strip.grow_discard(2 * (num_points + 1));
 
   if (loop && num_points < 3)
     loop = false;
 
   float half_line_width = line_width * 0.5f;
-  RasterPoint *s = strip;
+  RasterPoint *s = strip.begin();
   const RasterPoint *a, *b, *c;
   const RasterPoint * const points_end = points + num_points;
 
@@ -516,5 +521,5 @@ LineToTriangles(const RasterPoint *points, unsigned num_points,
     }
   }
 
-  return s - strip;
+  return s - strip.begin();
 }
