@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 
 <Form Caption="Waypoint Info">
+  <SymbolButton Name="cmdShrink" Caption="-" X="60" Y="37" Width="35" Height="35" OnClick="OnShrinkClicked" />
+  <SymbolButton Name="cmdMagnify" Caption="+" X="-95" Y="37" Width="35" Height="35" OnClick="OnMagnifyClicked" />
+
   <SymbolButton Name="cmdPrev" Caption="&lt;" X="2" Y="-37" Width="37" Height="35" OnClick="OnPrevClicked" />
   <SymbolButton Name="cmdNext" Caption="&gt;" X="41" Y="-37" Width="37" Height="35" OnClick="OnNextClicked" />
-  
+
   <Button Name="cmdGoto" Caption="GoTo" X="85" Y="-37" Width="75" Height="35" OnClick="OnGotoClicked" />
 
   <Button Name="cmdClose" Caption="Close" X="-77" Y="-37" Width="75" Height="35" OnClick="OnCloseClicked" />

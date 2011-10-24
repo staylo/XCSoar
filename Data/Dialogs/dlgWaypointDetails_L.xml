@@ -3,6 +3,9 @@
 <Form Caption="Waypoint Info">
   <Button Name="cmdGoto" Caption="GoTo" X="2" Y="2" Width="75" Height="35" OnClick="OnGotoClicked" />
 
+  <SymbolButton Name="cmdMagnify" Caption="+" X="23" Y="60" Width="35" Height="35" OnClick="OnMagnifyClicked" />
+  <SymbolButton Name="cmdShrink" Caption="-" X="23" Y="97" Width="35" Height="35" OnClick="OnShrinkClicked" />
+
   <SymbolButton Name="cmdPrev" Caption="&lt;" X="2" Y="-74" Width="37" Height="35" OnClick="OnPrevClicked" />
   <SymbolButton Name="cmdNext" Caption="&gt;" X="41" Y="-74" Width="36" Height="35" OnClick="OnNextClicked" />
 
