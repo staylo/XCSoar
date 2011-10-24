@@ -26,17 +26,15 @@ Copyright_License {
 #include "Engine/Task/TaskEvents.hpp"
 #include "Engine/Task/Factory/AbstractTaskFactory.hpp"
 #include "Protection.hpp"
-#include "Math/Earth.hpp"
-#include "Profile/Profile.hpp"
 #include "LocalTime.hpp"
-#include "UtilsText.hpp"
-#include "OS/PathName.hpp"
-#include "Math/SunEphemeris.hpp"
+#include "LocalPath.hpp"
 #include "Blackboard.hpp"
 #include "SettingsComputer.hpp"
 #include "Screen/Bitmap.hpp"
 #include "Screen/Layout.hpp"
 #include "Screen/Key.h"
+#include "Math/Earth.hpp"
+#include "Math/SunEphemeris.hpp"
 #include "Math/FastMath.h"
 #include "MainWindow.hpp"
 #include "MapWindow/GlueMapWindow.hpp"
@@ -53,6 +51,10 @@ Copyright_License {
 #include "InputEvents.hpp"
 #include "NMEA/Aircraft.hpp"
 #include "Units/UnitsFormatter.hpp"
+#ifdef ANDROID
+#include "Android/NativeView.hpp"
+#include "Android/Main.hpp"
+#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -60,69 +62,29 @@ Copyright_License {
 
 static int page = 0;
 static WndForm *wf = NULL;
-static WndProperty *wDetails = NULL;
+static WndFrame *wDetails = NULL;
 static WndFrame *wInfo = NULL;
 static WndFrame *wCommand = NULL;
 static WndOwnerDrawFrame *wImage = NULL;
-static bool hasimage1 = false;
-static bool hasimage2 = false;
 static const Waypoint *selected_waypoint = NULL;
 
-static Bitmap jpgimage1, jpgimage2;
+static StaticArray<Bitmap, 5> images;
 
 static void
 NextPage(int Step)
 {
   assert(selected_waypoint);
-  bool page_ok = false;
-  page += Step;
+  int last_page = 2 + images.size();
 
   do {
+    page += Step;
     if (page < 0)
-      page = 4;
-    if (page > 4)
+      page = last_page;
+    else if (page > last_page)
       page = 0;
-
-    switch (page) {
-    case 0:
-      page_ok = true;
-      break;
-
-    case 1:
-      if (selected_waypoint->details.empty()) 
-        page += Step;
-      else
-        page_ok = true;
-
-      break;
-
-    case 2:
-      page_ok = true;
-      break;
-
-    case 3:
-      if (!hasimage1)
-        page += Step;
-      else
-        page_ok = true;
-
-      break;
-
-    case 4:
-      if (!hasimage2)
-        page += Step;
-      else
-        page_ok = true;
-
-      break;
-
-    default:
-      page_ok = true;
-      page = 0;
-      break;
-      // error!
-    }
-  } while (!page_ok);
+  } while (page == 1 &&
+           selected_waypoint->details.empty() &&
+           selected_waypoint->files_external.empty());
 
   wInfo->set_visible(page == 0);
   wDetails->set_visible(page == 1);
@@ -406,11 +368,30 @@ static void
 OnImagePaint(gcc_unused WndOwnerDrawFrame *Sender, Canvas &canvas)
 {
   canvas.clear_white();
-  if (page == 3) {
-    canvas.copy(jpgimage1);
-  } else if (page == 4) {
-    canvas.copy(jpgimage2);
+  if (page >= 3 && page < 3 + (int)images.size())
+    canvas.copy(images[page-3]);
+}
+
+static void
+OnFileListEnter(gcc_unused unsigned i)
+{
+  if (i < selected_waypoint->files_external.size()) {
+    TCHAR path[MAX_PATH];
+    LocalPath(path, selected_waypoint->files_external[i].c_str());
+
+    // TODO: support other platforms
+#ifdef ANDROID
+    native_view->openFile(path);
+#endif
   }
+}
+
+static void
+OnFileListItemPaint(Canvas &canvas, const PixelRect paint_rc, unsigned i)
+{
+  canvas.text(paint_rc.left + Layout::Scale(2),
+              paint_rc.top + Layout::Scale(2),
+              selected_waypoint->files_external[i].c_str());
 }
 
 static gcc_constexpr_data CallBackTableEntry CallBackTable[] = {
@@ -454,13 +435,6 @@ dlgWaypointDetailsShowModal(SingleWindow &parent, const Waypoint& way_point,
                   Layout::landscape ? _T("IDR_XML_WAYPOINTDETAILS_L") :
                                       _T("IDR_XML_WAYPOINTDETAILS"));
   assert(wf != NULL);
-
-  TCHAR path[MAX_PATH], buffer[MAX_PATH];
-  const TCHAR *Directory = NULL;
-  if (Profile::GetPath(szProfileWaypointFile, path))
-    Directory = DirName(path, buffer);
-  if (Directory == NULL)
-    Directory = _T("");
 
   TCHAR sTmp[128];
   _stprintf(sTmp, _T("%s: '%s'"), wf->GetCaption(), selected_waypoint->name.c_str());
@@ -567,17 +541,37 @@ dlgWaypointDetailsShowModal(SingleWindow &parent, const Waypoint& way_point,
 
   wf->SetKeyDownNotify(FormKeyDown);
 
-  wInfo = ((WndFrame *)wf->FindByName(_T("frmInfos")));
-  wCommand = ((WndFrame *)wf->FindByName(_T("frmCommands")));
-  wImage = ((WndOwnerDrawFrame *)wf->FindByName(_T("frmImage")));
-  wDetails = (WndProperty*)wf->FindByName(_T("frmDetails"));
+  wInfo = (WndFrame *)wf->FindByName(_T("frmInfos"));
+  wCommand = (WndFrame *)wf->FindByName(_T("frmCommands"));
+  wDetails = (WndFrame *)wf->FindByName(_T("frmDetails"));
+  wImage = (WndOwnerDrawFrame *)wf->FindByName(_T("frmImage"));
+
+  WndListFrame *wFilesList = (WndListFrame *)wf->FindByName(_T("Files"));
+  WndProperty *wDetailsText = (WndProperty *)wf->FindByName(_T("Details"));
 
   assert(wInfo != NULL);
   assert(wCommand != NULL);
-  assert(wImage != NULL);
   assert(wDetails != NULL);
+  assert(wImage != NULL);
 
-  wDetails->SetText(selected_waypoint->details.c_str(), true);
+  assert(wFilesList != NULL);
+  assert(wDetailsText != NULL);
+
+  int num_files = selected_waypoint->files_external.size();
+  if (num_files > 0) {
+    wFilesList->SetPaintItemCallback(OnFileListItemPaint);
+    wFilesList->SetCursorCallback(OnFileListEnter);
+    wFilesList->SetActivateCallback(OnFileListEnter);
+
+    unsigned list_height = wFilesList->GetItemHeight() * std::min(num_files, 5);
+    wFilesList->resize(wFilesList->get_width(), list_height);
+    wFilesList->SetLength(num_files);
+
+    PixelRect rc = wDetailsText->get_position();
+    rc.top += list_height + Layout::Scale(2);
+    wDetailsText->move(rc);
+  }
+  wDetailsText->SetText(selected_waypoint->details.c_str(), true);
   wCommand->hide();
 
   if (!allow_navigation) {
@@ -595,13 +589,15 @@ dlgWaypointDetailsShowModal(SingleWindow &parent, const Waypoint& way_point,
 
   ShowTaskCommands();
 
-  _stprintf(path, _T("%s" DIR_SEPARATOR_S "modis-%03d.jpg"),
-            Directory, selected_waypoint->original_id);
-  hasimage1 = jpgimage1.load_file(path);
-
-  _stprintf(path, _T("%s" DIR_SEPARATOR_S "google-%03d.jpg"),
-            Directory, selected_waypoint->original_id);
-  hasimage2 = jpgimage2.load_file(path);
+  std::vector<tstring>::const_iterator it;
+  for (it = selected_waypoint->files_embed.begin();
+       it < selected_waypoint->files_embed.end() && !images.full();
+       it++) {
+    TCHAR path[MAX_PATH];
+    LocalPath(path, it->c_str());
+    if (!images.append().load_file(path))
+      images.shrink(images.size() - 1);
+  }
 
   page = 0;
 
@@ -611,6 +607,7 @@ dlgWaypointDetailsShowModal(SingleWindow &parent, const Waypoint& way_point,
 
   delete wf;
 
-  jpgimage1.reset();
-  jpgimage2.reset();
+  for (Bitmap *bmp = images.begin(); bmp < images.end(); bmp++)
+    bmp->reset();
+  images.clear();
 }
