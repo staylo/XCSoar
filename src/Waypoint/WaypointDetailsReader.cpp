@@ -68,7 +68,9 @@ find_waypoint(Waypoints &way_points, const TCHAR *name)
 
 static void
 SetAirfieldDetails(Waypoints &way_points, const TCHAR *name,
-                   const tstring &Details)
+                   const tstring &Details,
+                   const std::vector<tstring> &files_external,
+                   const std::vector<tstring> &files_embed)
 {
   const Waypoint *wp = find_waypoint(way_points, name);
   if (wp == NULL)
@@ -76,6 +78,8 @@ SetAirfieldDetails(Waypoints &way_points, const TCHAR *name,
 
   Waypoint new_wp(*wp);
   new_wp.details = Details.c_str();
+  new_wp.files_external = files_external;
+  new_wp.files_embed = files_embed;
   way_points.replace(*wp, new_wp);
   way_points.optimise();
 }
@@ -88,7 +92,9 @@ ParseAirfieldDetails(Waypoints &way_points, TLineReader &reader,
                      OperationEnvironment &operation)
 {
   tstring Details;
+  std::vector<tstring> files_external, files_embed;
   TCHAR Name[201];
+  const TCHAR *filename;
 
   Name[0] = 0;
 
@@ -102,9 +108,12 @@ ParseAirfieldDetails(Waypoints &way_points, TLineReader &reader,
   while ((TempString = reader.read()) != NULL) {
     if (TempString[0] == _T('[')) { // Look for start
       if (inDetails)
-        SetAirfieldDetails(way_points, Name, Details);
+        SetAirfieldDetails(way_points, Name, Details, files_external,
+                           files_embed);
 
       Details.clear();
+      files_external.clear();
+      files_embed.clear();
 
       // extract name
       for (i = 1; i < 201; i++) {
@@ -118,6 +127,12 @@ ParseAirfieldDetails(Waypoints &way_points, TLineReader &reader,
       inDetails = true;
 
       operation.SetProgressPosition(reader.tell() * 100 / filesize);
+    } else if ((filename =
+                string_after_prefix_ci(TempString, _T("file="))) != NULL) {
+      files_external.push_back(filename);
+    } else if ((filename =
+                string_after_prefix_ci(TempString, _T("image="))) != NULL) {
+      files_embed.push_back(filename);
     } else {
       // append text to details string
       if (!string_is_empty(TempString)) {
@@ -128,7 +143,7 @@ ParseAirfieldDetails(Waypoints &way_points, TLineReader &reader,
   }
 
   if (inDetails)
-    SetAirfieldDetails(way_points, Name, Details);
+    SetAirfieldDetails(way_points, Name, Details, files_external, files_embed);
 }
 
 /**
