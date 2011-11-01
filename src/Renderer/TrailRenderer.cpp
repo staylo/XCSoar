@@ -134,7 +134,7 @@ TrailRenderer::Draw(Canvas &canvas, const GlideComputer &glide_computer,
           ? - it->GetVario() / value_min
           : it->GetVario() / value_max ;
 
-        if (!scaled_trail)||(dt > 60)
+        if ((!scaled_trail)||(dt > fixed(60)))
           canvas.select(Graphics::hpSnail[GetSnailColorIndex(colour_vario)]);
         else
           canvas.select(Graphics::hpSnailVario[GetSnailColorIndex(colour_vario)]);
@@ -142,10 +142,10 @@ TrailRenderer::Draw(Canvas &canvas, const GlideComputer &glide_computer,
           canvas.null_pen();
           //canvas.black_brush();
           canvas.select(Graphics::hpSnailVarioNegative[GetSnailColorIndex(colour_vario)]);
-          if (dt > 60)
+          if (dt > fixed(60))
 	    canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, 3);
           else
-	    canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, 3-(5*colour_vario));
+	    canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, fixed(3)-(fixed(5)*colour_vario));
         }
         else
           canvas.line_piece(last_point, pt);
