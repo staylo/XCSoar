@@ -201,7 +201,7 @@ Canvas::line_piece(const RasterPoint a, const RasterPoint b)
 void
 Canvas::line_square_piece(const RasterPoint a, const RasterPoint b)
 {
-  pen.set();
+  pen.Set();
 
   const RasterPoint v[] = { {a.x, a.y}, {b.x, b.y} };
     glVertexPointer(2, GL_VALUE, 0, &v[0].x);

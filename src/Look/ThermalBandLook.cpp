@@ -30,8 +30,8 @@ ThermalBandLook::Initialise(bool _inverse)
 {
   inverse = _inverse;
 
-  brush.set(COLOR_WHITE);
-  pen.set(Layout::Scale(1), COLOR_WHITE);
+  brush.Set(COLOR_WHITE);
+  pen.Set(Layout::Scale(1), COLOR_WHITE);
 
   white_pen.Set(2, COLOR_WHITE);
   black_pen.Set(2, COLOR_BLACK);

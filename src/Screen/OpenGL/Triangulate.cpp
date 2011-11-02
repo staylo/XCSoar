@@ -498,17 +498,8 @@ LineToTriangles(const RasterPoint *points, unsigned num_points,
         bisector_x = sign*floor(bisector_x * scale + 0.5f);
         bisector_y = sign*floor(bisector_y * scale + 0.5f);
 
-<<<<<<< HEAD
         AppendPoint(s, b->x - bisector_x, b->y - bisector_y);
         AppendPoint(s, b->x + bisector_x, b->y + bisector_y);
-=======
-        s->x = b->x - bisector_x;
-        s->y = b->y - bisector_y;
-        s++;
-        s->x = b->x + bisector_x;
-        s->y = b->y + bisector_y;
-        s++;
->>>>>>> OpenGL/Triangulate: support thick polylines with acute angles
       }
 
       a = b;
