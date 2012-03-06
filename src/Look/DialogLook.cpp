@@ -45,14 +45,22 @@ DialogLook::Initialise(const Font &caption_font,
   caption.inactive_background_color = COLOR_GRAY;
 #endif
 
+#ifdef NOOK
+  SetBackgroundColor(COLOR_LIGHT_GRAY);
+#else
   SetBackgroundColor(Color(0xe2, 0xdc, 0xbe));
+#endif
   text_color = COLOR_BLACK;
 
   text_font = &_text_font;
   small_font = &_small_font;
   button.Initialise(button_font);
 
+#ifdef NOOK
+  focused.background_color = COLOR_DARK_GRAY;
+#else
   focused.background_color = COLOR_XCSOAR_DARK;
+#endif
   focused.text_color = COLOR_WHITE;
   focused.border_pen.Set(Layout::FastScale(1) + 2, COLOR_BLACK);
 

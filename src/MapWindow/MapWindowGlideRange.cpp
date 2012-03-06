@@ -303,12 +303,16 @@ MapWindow::DrawTerrainAbove(Canvas &canvas)
     glStencilFunc(GL_NOTEQUAL, 1, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
+#ifndef NOOK
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#endif
 
     canvas.Clear(Color(255, 255, 255, 77));
 
+#ifndef NOOK
     glDisable(GL_BLEND);
+#endif
     glDisable(GL_STENCIL_TEST);
 
 #elif defined(USE_GDI)

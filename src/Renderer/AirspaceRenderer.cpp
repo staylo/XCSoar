@@ -164,7 +164,9 @@ public:
     if (!warning_manager.IsAcked(airspace) &&
         settings.classes[airspace.GetType()].fill_mode !=
         AirspaceClassRendererSettings::FillMode::NONE) {
-      GLEnable blend(GL_BLEND);
+#ifndef NOOK
+        GLEnable blend(GL_BLEND);
+#endif
       SetupInterior(airspace);
       if (warning_manager.HasWarning(airspace) ||
           warning_manager.IsInside(airspace) ||
@@ -211,7 +213,9 @@ public:
       // fill interior without overpainting any previous outlines
       {
         SetupInterior(airspace, !fill_airspace);
+#ifndef NOOK
         GLEnable blend(GL_BLEND);
+#endif
         DrawPrepared();
       }
 
@@ -310,7 +314,9 @@ public:
     unsigned screen_radius = projection.GeoToScreenDistance(airspace.GetRadius());
 
     {
+#ifndef NOOK
       GLEnable blend(GL_BLEND);
+#endif
       SetupInterior(airspace);
       canvas.DrawCircle(screen_center.x, screen_center.y, screen_radius);
     }
@@ -328,7 +334,9 @@ public:
       // fill interior without overpainting any previous outlines
       {
         SetupInterior(airspace);
+#ifndef NOOK
         GLEnable blend(GL_BLEND);
+#endif
         DrawPrepared();
       }
     }
