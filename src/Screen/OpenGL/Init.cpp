@@ -141,7 +141,11 @@ OpenGL::SetupContext()
   frame_buffer_object = CheckFBO() && FBO::Initialise();
 
   glDisable(GL_DEPTH_TEST);
+#ifdef NOOK
+  glEnable(GL_DITHER);
+#else
   glDisable(GL_DITHER);
+#endif
   glDisable(GL_LIGHTING);
 
   glEnableClientState(GL_VERTEX_ARRAY);

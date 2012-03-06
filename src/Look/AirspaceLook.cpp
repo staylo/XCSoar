@@ -32,6 +32,7 @@ Copyright_License {
 #endif
 
 const Color AirspaceLook::preset_colors[] = {
+#ifndef NOOK
   COLOR_RED,
   COLOR_GREEN,
   COLOR_BLUE,
@@ -44,9 +45,13 @@ const Color AirspaceLook::preset_colors[] = {
   DarkColor(COLOR_YELLOW),
   DarkColor(COLOR_MAGENTA),
   DarkColor(COLOR_CYAN),
+#endif
   COLOR_WHITE,
   COLOR_LIGHT_GRAY,
   COLOR_GRAY,
+#ifdef NOOK
+  COLOR_DARK_GRAY,
+#endif
   COLOR_BLACK,
 };
 

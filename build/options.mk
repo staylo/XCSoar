@@ -34,3 +34,8 @@ ifeq ($(NO_HORIZON),y)
 TARGET_CPPFLAGS += -DNO_HORIZON
 WINDRESFLAGS += -DNO_HORIZON
 endif
+
+# used to compile for eInk Nook Touch device
+ifeq ($(NOOK),y)
+TARGET_CPPFLAGS += -DNOOK
+endif

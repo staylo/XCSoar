@@ -30,7 +30,11 @@ Copyright_License {
 #include "Screen/Features.hpp"
 #include "Engine/Airspace/AirspaceClass.hpp"
 
+#ifdef NOOK
+#define NUMAIRSPACECOLORS 5
+#else
 #define NUMAIRSPACECOLORS 16
+#endif
 #define NUMAIRSPACEBRUSHES 8
 
 struct AirspaceRendererSettings;

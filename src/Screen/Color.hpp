@@ -33,17 +33,42 @@ Copyright_License {
 #endif
 
 #ifdef TESTING
+#ifdef NOOK
+#define COLOR_XCSOAR_LIGHT Color(238, 238, 238)
+#define COLOR_XCSOAR Color(237, 237, 237)
+#define COLOR_XCSOAR_DARK Color(236, 236, 236)
+#else
 #define COLOR_XCSOAR_LIGHT Color(0xed, 0x90, 0x90)
 #define COLOR_XCSOAR Color(0xd0, 0x17, 0x17)
 #define COLOR_XCSOAR_DARK Color(0x5d, 0x0a, 0x0a)
+#endif
+#else
+#ifdef NOOK
+#define COLOR_XCSOAR_LIGHT Color(238, 238, 238)
+#define COLOR_XCSOAR Color(237, 237, 237)
+#define COLOR_XCSOAR_DARK Color(236, 236, 236)
 #else
 #define COLOR_XCSOAR_LIGHT Color(0xaa, 0xc9, 0xe4)
 #define COLOR_XCSOAR Color(0x3f, 0x76, 0xa8)
 #define COLOR_XCSOAR_DARK Color(0x00, 0x31, 0x5e)
 #endif
+#endif
 
 #define COLOR_WHITE Color(0xff, 0xff, 0xff)
 #define COLOR_BLACK Color(0x00, 0x00, 0x00)
+#ifdef NOOK
+#define COLOR_GRAY Color(238, 238, 238)
+#define COLOR_LIGHT_GRAY Color(239, 239, 239)
+#define COLOR_DARK_GRAY Color(237, 237, 237)
+#define COLOR_RED Color(238, 238, 238)
+#define COLOR_GREEN Color(237, 237, 237)
+#define COLOR_BLUE Color(236, 236, 236)
+#define COLOR_YELLOW Color(238, 238, 238)
+#define COLOR_CYAN Color(238, 238, 238)
+#define COLOR_MAGENTA Color(237, 237, 237)
+#define COLOR_ORANGE Color(236, 236, 236)
+#define COLOR_BROWN Color(236, 236, 236)
+#else
 #define COLOR_GRAY Color(0x80, 0x80, 0x80)
 #define COLOR_LIGHT_GRAY Color(0xc0, 0xc0, 0xc0)
 #define COLOR_DARK_GRAY Color(0x4, 0x40, 0x40)
@@ -55,6 +80,7 @@ Copyright_License {
 #define COLOR_MAGENTA Color(0xff, 0x00, 0xff)
 #define COLOR_ORANGE Color(0xff, 0xa2, 0x00)
 #define COLOR_BROWN Color(0xb7, 0x64, 0x1e)
+#endif
 
 static inline constexpr uint8_t
 LightColor(uint8_t c)

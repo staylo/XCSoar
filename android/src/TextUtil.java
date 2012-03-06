@@ -45,7 +45,7 @@ public class TextUtil {
 
   public TextUtil(String family_name, int style, int textSize) {
     Typeface tf = Typeface.create(family_name, style);
-    paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    paint = new Paint();
     paint.setTypeface(tf);
     paint.setTextSize(textSize);
     if ((style & Typeface.ITALIC) != 0 && !tf.isItalic())
