@@ -27,9 +27,9 @@ Copyright_License {
 void
 TrafficLook::Initialise()
 {
-  safe_color = Color(0x1d,0x9b,0xc5);
-  warning_color = Color(0xfe,0x84,0x38);
-  alarm_color = Color(0xfb,0x35,0x2f);
+  safe_color = COLOR_GRAY;
+  warning_color = COLOR_DARK_GRAY;
+  alarm_color = COLOR_BLACK;
 
   safe_brush.Set(safe_color);
   warning_brush.Set(warning_color);

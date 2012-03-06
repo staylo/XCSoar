@@ -36,10 +36,12 @@ TrailLook::Initialise(const MapSettings &settings_map)
   };
 
   static gcc_constexpr_data ColorRamp snail_colors_vario2[] = {
-    {0,   0x00, 0x00, 0xff},
-    {99,  0x00, 0xff, 0xff},
-    {100, 0xff, 0xff, 0x00},
-    {200, 0xff, 0x00, 0x00}
+    {0,   0, 0, 0},
+    {74,  0, 0, 0},
+    {75, 238, 238, 238},
+    {124, 238, 238, 238},
+    {125, 237, 237, 237},
+    {200, 237, 237, 237}
   };
 
   static gcc_constexpr_data ColorRamp snail_colors_alt[] = {
@@ -58,7 +60,7 @@ TrailLook::Initialise(const MapSettings &settings_map)
     Color color = (settings_map.snail_type == stAltitude) ?
                   ColorRampLookup(ih, snail_colors_alt, 5) :
                   (settings_map.snail_type == stSeeYouVario) ?
-                  ColorRampLookup(ih, snail_colors_vario2, 4) :
+                  ColorRampLookup(ih, snail_colors_vario2, 6) :
                   ColorRampLookup(ih, snail_colors_vario, 3);
 
     if (i < NUMSNAILCOLORS / 2 ||

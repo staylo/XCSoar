@@ -49,8 +49,8 @@ OZRenderer::Prepare(Canvas &canvas, Layer layer, int offset) const
   if (layer == LAYER_SHADE) {
     Color color = settings.classes[AATASK].color;
 #ifdef ENABLE_OPENGL
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     canvas.Select(Brush(color.WithAlpha(64)));
 #elif defined(USE_GDI)
@@ -85,7 +85,7 @@ OZRenderer::Finish(Canvas &canvas, Layer layer) const
 {
   if (layer == LAYER_SHADE) {
 #ifdef ENABLE_OPENGL
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
 #elif defined(USE_GDI)
     canvas.SetMixCopy();
 #endif /* GDI */

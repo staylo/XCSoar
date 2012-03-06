@@ -303,12 +303,12 @@ MapWindow::DrawTerrainAbove(Canvas &canvas)
     glStencilFunc(GL_NOTEQUAL, 1, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     canvas.clear(Color(255, 255, 255, 77));
 
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
     glDisable(GL_STENCIL_TEST);
 
 #elif defined(USE_GDI)

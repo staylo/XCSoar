@@ -130,7 +130,7 @@ public:
 
     // Disable "transparency" effect
 #ifdef ENABLE_OPENGL
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
 #elif defined(USE_GDI)
     canvas.SetMixCopy();
 #endif /* GDI */

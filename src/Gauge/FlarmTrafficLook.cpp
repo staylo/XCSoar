@@ -32,10 +32,10 @@ FlarmTrafficLook::Initialise(const TrafficLook &other, bool small)
   passive_color = Color(0x99, 0x99, 0x99);
   warning_color = other.warning_color;
   alarm_color = other.alarm_color;
-  default_color = COLOR_BLACK;
-  selection_color = COLOR_BLUE;
+  default_color = COLOR_GRAY;
+  selection_color = COLOR_DARK_GRAY;
   background_color = COLOR_WHITE;
-  radar_color = COLOR_LIGHT_GRAY;
+  radar_color = COLOR_DARK_GRAY;
 
   warning_brush.Set(warning_color);
   alarm_brush.Set(alarm_color);

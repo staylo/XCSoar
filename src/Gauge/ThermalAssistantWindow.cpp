@@ -36,8 +36,8 @@
 const Color ThermalAssistantWindow::hcBackground(0xFF, 0xFF, 0xFF);
 const Color ThermalAssistantWindow::hcCircles(0xB0, 0xB0, 0xB0);
 const Color ThermalAssistantWindow::hcStandard(0x00, 0x00, 0x00);
-const Color ThermalAssistantWindow::hcPolygonBrush(0xCC, 0xCC, 0xFF);
-const Color ThermalAssistantWindow::hcPolygonPen(0x00, 0x00, 0xFF);
+const Color ThermalAssistantWindow::hcPolygonBrush(COLOR_DARK_GRAY);
+const Color ThermalAssistantWindow::hcPolygonPen(COLOR_BLACK);
 
 ThermalAssistantWindow::ThermalAssistantWindow(unsigned _padding, bool _small)
   :max_lift(fixed_one),
@@ -58,11 +58,11 @@ ThermalAssistantWindow::OnCreate()
 
   hbBackground.Set(hcBackground);
 
-#ifdef ENABLE_OPENGL
-  hbPolygon.Set(hcPolygonBrush.WithAlpha(128));
-#else /* !OPENGL */
+//#ifdef ENABLE_OPENGL
+//  hbPolygon.Set(hcPolygonBrush.WithAlpha(128));
+//#else /* !OPENGL */
   hbPolygon.Set(hcPolygonBrush);
-#endif /* !OPENGL */
+//#endif /* !OPENGL */
 
   UPixelScalar width = Layout::FastScale(small ? 1 : 2);
 #ifdef ENABLE_OPENGL

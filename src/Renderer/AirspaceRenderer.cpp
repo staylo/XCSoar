@@ -161,7 +161,7 @@ public:
     GLEnable stencil(GL_STENCIL_TEST);
 
     if (!m_warnings.is_acked(airspace)) {
-      GLEnable blend(GL_BLEND);
+      //GLEnable blend(GL_BLEND);
       setup_interior(airspace);
       if (m_warnings.is_warning(airspace) ||
           m_warnings.is_inside(airspace) ||
@@ -202,7 +202,7 @@ public:
       // fill interior without overpainting any previous outlines
       {
         setup_interior(airspace, !fill_airspace);
-        GLEnable blend(GL_BLEND);
+        //GLEnable blend(GL_BLEND);
         draw_prepared();
       }
 
@@ -295,7 +295,7 @@ public:
     unsigned screen_radius = projection.GeoToScreenDistance(airspace.GetRadius());
 
     {
-      GLEnable blend(GL_BLEND);
+      //GLEnable blend(GL_BLEND);
       setup_interior(airspace);
       canvas.circle(screen_center.x, screen_center.y, screen_radius);
     }
@@ -313,7 +313,7 @@ public:
       // fill interior without overpainting any previous outlines
       {
         setup_interior(airspace);
-        GLEnable blend(GL_BLEND);
+        //GLEnable blend(GL_BLEND);
         draw_prepared();
       }
     }
