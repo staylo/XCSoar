@@ -40,7 +40,7 @@ WaypointLook::Initialise(const WaypointRendererSettings &settings)
   obstacle_icon.Load(IDB_OBSTACLE, IDB_OBSTACLE_HD);
 
 #ifdef NOOK
-  reachable_brush.Set(COLOR_LIGHT_GRAY);
+  reachable_brush.Set(COLOR_WHITE);
   terrain_unreachable_brush.Set(LightColor(COLOR_BLACK));
 #else
   reachable_brush.Set(COLOR_GREEN);
