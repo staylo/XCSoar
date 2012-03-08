@@ -24,6 +24,7 @@ that have native methods, to prepare for calling "javah".
            verbose="${verbose}">
       <src path="${src.dir}" />
       <include name="DifferentTouchInput.java"/>
+      <include name="N2EpdController.java"/>
       <include name="NativeView.java"/>
       <include name="EventBridge.java"/>
       <include name="Timer.java"/>
