@@ -179,6 +179,8 @@ class NativeView extends SurfaceView
     Log.d(TAG, "OpenGL version: " + gl.glGetString(GL10.GL_VERSION));
     Log.d(TAG, "OpenGL renderer: " + gl.glGetString(GL10.GL_RENDERER));
     Log.d(TAG, "OpenGL extensions: " + gl.glGetString(GL10.GL_EXTENSIONS));
+
+    N2EpdController.enterA2Mode();
   }
 
   /**
