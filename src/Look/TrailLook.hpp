@@ -25,6 +25,7 @@
 #define XCSOAR_TRAIL_LOOK_HPP
 
 #include "Screen/Pen.hpp"
+#include "Screen/Brush.hpp"
 #include "Compiler.h"
 
 struct MapSettings;
@@ -34,6 +35,8 @@ struct TrailLook {
 
   Pen hpSnail[NUMSNAILCOLORS];
   Pen hpSnailVario[NUMSNAILCOLORS];
+  Brush hbSnail[NUMSNAILCOLORS];
+  uint8_t widthSnail[NUMSNAILCOLORS];
 
   Pen trace_pen;
 

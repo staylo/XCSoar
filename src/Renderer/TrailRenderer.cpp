@@ -142,22 +142,27 @@ TrailRenderer::Draw(Canvas &canvas, const TraceComputer &trace_computer,
     RasterPoint pt = projection.GeoToScreen(gp);
 
     if (last_valid) {
+	const fixed colour_vario = negative(it->GetVario())
+	          ? - it->GetVario() / value_min
+		            : it->GetVario() / value_max ;
+
       if (settings.snail_type == stAltitude) {
         unsigned index((it->GetAltitude() - value_min) / (value_max - value_min)
                        * (TrailLook::NUMSNAILCOLORS - 1));
         index = max(0u, min(TrailLook::NUMSNAILCOLORS - 1, index));
         canvas.Select(look.hpSnail[index]);
       } else {
-        const fixed colour_vario = negative(it->GetVario())
-          ? - it->GetVario() / value_min
-          : it->GetVario() / value_max ;
-
         if (!scaled_trail)
           canvas.Select(look.hpSnail[GetSnailColorIndex(colour_vario)]);
         else
           canvas.Select(look.hpSnailVario[GetSnailColorIndex(colour_vario)]);
       }
-      canvas.line_piece(last_point, pt);
+      if (negative(it->GetVario())){
+	canvas.Select(look.hbSnail[GetSnailColorIndex(colour_vario)]);
+	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, look.widthSnail[GetSnailColorIndex(colour_vario)]);
+      }
+      else
+        canvas.line_piece(last_point, pt);
     }
     last_point = pt;
     last_valid = true;
