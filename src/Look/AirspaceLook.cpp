@@ -45,14 +45,17 @@ const Color AirspaceLook::preset_colors[] = {
   DarkColor(COLOR_YELLOW),
   DarkColor(COLOR_MAGENTA),
   DarkColor(COLOR_CYAN),
-#endif
+#else
   COLOR_WHITE,
-  COLOR_LIGHT_GRAY,
-  COLOR_GRAY,
-#ifdef NOOK
-  COLOR_DARK_GRAY,
-#endif
+  Color(255,255,214),
+  Color(255,255,205),
+  Color(255,255,204),
+  Color(255,255,203),
+  Color(255,255,202),
+  Color(255,255,201),
+  Color(255,255,200),
   COLOR_BLACK,
+#endif
 };
 
 void

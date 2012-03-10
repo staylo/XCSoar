@@ -31,7 +31,7 @@ Copyright_License {
 #include "Engine/Airspace/AirspaceClass.hpp"
 
 #ifdef NOOK
-#define NUMAIRSPACECOLORS 5
+#define NUMAIRSPACECOLORS  9
 #else
 #define NUMAIRSPACECOLORS 16
 #endif
