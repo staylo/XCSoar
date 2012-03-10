@@ -31,7 +31,7 @@ Copyright_License {
 #include "Engine/Airspace/AirspaceClass.hpp"
 #include "Compiler.h"
 
-#define NUMAIRSPACECOLORS 5
+#define NUMAIRSPACECOLORS  9
 #define NUMAIRSPACEBRUSHES 8
 
 struct AirspaceRendererSettings;

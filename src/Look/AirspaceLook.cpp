@@ -33,9 +33,13 @@ Copyright_License {
 
 const Color AirspaceLook::preset_colors[] = {
   COLOR_WHITE,
-  COLOR_LIGHT_GRAY,
-  COLOR_GRAY,
-  COLOR_DARK_GRAY,
+  Color(255,255,214),
+  Color(255,255,205),
+  Color(255,255,204),
+  Color(255,255,203),
+  Color(255,255,202),
+  Color(255,255,201),
+  Color(255,255,200),
   COLOR_BLACK,
 };
 
