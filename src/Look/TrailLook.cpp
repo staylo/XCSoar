@@ -35,15 +35,6 @@ TrailLook::Initialise(const MapSettings &settings_map)
     {200, 0x1e, 0xf1, 0x73} // liftColor
   };
 
-  static gcc_constexpr_data ColorRamp snail_colors_vario2[] = {
-    {0,   0, 0, 0},
-    {74,  0, 0, 0},
-    {75, 238, 238, 238},
-    {124, 238, 238, 238},
-    {125, 237, 237, 237},
-    {200, 237, 237, 237}
-  };
-
   static gcc_constexpr_data ColorRamp snail_colors_alt[] = {
     {0,   0xff, 0x00, 0x00},
     {50,  0xff, 0xff, 0x00},
@@ -51,6 +42,18 @@ TrailLook::Initialise(const MapSettings &settings_map)
     {150, 0x00, 0xff, 0xff},
     {200, 0x00, 0x00, 0xff},
   };
+
+  static gcc_constexpr_data ColorRamp snail_colors_fade[] = {
+    {0,  255, 255, 199},
+    {10, 255, 255, 200},
+    {20, 255, 255, 201},
+    {30, 255, 255, 202},
+    {40, 255, 255, 203},
+    {60, 255, 255, 204},
+    {61, 255, 255, 205},
+    {200, 255, 255, 205},
+  };
+
 
   PixelScalar iwidth;
   PixelScalar minwidth = Layout::ScalePenWidth(2);
@@ -60,7 +63,7 @@ TrailLook::Initialise(const MapSettings &settings_map)
     Color color = (settings_map.snail_type == stAltitude) ?
                   ColorRampLookup(ih, snail_colors_alt, 5) :
                   (settings_map.snail_type == stSeeYouVario) ?
-                  ColorRampLookup(ih, snail_colors_vario2, 6) :
+                  ColorRampLookup(ih, snail_colors_fade, 8) :
                   ColorRampLookup(ih, snail_colors_vario, 3);
 
     if (i < NUMSNAILCOLORS / 2 ||
@@ -69,7 +72,7 @@ TrailLook::Initialise(const MapSettings &settings_map)
     else
       iwidth = max(minwidth,
                    PixelScalar((i - NUMSNAILCOLORS / 2) *
-                               Layout::ScalePenWidth(16) / NUMSNAILCOLORS));
+                               Layout::ScalePenWidth(32) / NUMSNAILCOLORS));
 
     hpSnail[i].Set(minwidth, color);
     hpSnailVario[i].Set(iwidth, color);
@@ -77,7 +80,7 @@ TrailLook::Initialise(const MapSettings &settings_map)
     minwidth = Layout::ScalePenWidth(1);
     widthSnail[i] = max(minwidth,
 		       PixelScalar((NUMSNAILCOLORS / 2 - i) *
-			       Layout::ScalePenWidth(4) / NUMSNAILCOLORS));
+			       Layout::ScalePenWidth(16) / NUMSNAILCOLORS));
 
   }
 

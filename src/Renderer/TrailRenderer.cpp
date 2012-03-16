@@ -24,6 +24,7 @@ Copyright_License {
 #include "TrailRenderer.hpp"
 #include "Look/TrailLook.hpp"
 #include "Screen/Canvas.hpp"
+#include "Screen/Ramp.hpp"
 #include "NMEA/Info.hpp"
 #include "NMEA/Derived.hpp"
 #include "MapSettings.hpp"
@@ -31,6 +32,7 @@ Copyright_License {
 #include "Projection/WindowProjection.hpp"
 #include "Engine/Math/Earth.hpp"
 #include "Engine/Contest/ContestResult.hpp"
+#include "LogFile.hpp"
 
 #include <algorithm>
 
@@ -157,12 +159,33 @@ TrailRenderer::Draw(Canvas &canvas, const TraceComputer &trace_computer,
         else
           canvas.Select(look.hpSnailVario[GetSnailColorIndex(colour_vario)]);
       }
+
+
+
+static gcc_constexpr_data ColorRamp snail_colors_fade[] = {
+    {0,  255, 255, 199},
+/*    {10, 255, 255, 200},
+    {20, 255, 255, 201},
+    {30, 255, 255, 202},
+    {40, 255, 255, 203}, */
+    {60, 255, 255, 203},
+    {61, 255, 255, 204},
+    {200, 255, 255, 204},
+  };
+
+      Pen pen = canvas.GetPen();
+      const fixed dt = fixed(unsigned(basic.time) - it->GetTime());
+      LogStartUp(_T("basic.time %i it.time %i dt %i"), unsigned(basic.time), it->GetTime(), unsigned(basic.time) - it->GetTime());
+      pen.Set(pen.GetWidth(), ColorRampLookup(dt, snail_colors_fade, 4));
       if (negative(it->GetVario())){
+	canvas.SelectWhitePen();
 	canvas.Select(look.hbSnail[GetSnailColorIndex(colour_vario)]);
 	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, look.widthSnail[GetSnailColorIndex(colour_vario)]);
       }
-      else
+      else{
+	canvas.Select(pen);
         canvas.line_piece(last_point, pt);
+      }
     }
     last_point = pt;
     last_valid = true;

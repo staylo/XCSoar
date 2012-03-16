@@ -135,6 +135,10 @@ public:
     brush = Brush(COLOR_BLACK);
   }
 
+  Pen GetPen() const {
+    return pen;
+  }
+
   void Select(const Pen &_pen) {
     pen = _pen;
   }
