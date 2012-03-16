@@ -179,7 +179,8 @@ static gcc_constexpr_data ColorRamp snail_colors_fade[] = {
       pen.Set(pen.GetWidth(), ColorRampLookup(dt, snail_colors_fade, 4));
       if (negative(it->GetVario())){
 	canvas.SelectWhitePen();
-	canvas.Select(look.hbSnail[GetSnailColorIndex(colour_vario)]);
+	//canvas.Select(look.hbSnail[GetSnailColorIndex(colour_vario)]);
+	canvas.Select(Brush(ColorRampLookup(dt, snail_colors_fade, 4)));
 	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, look.widthSnail[GetSnailColorIndex(colour_vario)]);
       }
       else{
