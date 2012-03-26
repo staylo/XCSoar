@@ -47,13 +47,13 @@ Copyright_License {
 #define COLOR_GRAY Color(238, 238, 238)
 #define COLOR_LIGHT_GRAY Color(239, 239, 239)
 #define COLOR_DARK_GRAY Color(237, 237, 237)
-#define COLOR_RED Color(238, 238, 238)
+#define COLOR_RED Color(0x00, 0x00, 0x00)
 #define COLOR_GREEN Color(237, 237, 237)
-#define COLOR_BLUE Color(236, 236, 236)
+#define COLOR_BLUE Color(239, 239, 239)
 #define COLOR_YELLOW Color(238, 238, 238)
 #define COLOR_CYAN Color(238, 238, 238)
 #define COLOR_MAGENTA Color(237, 237, 237)
-#define COLOR_ORANGE Color(236, 236, 236)
+#define COLOR_ORANGE Color(237, 237, 237)
 #define COLOR_BROWN Color(236, 236, 236)
 
 static inline gcc_constexpr_function uint8_t

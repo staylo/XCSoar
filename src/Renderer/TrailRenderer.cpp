@@ -179,9 +179,16 @@ static gcc_constexpr_data ColorRamp snail_colors_fade[] = {
       pen.Set(pen.GetWidth(), ColorRampLookup(dt, snail_colors_fade, 4));
       if (negative(it->GetVario())){
 	canvas.SelectWhitePen();
-	//canvas.Select(look.hbSnail[GetSnailColorIndex(colour_vario)]);
 	canvas.Select(Brush(ColorRampLookup(dt, snail_colors_fade, 4)));
 	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, look.widthSnail[GetSnailColorIndex(colour_vario)]);
+        //  RasterPoint arrow[3];
+        //  arrow[0].x = last_point.x - look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.x - last_point.x)/2;
+        //  arrow[0].y = last_point.y - look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.y - last_point.y)/2;
+        //  arrow[1].x = last_point.x + look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.x - last_point.x)/2;
+        //  arrow[1].y = arrow[0].y;
+        //  arrow[2].x = last_point.x + (pt.x - last_point.x)/2;
+        //  arrow[2].y = last_point.y + look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.y - last_point.y)/2;
+        //  canvas.DrawTriangleFan(arrow, 3);
       }
       else{
 	canvas.Select(pen);
