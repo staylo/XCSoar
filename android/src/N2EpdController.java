@@ -54,7 +54,7 @@ public class N2EpdController
             Constructor RegionParamsConstructor = epdControllerRegionParamsClass.getConstructor(new Class[]{Integer.TYPE, Integer.TYPE,
                                                                                                             Integer.TYPE, Integer.TYPE, epdControllerWaveClass, Integer.TYPE});
 
-            Object localRegionParams = RegionParamsConstructor.newInstance(new Object[]{0, 0, 600, 800, waveEnums[3], 16}); // Wave = A2
+            Object localRegionParams = RegionParamsConstructor.newInstance(new Object[]{0, 0, 600, 800, waveEnums[0], 16}); // Wave = A2
 
             Method epdControllerSetRegionMethod = epdControllerClass.getMethod("setRegion", new Class[]{String.class,
                                                                                                         epdControllerRegionClass,
@@ -95,12 +95,12 @@ public class N2EpdController
             Method epdControllerSetRegionMethod = epdControllerClass.getMethod("setRegion", new Class[]{String.class,
                                                                                                         epdControllerRegionClass,
                                                                                                         epdControllerRegionParamsClass});
-            epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
+//            epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
 
 
 
-            Thread.sleep(100L);
-            localRegionParams = RegionParamsConstructor.newInstance(new Object[]{0, 0, 600, 800, waveEnums[3], 14}); // Wave = A2
+            //Thread.sleep(100L);
+            localRegionParams = RegionParamsConstructor.newInstance(new Object[]{0, 0, 600, 800, waveEnums[2], 14}); // Wave = A2
             epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
             vCurrentNode = 3;
 

@@ -23,6 +23,7 @@ Copyright_License {
 
 #include "Screen/TopWindow.hpp"
 #include "PeriodClock.hpp"
+#include "LogFile.hpp"
 
 #ifdef ANDROID
 #include "Screen/Android/Event.hpp"
@@ -96,7 +97,7 @@ TopWindow::Invalidate()
 
   /* wake up the event loop */
 #ifdef ANDROID
-  event_queue->Push(Event::NOP);
+  //event_queue->Push(Event::NOP);
 #else
   /* note that SDL_NOEVENT is not documented, but since we just want
      to wake up without actually sending an event, I hope this works
@@ -132,7 +133,8 @@ TopWindow::refresh()
 
   Invalidated = false;
   Invalidated_lock.Unlock();
-
+  
+  LogStartUp(_T("TopWindow::refresh"));
   Expose();
 }
 

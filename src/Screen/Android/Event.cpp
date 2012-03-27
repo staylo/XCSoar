@@ -25,6 +25,7 @@ Copyright_License {
 #include "Screen/TopWindow.hpp"
 #include "Thread/Notify.hpp"
 #include "Android/Timer.hpp"
+#include "LogFile.hpp"
 
 void
 EventQueue::Push(const Event &event)
@@ -157,6 +158,7 @@ EventLoop::Get(Event &event)
 
     /* that was the last event for now, refresh the screen now */
     top_window.refresh();
+    LogStartUp(_T("Event %i"), event.type);
     bulk = false;
   }
 
