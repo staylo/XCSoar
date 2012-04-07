@@ -36,7 +36,7 @@
 const Color ThermalAssistantWindow::hcBackground(0xFF, 0xFF, 0xFF);
 const Color ThermalAssistantWindow::hcCircles(0xB0, 0xB0, 0xB0);
 const Color ThermalAssistantWindow::hcStandard(0x00, 0x00, 0x00);
-const Color ThermalAssistantWindow::hcPolygonBrush(COLOR_DARK_GRAY);
+const Color ThermalAssistantWindow::hcPolygonBrush(255, 255, 214);
 const Color ThermalAssistantWindow::hcPolygonPen(COLOR_BLACK);
 
 ThermalAssistantWindow::ThermalAssistantWindow(unsigned _padding, bool _small)
