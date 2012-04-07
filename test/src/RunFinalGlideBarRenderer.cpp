@@ -98,7 +98,6 @@ protected:
     PixelRect rc = {
       0, 0, (PixelScalar)canvas.get_width(), (PixelScalar)canvas.get_height()
     };
-    
     renderer.Draw(canvas, rc, calculated, glide_settings, true);
   }
 };
