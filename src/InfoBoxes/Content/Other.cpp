@@ -32,6 +32,8 @@ Copyright_License {
 #include "Language/Language.hpp"
 #include "UIGlobals.hpp"
 #include "Look/Look.hpp"
+#include "Units/Units.hpp"
+#include "Atmosphere/Temperature.hpp"
 
 #ifdef HAVE_MEM_INFO
 #include "Formatter/ByteSizeFormatter.hpp"
@@ -116,6 +118,24 @@ InfoBoxContentBattery::Update(InfoBoxData &data)
 
   data.SetInvalid();
 }
+
+void
+InfoBoxContentBatteryTemperature::Update(InfoBoxData &data)
+{
+#ifndef HAVE_BATTERY
+    data.SetInvalid();
+    return;
+#endif
+
+  // Set Value
+  data.SetValue(_T("%2.1f"),
+                    Units::ToUserTemperature(CelsiusToKelvin(fixed(Power::Battery::Temperature))));
+
+  data.SetValueUnit(Units::current.temperature_unit);
+}
+
+
+
 
 void
 InfoBoxContentExperimental1::Update(InfoBoxData &data)

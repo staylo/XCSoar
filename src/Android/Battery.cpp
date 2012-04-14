@@ -29,6 +29,7 @@ namespace Power {
   namespace Battery {
     unsigned RemainingPercent = 0;
     bool RemainingPercentValid = false;
+    unsigned Temperature = 0;
   }
 
   namespace External {
@@ -54,3 +55,12 @@ Java_org_xcsoar_NativeView_setBatteryPercent(JNIEnv *env, jobject obj,
     break;
   }
 }
+
+gcc_visibility_default
+JNIEXPORT void JNICALL
+Java_org_xcsoar_NativeView_setBatteryTemperature(JNIEnv *env, jobject obj,
+		                             jint temperature)
+{
+  Power::Battery::Temperature = temperature;
+}
+

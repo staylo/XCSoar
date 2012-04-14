@@ -441,6 +441,7 @@ const InfoBoxFactory::InfoBoxMetaData InfoBoxFactory::MetaData[NUM_TYPES] = {
     N_("Time Flt"),
     N_("Time elapsed since takeoff was detected."),
     IBFHelper<InfoBoxContentTimeFlight>::Create,
+    
     e_TimeLocal, // Time local
     e_WP_Name, // Next
   },
@@ -735,9 +736,21 @@ const InfoBoxFactory::InfoBoxMetaData InfoBoxFactory::MetaData[NUM_TYPES] = {
     N_("Battery"),
     N_("Displays percentage of device battery remaining (where applicable) and status/voltage of external power supply."),
     IBFHelper<InfoBoxContentBattery>::Create,
-    e_CPU_Load, // CPU
-    e_CPU_Load, // CPU
+    e_Battery, // CPU
+    e_Battery, // CPU
   },
+
+
+  // e_Battery_Temp
+  {
+    N_("Battery temperature"),
+    N_("Batt Temp"),
+    N_("Displays temperature as reported by the device battery temperature sensor."),
+    IBFHelper<InfoBoxContentBatteryTemperature>::Create,
+    e_Battery, // CPU
+    e_Battery, // CPU
+  },
+
 
   // e_Fin_GR
   {
@@ -835,8 +848,8 @@ const InfoBoxFactory::InfoBoxMetaData InfoBoxFactory::MetaData[NUM_TYPES] = {
     N_("CPU"),
     N_("CPU load consumed by XCSoar averaged over 5 seconds."),
     IBFHelper<InfoBoxContentCPULoad>::Create,
-    e_Battery, // Battery
-    e_Battery, // Battery
+    e_CPU_Load, // Battery
+    e_CPU_Load, // Battery
   },
 
   // e_WP_H

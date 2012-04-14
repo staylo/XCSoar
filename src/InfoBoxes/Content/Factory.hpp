@@ -107,6 +107,7 @@ namespace InfoBoxFactory
     e_Climb_Avg, /* Time-average climb rate in all thermals */
     e_RH_Trend, /* Task Req. Total Height Trend */
     e_Battery, /* Displays percentage of device battery remaining (where applicable) and status/voltage of external power supply */
+    e_Battery_Temp, /* Displays temperature reported by device battery temperature sensor */
     e_Fin_GR, /* Geometric gradient to the arrival height above the final waypoint. This is not adjusted for total energy */
     e_Alternate_1_Name, /* Displays name and bearing to the best alternate landing location */
     e_Alternate_2_Name, /* Displays name and bearing to the second alternate landing location */

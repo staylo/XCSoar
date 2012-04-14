@@ -38,6 +38,12 @@ public:
   virtual void Update(InfoBoxData &data);
 };
 
+class InfoBoxContentBatteryTemperature : public InfoBoxContent
+{
+public:
+  virtual void Update(InfoBoxData &data);
+};
+
 class InfoBoxContentExperimental1 : public InfoBoxContent
 {
 public:

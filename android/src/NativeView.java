@@ -265,6 +265,7 @@ class NativeView extends SurfaceView
   protected native void resumeNative();
 
   protected native void setBatteryPercent(int level, int plugged);
+  protected native void setBatteryTemperature(int temperature);
 
   protected native void setHapticFeedback(boolean on);
 
