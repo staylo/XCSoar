@@ -56,7 +56,7 @@ public class XCSoar extends Activity {
       if (nativeView == null)
         return;
 
-      int level = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+      int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
       int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
       nativeView.setBatteryPercent(level, plugged);
     }
