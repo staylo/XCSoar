@@ -45,24 +45,24 @@ DialogLook::Initialise(const Font &caption_font,
   caption.inactive_background_color = COLOR_GRAY;
 #endif
 
-  SetBackgroundColor(COLOR_LIGHT_GRAY);
+  SetBackgroundColor(COLOR_GRAY_1);
   text_color = COLOR_BLACK;
 
   text_font = &_text_font;
   small_font = &_small_font;
   button.Initialise(button_font);
 
-  focused.background_color = COLOR_DARK_GRAY;
-  focused.text_color = COLOR_WHITE;
+  focused.background_color = COLOR_GRAY_1;
+  focused.text_color = COLOR_BLACK;
   focused.border_pen.Set(Layout::FastScale(1) + 2, COLOR_BLACK);
 
   list.background_color = COLOR_WHITE;
   list.text_color = COLOR_BLACK;
-  list.selected.background_color = COLOR_XCSOAR_LIGHT;
+  list.selected.background_color = COLOR_GRAY_1;
   list.selected.text_color = COLOR_BLACK;
-  list.focused.background_color = COLOR_XCSOAR;
+  list.focused.background_color = COLOR_GRAY_2;
   list.focused.text_color = COLOR_BLACK;
-  list.pressed.background_color = COLOR_YELLOW;
+  list.pressed.background_color = COLOR_GRAY_3;
   list.pressed.text_color = COLOR_BLACK;
   list.font = &list_font;
 }

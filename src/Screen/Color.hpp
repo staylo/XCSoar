@@ -42,6 +42,14 @@ Copyright_License {
 #define COLOR_XCSOAR_DARK Color(236, 236, 236)
 #endif
 
+#define COLOR_GRAY_1 Color(255,255,214)
+#define COLOR_GRAY_2 Color(255,255,205)
+#define COLOR_GRAY_3 Color(255,255,204)
+#define COLOR_GRAY_4 Color(255,255,203)
+#define COLOR_GRAY_5 Color(255,255,202)
+#define COLOR_GRAY_6 Color(255,255,201)
+#define COLOR_GRAY_7 Color(255,255,200)
+
 #define COLOR_WHITE Color(0xff, 0xff, 0xff)
 #define COLOR_BLACK Color(0x00, 0x00, 0x00)
 #define COLOR_GRAY Color(238, 238, 238)

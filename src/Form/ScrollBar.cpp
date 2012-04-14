@@ -200,11 +200,11 @@ ScrollBar::Paint(Canvas &canvas) const
   // fill the rest with darker gray
   if (up_arrow_rect.bottom + 1 < rc_slider.top)
     canvas.DrawFilledRectangle(rc.left + 1, up_arrow_rect.bottom + 1,
-                               rc.right, rc_slider.top, COLOR_GRAY);
+                               rc.right, rc_slider.top, COLOR_GRAY_2);
 
   if (rc_slider.bottom < down_arrow_rect.top)
     canvas.DrawFilledRectangle(rc.left + 1, rc_slider.bottom,
-                               rc.right, down_arrow_rect.top, COLOR_GRAY);
+                               rc.right, down_arrow_rect.top, COLOR_GRAY_2);
 }
 
 void
