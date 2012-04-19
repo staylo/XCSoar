@@ -32,7 +32,6 @@ Copyright_License {
 #include "Projection/WindowProjection.hpp"
 #include "Engine/Math/Earth.hpp"
 #include "Engine/Contest/ContestResult.hpp"
-#include "LogFile.hpp"
 
 #include <algorithm>
 
@@ -175,12 +174,26 @@ static gcc_constexpr_data ColorRamp snail_colors_fade[] = {
 
       Pen pen = canvas.GetPen();
       const fixed dt = fixed(unsigned(basic.time) - it->GetTime());
-      LogStartUp(_T("basic.time %i it.time %i dt %i"), unsigned(basic.time), it->GetTime(), unsigned(basic.time) - it->GetTime());
       pen.Set(pen.GetWidth(), ColorRampLookup(dt, snail_colors_fade, 4));
+      
+      fixed scalefactor = (fixed_int_constant(750)-min(projection.GetMapScale(),fixed_int_constant(750)))/fixed_int_constant(750);
+
+      pen.Set(pen.GetWidth()*scalefactor, ColorRampLookup(dt, snail_colors_fade, 4));
+      bool fade_trail = projection.GetMapScale() <= fixed_int_constant(400);
+
+      if (!fade_trail)
+      {
+        if (!scaled_trail)
+                 canvas.Select(look.hpSnail[GetSnailColorIndex(colour_vario)]);
+        else
+	         canvas.Select(look.hpSnailVario[GetSnailColorIndex(colour_vario)]);
+	canvas.line_piece(last_point, pt);
+      }
+      else
       if (negative(it->GetVario())){
 	canvas.SelectWhitePen();
 	canvas.Select(Brush(ColorRampLookup(dt, snail_colors_fade, 4)));
-	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, look.widthSnail[GetSnailColorIndex(colour_vario)]);
+	canvas.circle(last_point.x + (pt.x - last_point.x)/2, last_point.y + (pt.y - last_point.y)/2, scalefactor*look.widthSnail[GetSnailColorIndex(colour_vario)]);
         //  RasterPoint arrow[3];
         //  arrow[0].x = last_point.x - look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.x - last_point.x)/2;
         //  arrow[0].y = last_point.y - look.widthSnail[GetSnailColorIndex(colour_vario)] + (pt.y - last_point.y)/2;
