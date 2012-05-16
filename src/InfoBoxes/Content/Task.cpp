@@ -40,18 +40,19 @@ Copyright_License {
 #include <tchar.h>
 #include <stdio.h>
 
-static constexpr InfoBoxContentNextWaypoint::PanelContent panels[] = {
-  InfoBoxContentNextWaypoint::PanelContent (
+
+static constexpr InfoBoxContentNext::PanelContent panels[] = {
+  InfoBoxContentNext::PanelContent (
     N_("Task"),
     LoadNextWaypointWidget),
 };
 
-const InfoBoxContentNextWaypoint::DialogContent InfoBoxContentNextWaypoint::dlgContent = {
+const InfoBoxContentNext::DialogContent InfoBoxContentNext::dlgContent = {
   ARRAY_SIZE(panels), &panels[0], false,
 };
 
-const InfoBoxContentNextWaypoint::DialogContent*
-InfoBoxContentNextWaypoint::GetDialogContent() {
+const InfoBoxContentNext::DialogContent*
+InfoBoxContentNext::GetDialogContent() {
   return &dlgContent;
 }
 

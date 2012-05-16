@@ -38,59 +38,62 @@ public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextWaypoint : public InfoBoxContent
+class InfoBoxContentNext : public InfoBoxContent
 {
 public:
   virtual const DialogContent *GetDialogContent();
-
   static const DialogContent dlgContent;
-
-  virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextDistance : public InfoBoxContent
+class InfoBoxContentNextWaypoint : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextETE : public InfoBoxContent
+class InfoBoxContentNextDistance : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextETA : public InfoBoxContent
+class InfoBoxContentNextETE : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextAltitudeDiff : public InfoBoxContent
+class InfoBoxContentNextETA : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextMC0AltitudeDiff : public InfoBoxContent
+class InfoBoxContentNextAltitudeDiff : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextAltitudeRequire : public InfoBoxContent
+class InfoBoxContentNextMC0AltitudeDiff : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextAltitudeArrival : public InfoBoxContent
+class InfoBoxContentNextAltitudeRequire : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextGR: public InfoBoxContent
+class InfoBoxContentNextAltitudeArrival : public InfoBoxContentNext
+{
+public:
+  virtual void Update(InfoBoxData &data);
+};
+
+class InfoBoxContentNextGR: public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
@@ -223,7 +226,7 @@ public:
   virtual void Update(InfoBoxData &data);
 };
 
-class InfoBoxContentNextETEVMG : public InfoBoxContent
+class InfoBoxContentNextETEVMG : public InfoBoxContentNext
 {
 public:
   virtual void Update(InfoBoxData &data);
