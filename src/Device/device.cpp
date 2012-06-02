@@ -78,10 +78,12 @@ DeviceConfigOverlaps(const DeviceConfig &a, const DeviceConfig &b)
     return (b.port_type == DeviceConfig::PortType::IOIOUART) &&
       a.ioio_uart_id == b.ioio_uart_id;
 
+  case DeviceConfig::PortType::TCP_LISTENER:
+    return false;
+
   case DeviceConfig::PortType::DISABLED:
   case DeviceConfig::PortType::AUTO:
   case DeviceConfig::PortType::INTERNAL:
-  case DeviceConfig::PortType::TCP_LISTENER:
     break;
   }
 
