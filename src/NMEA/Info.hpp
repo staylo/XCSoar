@@ -562,6 +562,13 @@ struct NMEAInfo {
   }
 
   /**
+   * Set the indicated airspeed [m/s] using the current altitude.
+   */
+  void ProvideIndicatedAirspeed(fixed ias) {
+    ProvideIndicatedAirspeedWithAltitude(ias, GetAltitudeBaroPreferred());
+  }
+
+  /**
    * Set the gross, non-compensated, plain-old vertical speed vario value [m/s].
    */
   void ProvideNoncompVario(fixed value) {
