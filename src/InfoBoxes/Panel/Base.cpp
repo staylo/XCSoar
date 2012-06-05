@@ -200,3 +200,26 @@ NumberButtonLayout::Prepare(ContainerWindow &parent, const PixelRect &parent_rc)
   value_rc.bottom = big_minus_rc.top;
 }
 
+void
+RatchetListLayout::Prepare(ContainerWindow &parent, const PixelRect &rc)
+{
+  PixelScalar right_buttons_width, detail_button_height;
+  right_buttons_width = detail_button_height = 0.2 * (rc.right - rc.left);
+  ratchet_list_rc = rc;
+  ratchet_list_rc.right = rc.right - right_buttons_width;
+  ratchet_list_rc.bottom = rc.bottom - detail_button_height;
+
+  ratchet_up_rc = rc;
+  ratchet_up_rc.left = ratchet_list_rc.right - ratchet_list_rc.left + 1;
+  ratchet_up_rc.bottom = rc.top + (rc.bottom - rc.top) / 2;
+
+  ratchet_down_rc = rc;
+  ratchet_down_rc.left = ratchet_up_rc.left;
+  ratchet_down_rc.top = ratchet_up_rc.bottom + 1;
+  ratchet_down_rc.bottom = rc.bottom;
+
+  details_button_rc = rc;
+  details_button_rc.right = ratchet_down_rc.left;
+  details_button_rc.top = rc.top + ratchet_list_rc.bottom - ratchet_list_rc.top
+    + 1;
+}
