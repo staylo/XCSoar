@@ -72,13 +72,19 @@ Copyright_License {
 #define COLOR_GRAY Color(0x80, 0x80, 0x80)
 #define COLOR_LIGHT_GRAY Color(0xc0, 0xc0, 0xc0)
 #define COLOR_DARK_GRAY Color(0x4, 0x40, 0x40)
+#ifdef NOOK
+#define COLOR_RED Color(238, 238, 238)
+#define COLOR_BLUE Color(239, 239, 239)
+#define COLOR_ORANGE Color(237, 237, 237)
+#else
 #define COLOR_RED Color(0xff, 0x00, 0x00)
-#define COLOR_GREEN Color(0x00, 0xff, 0x00)
 #define COLOR_BLUE Color(0x00, 0x00, 0xff)
+#define COLOR_ORANGE Color(0xff, 0xa2, 0x00)
+#endif
+#define COLOR_GREEN Color(0x00, 0xff, 0x00)
 #define COLOR_YELLOW Color(0xff, 0xff, 0x00)
 #define COLOR_CYAN Color(0x00, 0xff, 0xff)
 #define COLOR_MAGENTA Color(0xff, 0x00, 0xff)
-#define COLOR_ORANGE Color(0xff, 0xa2, 0x00)
 #define COLOR_BROWN Color(0xb7, 0x64, 0x1e)
 #endif
 
