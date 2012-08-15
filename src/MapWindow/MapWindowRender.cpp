@@ -127,8 +127,8 @@ MapWindow::Render(Canvas &canvas, const PixelRect &rc)
   draw_sw.Mark(_T("RenderTerrain"));
   RenderTerrain(canvas);
 
-  draw_sw.Mark(_T("RenderTopography"));
-  RenderTopography(canvas);
+//  draw_sw.Mark(_T("RenderTopography"));
+//  RenderTopography(canvas);
 
   draw_sw.Mark(_T("RenderFinalGlideShading"));
   RenderFinalGlideShading(canvas);
@@ -144,6 +144,9 @@ MapWindow::Render(Canvas &canvas, const PixelRect &rc)
   // Render task, waypoints
   draw_sw.Mark(_T("DrawTask"));
   DrawTask(canvas);
+
+  draw_sw.Mark(_T("RenderTopography"));
+  RenderTopography(canvas);
 
   draw_sw.Mark(_T("DrawWaypoints"));
   DrawWaypoints(canvas);
