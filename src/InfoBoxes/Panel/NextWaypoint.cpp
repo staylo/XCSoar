@@ -56,7 +56,7 @@ Copyright_License {
 enum ControlIndex {
   NextWaypoint,
   PreviousWaypoint,
-  WaypointDetails,
+  CloseDialog,
   TaskResume,
 };
 
@@ -81,7 +81,7 @@ protected:
    * class
    */
   ListControl *list;
-  WndButton *details, *task_resume;
+  WndButton *close, *task_resume;
   WndSymbolButton *prev, *next;
   const OrderedTask *task;
   unsigned waypoint_index;
@@ -153,7 +153,7 @@ NextWaypointWidget::Unprepare()
     delete list;
     delete prev;
     delete next;
-    delete details;
+    delete close;
     if (task != NULL)
       delete task;
     break;
@@ -254,10 +254,10 @@ NextWaypointWidget::CreateButtons(ContainerWindow &parent, const PixelRect &rc,
                              button_style,
                              this, NextWaypoint);
 
-  details = new WndButton(parent, dialog_look,
-                          _("Details"), details_button_rc,
+  close = new WndButton(parent, dialog_look,
+                          _("Close"), details_button_rc,
                           button_style,
-                          this, WaypointDetails);
+                          this, CloseDialog);
 }
 
 void
@@ -419,10 +419,8 @@ NextWaypointWidget::OnAction(int id)
     RatchetWaypoint(-1);
     break;
 
-  case WaypointDetails:
+  case CloseDialog:
   {
-    const Waypoint& wp = GetCurrentWaypoint();
-    dlgWaypointDetailsShowModal(UIGlobals::GetMainWindow(), wp);
     Close();
     break;
   }
