@@ -847,6 +847,10 @@ ifeq ($(HAVE_PCM_PLAYER),y)
 XCSOAR_SOURCES += $(SRC)/Audio/VarioGlue.cpp
 endif
 
+ifeq ($(NOOK),y)
+XCSOAR_SOURCES += $(SRC)/Android/Nook.cpp
+endif
+
 XCSOAR_LDADD = \
 	$(RESOURCE_BINARY)
 

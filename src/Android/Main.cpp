@@ -60,6 +60,10 @@ Copyright_License {
 #include "Android/IOIOHelper.hpp"
 #endif
 
+#ifdef NOOK
+#include "Android/Nook.hpp"
+#endif
+
 #ifndef NDEBUG
 #include "Screen/OpenGL/Texture.hpp"
 #include "Screen/OpenGL/Buffer.hpp"
@@ -205,6 +209,12 @@ Java_org_xcsoar_NativeView_deinitializeNative(JNIEnv *env, jobject obj)
   Java::URL::Deinitialise(env);
 
   DeinitialiseIOThread();
+
+#ifdef NOOK
+  Nook::DeinitUsb();
+#endif
+
+
 }
 
 gcc_visibility_default

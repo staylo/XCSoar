@@ -55,6 +55,10 @@ Copyright_License {
 #include <errno.h>
 #endif
 
+#ifdef NOOK
+#include "Android/Nook.hpp"
+#endif
+
 #include <windef.h> /* for MAX_PATH */
 
 /**
@@ -107,6 +111,10 @@ OpenPortInternal(const DeviceConfig &config, DataHandler &handler)
       return NULL;
 
     path = config.path.c_str();
+
+#ifdef NOOK
+    Nook::InitUsb();
+#endif
     break;
 
   case DeviceConfig::PortType::RFCOMM:
