@@ -29,10 +29,17 @@ Copyright_License {
  */
 enum {
   VK_ESCAPE = 0x04,
+#ifdef NOOK
+  VK_UP = 94,
+  VK_DOWN = 95,
+  VK_LEFT = 92,
+  VK_RIGHT = 93,
+#else
   VK_UP = 0x13,
   VK_DOWN = 0x14,
   VK_LEFT = 0x15,
   VK_RIGHT = 0x16,
+#endif
   VK_TAB = 0x3d,
   VK_SPACE = 0x3e,
   VK_RETURN = 0x42,
