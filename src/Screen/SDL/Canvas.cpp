@@ -146,7 +146,12 @@ Canvas::DrawButton(PixelRect rc, bool down)
 {
   const Pen old_pen = pen;
 
+#ifdef NOOK
+  Color gray = GRAYSCALE_1;
+#else
   Color gray = COLOR_LIGHT_GRAY;
+#endif
+
   DrawFilledRectangle(rc, gray);
 
   Pen bright(1, LightColor(gray));

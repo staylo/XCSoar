@@ -54,15 +54,25 @@ Copyright_License {
 #endif
 #endif
 
+#ifdef NOOK
+#define GRAYSCALE_1 Color(255,255,214)
+#define GRAYSCALE_2 Color(255,255,205)
+#define GRAYSCALE_3 Color(255,255,204)
+#define GRAYSCALE_4 Color(255,255,203)
+#define GRAYSCALE_5 Color(255,255,202)
+#define GRAYSCALE_6 Color(255,255,201)
+#define GRAYSCALE_7 Color(255,255,200)
+#endif
+
 #define COLOR_WHITE Color(0xff, 0xff, 0xff)
 #define COLOR_BLACK Color(0x00, 0x00, 0x00)
 #ifdef NOOK
 #define COLOR_GRAY Color(238, 238, 238)
 #define COLOR_LIGHT_GRAY Color(239, 239, 239)
 #define COLOR_DARK_GRAY Color(237, 237, 237)
-#define COLOR_RED Color(238, 238, 238)
+#define COLOR_RED Color(0, 0, 0)
 #define COLOR_GREEN Color(237, 237, 237)
-#define COLOR_BLUE Color(236, 236, 236)
+#define COLOR_BLUE Color(239, 239, 239)
 #define COLOR_YELLOW Color(238, 238, 238)
 #define COLOR_CYAN Color(238, 238, 238)
 #define COLOR_MAGENTA Color(237, 237, 237)

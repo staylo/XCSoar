@@ -41,7 +41,11 @@ InfoBoxLook::Initialise(bool _inverse, bool use_colors)
   value.fg_color = title.fg_color = comment.fg_color =
     inverse ? COLOR_WHITE : COLOR_BLACK;
   background_color = inverse ? COLOR_BLACK : COLOR_WHITE;
+#ifdef NOOK
+  focused_background_color = GRAYSCALE_1;
+#else
   focused_background_color = COLOR_XCSOAR_LIGHT;
+#endif
 
 #ifdef NOOK
   Color border_color = COLOR_GRAY;
@@ -62,11 +66,20 @@ InfoBoxLook::Initialise(bool _inverse, bool use_colors)
 
   colors[0] = border_color;
   if (use_colors) {
+#ifdef NOOK
+    colors[1] = inverse ? COLOR_INVERSE_RED : GRAYSCALE_7;
+    colors[2] = inverse ? COLOR_INVERSE_BLUE : GRAYSCALE_7;
+    colors[3] = inverse ? COLOR_INVERSE_GREEN : GRAYSCALE_7;
+    colors[4] = inverse ? COLOR_INVERSE_YELLOW : GRAYSCALE_7;
+    colors[5] = inverse ? COLOR_INVERSE_MAGENTA : GRAYSCALE_7;
+#else
     colors[1] = inverse ? COLOR_INVERSE_RED : COLOR_RED;
     colors[2] = inverse ? COLOR_INVERSE_BLUE : COLOR_BLUE;
     colors[3] = inverse ? COLOR_INVERSE_GREEN : COLOR_GREEN;
     colors[4] = inverse ? COLOR_INVERSE_YELLOW : COLOR_YELLOW;
     colors[5] = inverse ? COLOR_INVERSE_MAGENTA : COLOR_MAGENTA;
+#endif
+
   } else
     std::fill(colors + 1, colors + 6, border_color);
 }

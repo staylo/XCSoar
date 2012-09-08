@@ -30,8 +30,8 @@ ThermalBandLook::Initialise(bool _inverse, Color sky_color)
   inverse = _inverse;
 
 #ifdef NOOK
-  brush.Set(COLOR_GRAY);
-  pen.Set(Layout::ScalePenWidth(1), COLOR_DARK_GRAY);
+  brush.Set(GRAYSCALE_1);
+  pen.Set(Layout::ScalePenWidth(1), GRAYSCALE_3);
 #else
   brush.Set(sky_color);
   pen.Set(Layout::ScalePenWidth(1), DarkColor(sky_color));

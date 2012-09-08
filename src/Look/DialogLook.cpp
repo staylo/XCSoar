@@ -46,7 +46,7 @@ DialogLook::Initialise(const Font &caption_font,
 #endif
 
 #ifdef NOOK
-  SetBackgroundColor(COLOR_LIGHT_GRAY);
+  SetBackgroundColor(GRAYSCALE_1);
 #else
   SetBackgroundColor(Color(0xe2, 0xdc, 0xbe));
 #endif
@@ -57,20 +57,30 @@ DialogLook::Initialise(const Font &caption_font,
   button.Initialise(button_font);
 
 #ifdef NOOK
-  focused.background_color = COLOR_DARK_GRAY;
+  focused.background_color = GRAYSCALE_1;
+  focused.text_color = COLOR_BLACK;
 #else
   focused.background_color = COLOR_XCSOAR_DARK;
-#endif
   focused.text_color = COLOR_WHITE;
+#endif
   focused.border_pen.Set(Layout::FastScale(1) + 2, COLOR_BLACK);
 
   list.background_color = COLOR_WHITE;
   list.text_color = COLOR_BLACK;
+
+#ifdef NOOK
+  list.selected.background_color = GRAYSCALE_1;
+  list.focused.background_color = GRAYSCALE_2;
+  list.focused.text_color = COLOR_BLACK;
+  list.pressed.background_color = GRAYSCALE_3;
+#else
   list.selected.background_color = COLOR_XCSOAR_LIGHT;
-  list.selected.text_color = COLOR_BLACK;
   list.focused.background_color = COLOR_XCSOAR;
   list.focused.text_color = COLOR_WHITE;
   list.pressed.background_color = COLOR_YELLOW;
+#endif
+
+  list.selected.text_color = COLOR_BLACK;
   list.pressed.text_color = COLOR_BLACK;
   list.font = &list_font;
 }

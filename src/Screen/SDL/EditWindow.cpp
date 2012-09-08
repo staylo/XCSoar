@@ -95,12 +95,20 @@ EditWindow::OnPaint(Canvas &canvas)
 {
   if (IsEnabled()) {
     if (IsReadOnly())
+#ifdef NOOK
+      canvas.Clear(GRAYSCALE_1);
+#else
       canvas.Clear(Color(0xf0, 0xf0, 0xf0));
+#endif
     else
       canvas.ClearWhite();
     canvas.SetTextColor(COLOR_BLACK);
   } else {
+#ifdef NOOK
+    canvas.Clear(GRAYSCALE_1);
+#else
     canvas.Clear(COLOR_LIGHT_GRAY);
+#endif
     canvas.SetTextColor(COLOR_DARK_GRAY);
   }
 
