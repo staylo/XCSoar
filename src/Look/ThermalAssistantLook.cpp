@@ -31,21 +31,26 @@ ThermalAssistantLook::Initialise(bool small)
   background_color = COLOR_WHITE;
   circle_color = Color(0xB0, 0xB0, 0xB0);
   text_color = Color(0x00, 0x00, 0x00);
+#ifdef NOOK
+  polygon_fill_color = GRAYSCALE_1;
+#else
   polygon_fill_color = Color(0xCC, 0xCC, 0xFF);
+#endif
   polygon_border_color = Color(0x00, 0x00, 0xFF);
 
-#ifdef ENABLE_OPENGL
+#if defined (ENABLE_OPENGL) && !defined (NOOK)
   polygon_brush.Set(polygon_fill_color.WithAlpha(128));
-#else /* !OPENGL */
+#else // !OPENGL || NOOK
   polygon_brush.Set(polygon_fill_color);
-#endif /* !OPENGL */
+#endif
 
   UPixelScalar width = Layout::FastScale(small ? 1 : 2);
-#ifdef ENABLE_OPENGL
+#if defined (ENABLE_OPENGL) && !defined (NOOK)
   polygon_pen.Set(width, polygon_border_color.WithAlpha(128));
-#else /* !OPENGL */
+#else // !OPENGL || NOOK
   polygon_pen.Set(width, polygon_border_color);
-#endif /* !OPENGL */
+#endif
+
   inner_circle_pen.Set(1, circle_color);
   outer_circle_pen.Set(Pen::DASH, 1, circle_color);
   plane_pen.Set(width, COLOR_BLACK);
