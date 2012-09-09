@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 public class N2EpdController
 {
     public static int vCurrentNode = -2;
-    public static int GL16_MODE = 4;
+    public static int GL16_MODE = 5;
     // 0 - blink
     // 1 - ACTIVE
     // 2 - ONESHOT
@@ -95,11 +95,11 @@ public class N2EpdController
             Method epdControllerSetRegionMethod = epdControllerClass.getMethod("setRegion", new Class[]{String.class,
                                                                                                         epdControllerRegionClass,
                                                                                                         epdControllerRegionParamsClass});
-            epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
+//          epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
 
 
 
-            Thread.sleep(100L);
+//            Thread.sleep(100L);
             localRegionParams = RegionParamsConstructor.newInstance(new Object[]{0, 0, 600, 800, waveEnums[3], 14}); // Wave = A2
             epdControllerSetRegionMethod.invoke(null, new Object[]{"XCSoar", regionEnums[2], localRegionParams});
             vCurrentNode = 3;
