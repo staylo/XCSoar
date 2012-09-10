@@ -44,7 +44,7 @@ PNG_SPLASH_128 = $(patsubst Data/graphics/%.svg,$(DATA)/graphics/%_128.png,$(SVG
 ICNS_SPLASH_128 = $(PNG_SPLASH_128:.png=.icns)
 
 # render from SVG to PNG
-$(eval $(call rsvg-convert,$(PNG_SPLASH_160),$(DATA)/graphics/%_160.png,Data/graphics/%.svg,--width=160))
+$(eval $(call rsvg-convert,$(PNG_SPLASH_160),$(DATA)/graphics/%_160.png,Data/graphics/%.svg,--width=340))
 $(eval $(call rsvg-convert,$(PNG_SPLASH_80),$(DATA)/graphics/%_80.png,Data/graphics/%.svg,--width=80))
 $(eval $(call rsvg-convert,$(PNG_SPLASH_128),$(DATA)/graphics/%_128.png,Data/graphics/%.svg,--width=128))
 
@@ -105,7 +105,7 @@ BMP_LAUNCH_DLL_FLY_224 = $(PNG_LAUNCH_224:.png=_dll_1.bmp)
 BMP_LAUNCH_DLL_SIM_224 = $(PNG_LAUNCH_224:.png=_dll_2.bmp)
 
 # render from SVG to PNG
-$(eval $(call rsvg-convert,$(PNG_LAUNCH_224),$(DATA)/graphics/%_224.png,Data/graphics/%.svg,--width=224))
+$(eval $(call rsvg-convert,$(PNG_LAUNCH_224),$(DATA)/graphics/%_224.png,Data/graphics/%.svg,--width=580))
 
 # split into two uncompressed 8-bit BMPs (single 'convert' operation)
 $(eval $(call convert-to-bmp-half,$(BMP_LAUNCH_FLY_224),%_1.bmp,%.png,-background white))
