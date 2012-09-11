@@ -95,6 +95,10 @@ doc/html/advanced/input/ALL		http://xcsoar.sourceforge.net/advanced/input/
 #include "MapWindow/GlueMapWindow.hpp"
 #include "Simulator.hpp"
 
+#ifdef NOOK
+  #include "Android/Nook.hpp"
+#endif
+
 #include <assert.h>
 #include <ctype.h>
 #include <tchar.h>
@@ -688,3 +692,11 @@ InputEvents::eventFileManager(const TCHAR *misc)
 {
   ShowFileManager();
 }
+
+#ifdef NOOK
+void
+InputEvents::eventWifiSettings(const TCHAR *misc)
+{
+  Nook::WifiSettings();
+}
+#endif

@@ -36,6 +36,7 @@ namespace Nook {
    */
   void DeinitUsb();
 
+  void WifiSettings();
 }
 
 #endif

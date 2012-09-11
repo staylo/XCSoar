@@ -31,6 +31,7 @@ static char cmd_usb_rw[] = "su -c 'chmod 666 /dev/ttyUSB0'";
 static char cmd_usb_ro[] = "su -c 'chmod 500 /dev/ttyUSB0'";
 static char cmd_init_date[] = "date > /sdcard/initusbdate";
 static char cmd_deinit_date[] = "date > /sdcard/deinitusbdate";
+static char cmd_wifi_settings[] = "am start -n com.android.settings/.wifi.Settings_Wifi_Dialog";
 
 void
 Nook::InitUsb()
@@ -56,4 +57,10 @@ Nook::DeinitUsb()
 
     system(cmd_usb_ro);
     system(cmd_deinit_date);
+}
+
+void
+Nook::WifiSettings()
+{
+    system(cmd_wifi_settings);
 }

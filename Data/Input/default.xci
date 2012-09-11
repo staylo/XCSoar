@@ -663,6 +663,14 @@ event=Mode default
 label=File Manager
 location=8
 
+mode=Config3
+type=key
+data=0
+event=WifiSettings
+event=Mode default
+label=Wifi Settings
+location=9
+
 # -------------
 # mode=Vario1
 # -------------
