@@ -27,10 +27,16 @@ Copyright_License {
 void
 GestureLook::Initialise()
 {
-  color = COLOR_RED;
-  pen.Set(Layout::ScalePenWidth(5), color);
 
+#ifdef NOOK
+  color = GRAYSCALE_3;
+  invalid_color = GRAYSCALE_1;
+#else
+  color = COLOR_RED;
   invalid_color = LightColor(color);
+#endif
+
+  pen.Set(Layout::ScalePenWidth(5), color);
   invalid_pen.Set(Layout::ScalePenWidth(5), invalid_color);
 }
 

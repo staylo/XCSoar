@@ -97,6 +97,7 @@ doc/html/advanced/input/ALL		http://xcsoar.sourceforge.net/advanced/input/
 
 #ifdef NOOK
   #include "Android/Nook.hpp"
+  #include "Hardware/Display.hpp"
 #endif
 
 #include <assert.h>
@@ -697,6 +698,17 @@ InputEvents::eventFileManager(const TCHAR *misc)
 void
 InputEvents::eventWifiSettings(const TCHAR *misc)
 {
-  Nook::WifiSettings();
+ DisplaySettings::Orientation orientation =
+    CommonInterface::GetUISettings().display.orientation;
+  if ((orientation == DisplaySettings::Orientation::PORTRAIT)||(orientation == DisplaySettings::Orientation::DEFAULT)){
+    Nook::WifiSettings();
+    return;
+  }
+
+  const TCHAR *message =
+    _("Wifi settings can only be viewed in portrait orientation.");
+
+  ShowMessageBox(message, _("Wifi Settings"), MB_OK);
+
 }
 #endif

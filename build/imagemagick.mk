@@ -63,7 +63,7 @@ define convert-to-bmp
 
 $(1): $(2): $(3) | $$(dir $$(firstword $(1)))/dirstamp
 	@$$(NQ)echo "  BMP     $$@"
-	$$(Q)$$(IM_PREFIX)convert $$< $(4) +dither -compress none -type bilevel -monochrome $(5) bmp3:$$@
+	$$(Q)$$(IM_PREFIX)convert $$< $(4) -channel G -separate -monochrome -auto-level +dither -compress none -type bilevel $(5) bmp3:$$@
 
 endef
 
@@ -74,7 +74,7 @@ define convert-to-bmp-white
 
 $(1): $(2): $(3) | $$(dir $$(firstword $(1)))/dirstamp
 	@$$(NQ)echo "  BMP     $$@"
-	$$(Q)$$(IM_PREFIX)convert $$< $(4) -background white -layers flatten -background white +matte +dither -compress none -type bilevel -monochrome $(5) bmp3:$$@
+	$$(Q)$$(IM_PREFIX)convert $$< $(4) -background white -layers flatten -background white +matte -channel G -separate -monochrome -compress none -auto-level +dither -type bilevel $(5) bmp3:$$@
 
 endef
 
@@ -86,7 +86,7 @@ define convert-to-bmp-half
 $(1): $(2): $(3) | $$(dir $$(firstword $(1)))/dirstamp
 	@$$(NQ)echo "  BMP     $$@"
 	@$$(NQ)echo "  BMP     $$(@:1.bmp=2.bmp)"
-	$$(Q)$$(IM_PREFIX)convert $$< $(4) -layers flatten +matte +dither -compress none -type bilevel -monochrome -crop '50%x100%' -scene 1 bmp3:$$(@:1.bmp=%d.bmp)
+	$$(Q)$$(IM_PREFIX)convert $$< $(4) -layers flatten +matte -channel G -separate -monochrome -auto-level +dither -compress none -type bilevel -crop '50%x100%' -scene 1 bmp3:$$(@:1.bmp=%d.bmp)
 
 endef
 
