@@ -633,6 +633,16 @@ struct NMEAInfo {
   }
 
   /**
+   * Set the indicated airspeed [m/s] using the current altitude.
+   */
+  void ProvideIndicatedAirspeed(fixed ias) {
+    auto any_altitude = GetAnyAltitude();
+
+    if (any_altitude.first)
+      ProvideIndicatedAirspeedWithAltitude(ias, any_altitude.second);    
+  }
+
+  /**
    * Set the true airspeed [m/s] and derive the indicated airspeed
    * from it, using the current altitude.
    */
