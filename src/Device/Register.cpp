@@ -50,6 +50,7 @@ Copyright_License {
 #include "Device/Driver/FlyNet.hpp"
 #include "Device/Driver/CProbe.hpp"
 #include "Device/Driver/LevilAHRS_G.hpp"
+#include "Device/Driver/CondorUDP.hpp"
 #include "Util/Macros.hpp"
 
 /** NULL terminated array of available device drivers. */
@@ -82,6 +83,7 @@ static const struct DeviceRegister *const driver_list[] = {
   &gt_altimeter_device_driver,
   &c_probe_driver,
   &levil_driver,
+  &condorudp_driver,
   NULL
 };
 
