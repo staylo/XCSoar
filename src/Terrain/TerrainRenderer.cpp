@@ -34,7 +34,7 @@ Copyright_License {
 
 #include <assert.h>
 
-static constexpr ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
+static constexpr ColorRamp terrain_colors[9][NUM_COLOR_RAMP_LEVELS] = {
   {
     {0,           0x70, 0xc0, 0xa7},
     {250,         0xca, 0xe7, 0xb9},
@@ -154,6 +154,22 @@ static constexpr ColorRamp terrain_colors[8][NUM_COLOR_RAMP_LEVELS] = {
     {2000,        220, 220, 220},
     {2250,        220, 220, 220},
     {2500,        220, 220, 220}
+  },
+  { // Merged
+    {0,    255, 255, 255},
+    {150,  251, 227, 162},
+    {305,  235, 195, 132},
+    {610,  220, 162, 100},
+    {915,  209, 131, 69},
+    {1500, 205, 118, 48},
+    //{1500,        0xdc, 0xb2, 0x82},
+    {2000,        0xca, 0x8e, 0x72},
+    {2500,        0xde, 0xc8, 0xbd},
+    {3000,        0xe3, 0xe4, 0xe9},
+    {3500,        0xdb, 0xd9, 0xef},
+    {4000,        0xce, 0xcd, 0xf5},
+    {4500,        0xc2, 0xc1, 0xfa},
+    {5000,        0xb7, 0xb9, 0xff},
   }
 };
 
