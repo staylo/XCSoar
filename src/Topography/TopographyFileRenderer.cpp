@@ -43,7 +43,7 @@ TopographyFileRenderer::TopographyFileRenderer(const TopographyFile &_file)
    brush(file.GetColor())
 {
   if (file.GetIcon() == IDB_TOWN)
-    icon.Load(IDB_TOWN, IDB_TOWN_HD);
+    icon.Load(IDB_TOWN, IDB_TOWN);
 }
 
 void
