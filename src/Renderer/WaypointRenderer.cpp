@@ -324,7 +324,8 @@ protected:
     } else if (watchedWaypoint) {
       text_mode.shape = LabelShape::OUTLINED;
       text_mode.move_in_view = true;
-    }
+    } else if (way_point.IsLandable())
+      text_mode.shape = LabelShape::SHADOWED;
 
     TCHAR Buffer[NAME_SIZE+1];
     FormatLabel(Buffer, way_point, vwp.reach);
