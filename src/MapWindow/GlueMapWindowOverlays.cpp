@@ -163,7 +163,7 @@ GlueMapWindow::DrawGPSStatus(Canvas &canvas, const PixelRect &rc,
   y = rc.bottom - Layout::FastScale(34);
 
   TextInBoxMode mode;
-  mode.shape = LabelShape::ROUNDED_BLACK;
+  mode.shape = LabelShape::ROUNDED;
 
   canvas.Select(Fonts::map_bold);
   TextInBox(canvas, txt, x, y, mode, rc, NULL);

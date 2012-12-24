@@ -120,13 +120,7 @@ TextInBox(Canvas &canvas, const TCHAR *text, PixelScalar x, PixelScalar y,
   if (label_block != NULL && !label_block->check(rc))
     return false;
 
-  if (mode.shape == LabelShape::ROUNDED_BLACK ||
-      mode.shape == LabelShape::ROUNDED_WHITE) {
-    if (mode.shape == LabelShape::ROUNDED_BLACK)
-      canvas.SelectBlackPen();
-    else
-      canvas.SelectWhitePen();
-
+  if (mode.shape == LabelShape::ROUNDED){
     canvas.SelectWhiteBrush();
     canvas.DrawRoundRectangle(rc.left, rc.top, rc.right, rc.bottom,
                               Layout::SmallScale(8), Layout::SmallScale(8));

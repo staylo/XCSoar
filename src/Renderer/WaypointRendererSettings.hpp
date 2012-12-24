@@ -77,7 +77,7 @@ struct WaypointRendererSettings {
     display_text_type = DisplayTextType::FIRST_FIVE;
     arrival_height_display = ArrivalHeightDisplay::GLIDE;
     label_selection = LabelSelection::ALL;
-    landable_render_mode = LabelShape::ROUNDED_BLACK;
+    landable_render_mode = LabelShape::ROUNDED;
 
     landable_style = LandableStyle::PURPLE_CIRCLE;
     vector_landable_rendering = true;
