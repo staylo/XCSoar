@@ -120,7 +120,7 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
   if (!settings.vector_landable_rendering) {
     const MaskedIcon *icon;
 
-    if (reachable == ReachableTerrain)
+    if (reachable >= ReachableTerrain)
       icon = waypoint.IsAirport()
         ? &look.airport_reachable_icon
         : &look.field_reachable_icon;
@@ -148,18 +148,28 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
   case WaypointRendererSettings::LandableStyle::PURPLE_CIRCLE:
     // Render landable with reachable state
     if (reachable != Unreachable) {
-      canvas.Select(reachable == ReachableTerrain
+      canvas.Select(reachable >= ReachableTerrain
                     ? look.reachable_brush
                     : look.terrain_unreachable_brush);
+      fixed radiusoffset = fixed(3) * scale;
+      if (reachable == ReachableTerrainLow)
+	radiusoffset = fixed(3) * scale;
+      else if (reachable == ReachableTerrainMedium)
+	radiusoffset = fixed(5) * scale;
+      else if (reachable == ReachableTerrainHigh)
+	radiusoffset = fixed(7) * scale;
+      radiusoffset += radius;
+      canvas.SelectNullPen();
       DrawLandableBase(canvas, point, waypoint.IsAirport(),
-                       radius + Half(radius));
+                       radiusoffset);
+      canvas.SelectBlackPen();
     }
     canvas.Select(look.magenta_brush);
     break;
 
   case WaypointRendererSettings::LandableStyle::BW:
     if (reachable != Unreachable)
-      canvas.Select(reachable == ReachableTerrain
+      canvas.Select(reachable >= ReachableTerrain
                     ? look.reachable_brush
                     : look.terrain_unreachable_brush);
     else if (waypoint.IsAirport())
@@ -170,7 +180,7 @@ WaypointIconRenderer::DrawLandable(const Waypoint &waypoint,
 
   case WaypointRendererSettings::LandableStyle::TRAFFIC_LIGHTS:
     if (reachable != Unreachable)
-      canvas.Select(reachable == ReachableTerrain
+      canvas.Select(reachable >= ReachableTerrain
                     ? look.reachable_brush
                     : look.orange_brush);
     else

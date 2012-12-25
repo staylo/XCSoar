@@ -47,6 +47,9 @@ public:
     Unreachable,
     ReachableStraight,
     ReachableTerrain,
+    ReachableTerrainLow,
+    ReachableTerrainMedium,
+    ReachableTerrainHigh
   };
 
   WaypointIconRenderer(const WaypointRendererSettings &_settings,

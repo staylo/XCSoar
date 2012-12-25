@@ -53,6 +53,9 @@ public:
     Unreachable,
     ReachableStraight,
     ReachableTerrain,
+    ReachableTerrainLow,
+    ReachableTerrainMedium,
+    ReachableTerrainHigh
   };
 
   WaypointRenderer(const Waypoints *_way_points,

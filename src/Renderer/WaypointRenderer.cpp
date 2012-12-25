@@ -100,6 +100,12 @@ struct VisibleWaypoint {
     reach.direct = result.pure_glide_altitude_difference;
     if (positive(result.pure_glide_altitude_difference))
       reachable = WaypointRenderer::ReachableTerrain;
+    if (int(result.pure_glide_altitude_difference) > 300)
+      reachable = WaypointRenderer::ReachableTerrainHigh;
+    else if (int(result.pure_glide_altitude_difference) > 150)
+      reachable = WaypointRenderer::ReachableTerrainMedium;
+    else if (int(result.pure_glide_altitude_difference) > 0)
+      reachable = WaypointRenderer::ReachableTerrainLow;
   }
 
   void CalculateRouteArrival(const RoutePlannerGlue &route_planner,
@@ -121,8 +127,17 @@ struct VisibleWaypoint {
     else if (task_behaviour.route_planner.IsReachEnabled() &&
              !reach.IsReachableTerrain())
       reachable = WaypointRenderer::ReachableStraight;
-    else
+    else{
+    fixed arrivalheight = reach.direct;
+    if (positive(arrivalheight))
       reachable = WaypointRenderer::ReachableTerrain;
+    if (int(arrivalheight) > 300)
+      reachable = WaypointRenderer::ReachableTerrainHigh;
+    else if (int(arrivalheight) > 150)
+      reachable = WaypointRenderer::ReachableTerrainMedium;
+    else if (int(arrivalheight) > 0)
+      reachable = WaypointRenderer::ReachableTerrainLow;
+    }
   }
 
   void DrawSymbol(const struct WaypointRendererSettings &settings,
@@ -441,7 +456,13 @@ MapWaypointLabelRender(Canvas &canvas, UPixelScalar width, UPixelScalar height,
 
   for (const auto &l : labels) {
     canvas.Select(l.bold ? Fonts::map_bold : Fonts::map);
-
+    if (l.inTask)
+      canvas.SetTextColor(COLOR_VIOLET);
+    else if (l.isLandable){
+      canvas.SetTextColor(COLOR_MUTED_MAGENTA);
+      canvas.Select(Pen(1, COLOR_MUTED_MAGENTA));
+    }else
+      canvas.SetTextColor(COLOR_DARK_GRAY);
     TextInBox(canvas, l.Name, l.Pos.x, l.Pos.y, l.Mode,
               width, height, &label_block);
   }
