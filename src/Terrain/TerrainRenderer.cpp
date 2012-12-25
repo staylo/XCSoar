@@ -156,7 +156,7 @@ static constexpr ColorRamp terrain_colors[9][NUM_COLOR_RAMP_LEVELS] = {
     {2500,        220, 220, 220}
   },
   { // Merged
-    {0,    255, 255, 255},
+    {75,   255, 255, 255},
     {150,  251, 227, 162},
     {305,  235, 195, 132},
     {610,  220, 162, 100},
