@@ -54,11 +54,11 @@ TerrainShading(const short illum, uint8_t &r, uint8_t &g, uint8_t &b)
     g = MIX(0,g,x);
     b = MIX(64,b,x);
   } else if (illum > 0) {
-    // highlight to yellow
-    x = std::min(32, illum / 2);
-    r = MIX(255,r,x);
-    g = MIX(255,g,x);
-    b = MIX(16,b,x);
+    // shadow illuminated faces slightly
+    x = std::min(63, illum / 2);
+    r = MIX(0,r,x);
+    g = MIX(0,g,x);
+    b = MIX(32,b,x);
   }
 }
 
