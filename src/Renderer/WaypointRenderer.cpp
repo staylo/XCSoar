@@ -316,7 +316,6 @@ protected:
     if (vwp.reachable != WaypointRenderer::Unreachable &&
         way_point.IsLandable()) {
       text_mode.shape = settings.landable_render_mode;
-      bold = true;
       text_mode.move_in_view = true;
     } else if (vwp.in_task) {
       text_mode.shape = LabelShape::OUTLINED;
