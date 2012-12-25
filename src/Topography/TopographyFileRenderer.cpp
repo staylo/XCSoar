@@ -39,8 +39,8 @@ Copyright_License {
 #include <algorithm>
 
 TopographyFileRenderer::TopographyFileRenderer(const TopographyFile &_file)
-  :file(_file), pen(file.GetPenWidth(), file.GetColor()),
-   brush(file.GetColor())
+  :file(_file), pen(file.GetPenWidth(), file.GetColor()), //Desaturate(file.GetColor(),255)),
+   brush(Desaturate(file.GetColor(),140))
 {
   if (file.GetIcon() == IDB_TOWN)
     icon.Load(IDB_TOWN, IDB_TOWN);
