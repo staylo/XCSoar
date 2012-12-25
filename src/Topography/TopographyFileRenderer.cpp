@@ -36,6 +36,11 @@ Copyright_License {
 #include "Util/AllocatedArray.hpp"
 #include "Geo/GeoClip.hpp"
 
+#ifdef ENABLE_OPENGL
+#include "Screen/OpenGL/Scope.hpp"
+#endif
+
+
 #include <algorithm>
 
 TopographyFileRenderer::TopographyFileRenderer(const TopographyFile &_file)
@@ -274,6 +279,7 @@ TopographyFileRenderer::Paint(Canvas &canvas,
     case MS_SHAPE_POLYGON:
 #ifdef ENABLE_OPENGL
       {
+
         const GLushort *index_count;
         const GLushort *triangles = shape.get_indices(level, min_distance,
                                                         index_count);
@@ -283,6 +289,8 @@ TopographyFileRenderer::Paint(Canvas &canvas,
 #else
         glVertexPointer(2, GL_INT, 0, &points[0].x);
 #endif
+ GLEnable blend(GL_BLEND);
+ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDrawElements(GL_TRIANGLE_STRIP, *index_count, GL_UNSIGNED_SHORT,
                        triangles);
       }
