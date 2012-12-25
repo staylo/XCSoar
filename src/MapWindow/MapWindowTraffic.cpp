@@ -101,15 +101,20 @@ MapWindow::DrawFLARMTraffic(Canvas &canvas,
     // only draw labels if not close to aircraft
     if (dx * dx + dy * dy > Layout::Scale(30 * 30)) {
       // If FLARM callsign/name available draw it to the canvas
-      if (traffic.HasName() && !StringIsEmpty(traffic.name))
+      if (traffic.HasName() && !StringIsEmpty(traffic.name)){
+	canvas.SetTextColor(COLOR_BLACK);
+
         TextInBox(canvas, traffic.name, sc_name.x, sc_name.y,
                   mode, GetClientRect());
+      }
 
       if (traffic.climb_rate_avg30s >= fixed(0.1)) {
         // If average climb data available draw it to the canvas
         TCHAR label_avg[100];
         FormatUserVerticalSpeed(traffic.climb_rate_avg30s,
                                        label_avg, false);
+	canvas.SetTextColor(COLOR_BLACK);
+
         TextInBox(canvas, label_avg, sc_av.x, sc_av.y, mode, GetClientRect());
       }
     }

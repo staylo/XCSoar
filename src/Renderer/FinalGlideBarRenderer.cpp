@@ -226,6 +226,7 @@ FinalGlideBarRenderer::Draw(Canvas &canvas, const PixelRect &rc,
   TextInBoxMode style;
   style.shape = LabelShape::ROUNDED;
   style.move_in_view = true;
+  canvas.SetTextColor(COLOR_BLACK);
 
   if (text_size.cx < Layout::Scale(18)) {
     style.align = TextInBoxMode::Alignment::RIGHT;

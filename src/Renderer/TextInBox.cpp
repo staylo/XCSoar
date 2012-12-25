@@ -140,11 +140,9 @@ TextInBox(Canvas &canvas, const TCHAR *text, PixelScalar x, PixelScalar y,
                               Layout::SmallScale(8), Layout::SmallScale(8));
 
     canvas.SetBackgroundTransparent();
-    canvas.SetTextColor(COLOR_BLACK);
     canvas.DrawText(x, y, text);
   } else if (mode.shape == LabelShape::FILLED) {
     canvas.SetBackgroundColor(COLOR_WHITE);
-    canvas.SetTextColor(COLOR_BLACK);
     canvas.DrawOpaqueText(x, y, rc, text);
   } else if (mode.shape == LabelShape::SHADOWED) {
     RenderShadowedText(canvas, text, x, y, false);
@@ -156,7 +154,6 @@ TextInBox(Canvas &canvas, const TCHAR *text, PixelScalar x, PixelScalar y,
     RenderOutlinedText(canvas, text, x, y, true);
   } else {
     canvas.SetBackgroundTransparent();
-    canvas.SetTextColor(COLOR_BLACK);
     canvas.DrawText(x, y, text);
   }
 

@@ -108,6 +108,8 @@ GlueMapWindow::DrawPanInfo(Canvas &canvas) const
       elevation_long = _("Elevation: ");
       elevation_long += elevation_short;
 
+      canvas.SetTextColor(COLOR_BLACK);
+
       TextInBox(canvas, elevation_long, x, y, mode,
                 render_projection.GetScreenWidth(),
                 render_projection.GetScreenHeight());
@@ -124,6 +126,8 @@ GlueMapWindow::DrawPanInfo(Canvas &canvas) const
     TCHAR *newline = _tcschr(start, _T('\n'));
     if (newline != NULL)
       *newline = _T('\0');
+
+    canvas.SetTextColor(COLOR_BLACK);
 
     TextInBox(canvas, start, x, y, mode,
               render_projection.GetScreenWidth(),
@@ -166,6 +170,8 @@ GlueMapWindow::DrawGPSStatus(Canvas &canvas, const PixelRect &rc,
   mode.shape = LabelShape::ROUNDED;
 
   canvas.Select(Fonts::map_bold);
+  canvas.SetTextColor(COLOR_BLACK);
+
   TextInBox(canvas, txt, x, y, mode, rc, NULL);
 }
 

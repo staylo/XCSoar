@@ -101,6 +101,7 @@ WindArrowRenderer::Draw(Canvas &canvas, const Angle screen_angle,
   style.align = TextInBoxMode::Alignment::CENTER;
   style.vertical_position = TextInBoxMode::VerticalPosition::CENTERED;
   style.shape = LabelShape::OUTLINED;
+  canvas.SetTextColor(COLOR_BLACK);
 
   TextInBox(canvas, buffer, label[0].x, label[0].y, style, rc);
 }
