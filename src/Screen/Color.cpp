@@ -23,7 +23,12 @@ Copyright_License {
 
 #include "Screen/Color.hpp"
 
-Color Desaturate(Color c) {
-  int a = (c.Red() + c.Green() + c.Blue()) / 3;
-  return Color((c.Red() + a) / 2, (c.Green() + a) / 2, (c.Blue() + a) / 2);
+Color Desaturate(Color c, unsigned k) {
+  //k 0 (fully saturated) - 255 (fully desaturated)
+  int intensity = (2*c.Red() + c.Blue() + 3*c.Green()) / 6;
+  if (k > 255)
+    k = 255;
+  return Color(((c.Red()*(255 - k)) + intensity*k)/255,
+		((c.Green()*(255 - k)) + intensity*k)/255,
+		((c.Blue()*(255 - k)) + intensity*k)/255);
 }

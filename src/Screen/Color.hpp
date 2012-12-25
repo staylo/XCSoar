@@ -89,6 +89,6 @@ DarkColor(Color c)
                DarkColor(c.Blue()));
 }
 
-Color Desaturate(Color c);
+Color Desaturate(Color c, unsigned k);
 
 #endif
