@@ -30,21 +30,21 @@ TaskLook::Initialise()
 {
   // Magenta ICAO color is 0x65,0x23,0x1c
   const Color task_color = Color(0x62,0x4e,0x90);
-  const Color bearing_color = Color(0x3e,0x30,0x5f);
+  const Color bearing_color = Color(0xff,0x30,0xff);
   const Color isoline_color = bearing_color;
 
   oz_current_pen.Set(Pen::SOLID, Layout::ScalePenWidth(2), task_color);
-  oz_active_pen.Set(Pen::SOLID, Layout::ScalePenWidth(1), task_color);
-  oz_inactive_pen.Set(Pen::SOLID, Layout::ScalePenWidth(1),
+  oz_active_pen.Set(Pen::SOLID, Layout::ScalePenWidth(2), task_color);
+  oz_inactive_pen.Set(Pen::SOLID, Layout::ScalePenWidth(2),
                       DarkColor(task_color));
 
   leg_active_pen.Set(Pen::DASH, Layout::ScalePenWidth(2), task_color);
-  leg_inactive_pen.Set(Pen::DASH, Layout::ScalePenWidth(1), task_color);
+  leg_inactive_pen.Set(Pen::DASH, Layout::ScalePenWidth(2), task_color);
   arrow_pen.Set(Layout::ScalePenWidth(1), task_color);
 
-  isoline_pen.Set(Pen::DASH, Layout::ScalePenWidth(1), isoline_color);
+  isoline_pen.Set(Pen::DASH, Layout::ScalePenWidth(2), isoline_color);
 
-  bearing_pen.Set(Layout::ScalePenWidth(2), bearing_color);
+  bearing_pen.Set(Layout::ScalePenWidth(3), bearing_color);
   best_cruise_track_brush.Set(bearing_color);
   best_cruise_track_pen.Set(Layout::ScalePenWidth(1), DarkColor(bearing_color));
 
