@@ -75,14 +75,14 @@ RenderOutlinedText(Canvas &canvas, const TCHAR *text,
                    bool inverted)
 {
   canvas.SetBackgroundTransparent();
-
-  canvas.SetTextColor(inverted ? COLOR_BLACK : COLOR_WHITE);
+  Color saved_canvas_color = canvas.GetTextColor();
+  canvas.SetTextColor(inverted ? saved_canvas_color : COLOR_WHITE);
   canvas.DrawText(x + Layout::SmallScale(1), y, text);
   canvas.DrawText(x - Layout::SmallScale(1), y, text);
   canvas.DrawText(x, y + 1, text);
   canvas.DrawText(x, y - 1, text);
 
-  canvas.SetTextColor(inverted ? COLOR_WHITE : COLOR_BLACK);
+  canvas.SetTextColor(inverted ? COLOR_WHITE : saved_canvas_color);
   canvas.DrawText(x, y, text);
 }
 
