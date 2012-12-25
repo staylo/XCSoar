@@ -319,7 +319,6 @@ protected:
       text_mode.move_in_view = true;
     } else if (vwp.in_task) {
       text_mode.shape = LabelShape::OUTLINED;
-      bold = true;
     } else if (watchedWaypoint) {
       text_mode.shape = LabelShape::OUTLINED;
       text_mode.move_in_view = true;
