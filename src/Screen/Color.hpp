@@ -54,9 +54,11 @@ Copyright_License {
 #define COLOR_CYAN Color(0x00, 0xff, 0xff)
 #define COLOR_SKY_BLUE Color(0x03, 0xC8, 0xFC)
 #define COLOR_MAGENTA Color(0xff, 0x00, 0xff)
+#define COLOR_VIOLET Color(0x62,0x4e,0x90)
 #define COLOR_ORANGE Color(0xff, 0xa2, 0x00)
 #define COLOR_BROWN Color(0xb7, 0x64, 0x1e)
 
+#define COLOR_MUTED_MAGENTA Color(0xa4,0x32,0xa0)
 static inline constexpr uint8_t
 LightColor(uint8_t c)
 {
