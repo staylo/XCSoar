@@ -220,9 +220,6 @@ FinalGlideBarRenderer::Draw(Canvas &canvas, const PixelRect &rc,
                 Layout::Scale(9 + 5), y0 + cross_sign * Layout::Scale(9 - 5));
   }
 
-  canvas.SetTextColor(COLOR_BLACK);
-  canvas.SetBackgroundColor(COLOR_WHITE);
-
   TextInBoxMode style;
   style.shape = LabelShape::ROUNDED;
   style.move_in_view = true;
